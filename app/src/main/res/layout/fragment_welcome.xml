@@ -45,7 +45,7 @@
         android:theme="@style/Theme.WorldOfLuxury.Welcome"
         tools:context=".view.welcome.WelcomeFragment">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
             android:layout_width="@dimen/spacing_none"
             android:layout_height="@dimen/spacing_none"

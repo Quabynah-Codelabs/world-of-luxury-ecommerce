@@ -28,6 +28,7 @@
     <dimen name="spacing_x64">64dp</dimen>
     <dimen name="spacing_x96">96dp</dimen>
     <dimen name="spacing_x128">128dp</dimen>
+    <dimen name="spacing_x196">196dp</dimen>
     <dimen name="spacing_x256">256dp</dimen>
     <!-- Avatar & Logo. -->
     <dimen name="large_avatar_size">128dp</dimen>
