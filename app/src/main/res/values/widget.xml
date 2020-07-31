@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.WorldOfLuxury.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAppearance">?attr/textAppearanceButton</item>
+        <item name="android:paddingStart">@dimen/spacing_xlarge</item>
+        <item name="android:paddingEnd">@dimen/spacing_xlarge</item>
+        <item name="android:paddingTop">@dimen/spacing_large</item>
+        <item name="android:paddingBottom">@dimen/spacing_large</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="cornerFamily">cut</item>
+        <item name="iconPadding">@dimen/spacing_xxlarge</item>
+        <item name="iconGravity">textEnd</item>
+    </style>
+</resources>

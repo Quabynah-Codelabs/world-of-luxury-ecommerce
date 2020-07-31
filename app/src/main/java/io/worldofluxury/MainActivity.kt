@@ -1,11 +1,19 @@
 package io.worldofluxury
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dagger.hilt.android.AndroidEntryPoint
+import io.worldofluxury.base.DataBindingActivity
+import io.worldofluxury.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+
+@AndroidEntryPoint
+class MainActivity : DataBindingActivity() {
+    private val binding: ActivityMainBinding by binding(R.layout.activity_main)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding.apply {
+            lifecycleOwner = this@MainActivity
+        }
     }
 }
