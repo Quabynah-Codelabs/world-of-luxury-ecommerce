@@ -1,0 +1,31 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.WorldOfLuxury" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- System UI -->
+        <item name="android:colorBackground">@color/white</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/light_blue</item>
+        <item name="colorPrimaryVariant">@color/deep_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/lighter_blue</item>
+        <item name="colorSecondaryVariant">@color/light_blue</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?android:colorBackground</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Typography. -->
+        <item name="textAppearanceHeadline3">@style/TextAppearance.WorldOfLuxury.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.WorldOfLuxury.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.WorldOfLuxury.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.WorldOfLuxury.Headline6</item>
+        <item name="textAppearanceButton">@style/TextAppearance.WorldOfLuxury.Button</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.WorldOfLuxury.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.WorldOfLuxury.Body2</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.WorldOfLuxury.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.WorldOfLuxury.Subtitle2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.WorldOfLuxury.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.WorldOfLuxury.Overline</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

@@ -1,0 +1,2 @@
+rootProject.name = "World of Luxury"
+include ':app'

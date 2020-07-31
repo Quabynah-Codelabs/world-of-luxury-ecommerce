@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.WorldOfLuxury.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/rubik</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/rubik</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/rubik</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="fontFamily">@font/rubik</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Overline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+</resources>
