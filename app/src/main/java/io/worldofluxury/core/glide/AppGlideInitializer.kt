@@ -16,22 +16,10 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.core
+package io.worldofluxury.core.glide
 
-import android.app.Application
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 
-@HiltAndroidApp
-class WorldOfLuxuryApp : Application(), Configuration.Provider {
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
-
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
-
-}
+@GlideModule
+class AppGlideInitializer : AppGlideModule()

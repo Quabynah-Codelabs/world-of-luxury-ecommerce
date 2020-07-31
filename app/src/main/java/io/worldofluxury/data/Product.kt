@@ -16,22 +16,13 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.core
+package io.worldofluxury.data
 
-import android.app.Application
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
-@HiltAndroidApp
-class WorldOfLuxuryApp : Application(), Configuration.Provider {
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
-
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
-
-}
+@Entity(tableName = "products")
+@Parcelize
+data class Product(@PrimaryKey val id: String, val name: String, val photoUrl: String) : Parcelable

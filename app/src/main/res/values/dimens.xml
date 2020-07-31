@@ -21,4 +21,5 @@
     <dimen name="spacing_large">16dp</dimen>
     <dimen name="spacing_xlarge">24dp</dimen>
     <dimen name="spacing_xxlarge">36dp</dimen>
+    <dimen name="spacing_xxxlarge">48dp</dimen>
 </resources>

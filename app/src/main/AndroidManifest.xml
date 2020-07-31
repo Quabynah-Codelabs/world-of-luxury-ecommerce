@@ -53,13 +53,15 @@
             android:exported="false"
             tools:node="merge">
 
+            <!-- FIXME: WorkManager is already initialized -->
+            <!--<meta-data
+                android:name="io.worldofluxury.initializer.WorkManagerInitializer"
+                android:value="androidx.startup" />-->
+
             <meta-data
                 android:name="io.worldofluxury.initializer.TimberInitializer"
                 android:value="androidx.startup" />
 
-            <meta-data
-                android:name="io.worldofluxury.initializer.WorkManagerInitializer"
-                android:value="androidx.startup" />
         </provider>
     </application>
 

@@ -16,22 +16,16 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.core
+package io.worldofluxury.database
 
-import android.app.Application
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import io.worldofluxury.data.Product
+import io.worldofluxury.database.dao.ProductDao
 
-@HiltAndroidApp
-class WorldOfLuxuryApp : Application(), Configuration.Provider {
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+@Database(entities = [Product::class], version = 1, exportSchema = true)
+abstract class AppDatabase : RoomDatabase() {
 
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
+    abstract fun productDao(): ProductDao
 
 }

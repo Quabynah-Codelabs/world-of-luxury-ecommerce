@@ -16,22 +16,22 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.core
+package io.worldofluxury.worker
 
-import android.app.Application
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
 
-@HiltAndroidApp
-class WorldOfLuxuryApp : Application(), Configuration.Provider {
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+class LoadProductsWorker @WorkerInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerParams: WorkerParameters
+) : CoroutineWorker(appContext, workerParams) {
 
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
 
+    override suspend fun doWork(): Result {
+        // TODO: Load data from json into database
+        return Result.failure()
+    }
 }

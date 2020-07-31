@@ -79,6 +79,9 @@ android {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+
+        buildConfigField("String", "UNSPLASH_ACCESS_KEY", "\"" + getUnsplashAccess() + "\"")
+        buildConfigField("String", "UNSPLASH_SECRET_KEY", "\"" + getUnsplashSecret() + "\"")
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -154,6 +157,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android-testing:$versions.daggerHiltAndroidVersion"
     implementation "androidx.hilt:hilt-common:$versions.daggerHiltVersion"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.daggerHiltVersion"
+    implementation "androidx.hilt:hilt-work:$versions.daggerHiltVersion"
+    kapt "androidx.hilt:hilt-compiler:$versions.daggerHiltVersion"
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
     kapt "com.google.dagger:hilt-android-compiler:$versions.daggerHiltAndroidVersion"
     kapt "androidx.hilt:hilt-compiler:$versions.daggerHiltVersion"
@@ -211,3 +216,12 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:$versions.androidTestRunner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoVersion"
 }
+
+def getUnsplashAccess() {
+    return project.findProperty("unsplash_access_key")
+}
+
+def getUnsplashSecret() {
+    return project.findProperty("unsplash_secret_key")
+}
+

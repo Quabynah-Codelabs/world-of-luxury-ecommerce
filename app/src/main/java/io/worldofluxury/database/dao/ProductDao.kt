@@ -16,22 +16,25 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.core
+package io.worldofluxury.database.dao
 
-import android.app.Application
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import io.worldofluxury.data.Product
 
-@HiltAndroidApp
-class WorldOfLuxuryApp : Application(), Configuration.Provider {
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+@Dao
+interface ProductDao {
 
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
+    @Query("select * from products order by id desc")
+    fun getAllProducts(): LiveData<MutableList<Product>>
+
+    @Query("select * from products where id = :id")
+    fun getProductById(id: String): LiveData<Product?>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(items: MutableList<Product>)
 
 }

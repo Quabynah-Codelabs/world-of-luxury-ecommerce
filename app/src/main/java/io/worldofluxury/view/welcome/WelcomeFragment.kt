@@ -22,21 +22,52 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
+import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.databinding.FragmentWelcomeBinding
+import io.worldofluxury.viewmodel.AuthViewModel
+import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  * Use the [WelcomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class WelcomeFragment : Fragment() {
+
+    private lateinit var binding: FragmentWelcomeBinding
+    private val viewModel by viewModels<AuthViewModel>()
+
+    @Inject
+    lateinit var productDao: ProductDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false)
+        return binding.root
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        binding.run {
+            lifecycleOwner = this@WelcomeFragment
+            executePendingBindings()
+        }
+
+        productDao.getAllProducts().observe(viewLifecycleOwner, Observer {
+            Timber.d("Products -> $it")
+        })
+    }
+
 }
