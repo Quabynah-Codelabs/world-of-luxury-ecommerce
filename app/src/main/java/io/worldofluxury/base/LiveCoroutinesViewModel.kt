@@ -1,5 +1,7 @@
 /*
- * Designed and developed by 2020 skydoves (Jaewoong Eum)
+ * Copyright (c) 2020.
+ * Designed and developed by @quabynah_codelabs (Dennis Bilson)
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,9 +26,9 @@ import kotlinx.coroutines.Dispatchers
 
 abstract class LiveCoroutinesViewModel : ViewModel() {
 
-  inline fun <T> launchOnViewModelScope(crossinline block: suspend () -> LiveData<T>): LiveData<T> {
-    return liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-      emitSource(block())
+    inline fun <T> launchOnViewModelScope(crossinline block: suspend () -> LiveData<T>): LiveData<T> {
+        return liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            emitSource(block())
+        }
     }
-  }
 }

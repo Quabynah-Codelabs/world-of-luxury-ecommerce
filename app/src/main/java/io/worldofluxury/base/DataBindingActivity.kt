@@ -1,5 +1,7 @@
 /*
- * Designed and developed by 2020 skydoves (Jaewoong Eum)
+ * Copyright (c) 2020.
+ * Designed and developed by @quabynah_codelabs (Dennis Bilson)
+ *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +31,7 @@ import androidx.databinding.ViewDataBinding
  */
 abstract class DataBindingActivity : AppCompatActivity() {
 
-  protected inline fun <reified T : ViewDataBinding> binding(
-    @LayoutRes resId: Int
-  ): Lazy<T> = lazy { DataBindingUtil.setContentView<T>(this, resId) }
+    protected inline fun <reified T : ViewDataBinding> binding(
+        @LayoutRes resId: Int
+    ): Lazy<T> = lazy { DataBindingUtil.setContentView<T>(this, resId) }
 }

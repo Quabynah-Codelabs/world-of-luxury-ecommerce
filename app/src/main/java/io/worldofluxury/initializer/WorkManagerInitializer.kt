@@ -16,27 +16,23 @@
  * limitations under the License.
  */
 
-package io.worldofluxury
+package io.worldofluxury.initializer
 
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import android.content.Context
+import androidx.startup.Initializer
+import androidx.work.Configuration
+import androidx.work.WorkManager
 
-import org.junit.Test
-import org.junit.runner.RunWith
+class WorkManagerInitializer : Initializer<WorkManager> {
 
-import org.junit.Assert.*
+    override fun create(context: Context): WorkManager {
+        val configuration = Configuration.Builder().build()
+        WorkManager.initialize(context, configuration)
+        return WorkManager.getInstance(context)
+    }
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("io.worldofluxury", appContext.packageName)
+    override fun dependencies(): List<Class<out Initializer<*>>> {
+        // No dependencies on other libraries.
+        return emptyList()
     }
 }
