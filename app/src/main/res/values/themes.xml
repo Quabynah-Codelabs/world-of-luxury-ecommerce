@@ -22,12 +22,12 @@
         <!-- System UI -->
         <item name="android:colorBackground">@color/placeholder</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorPrimary">@color/light_blue</item>
+        <item name="colorPrimaryVariant">@color/deep_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/black</item>
-        <item name="colorSecondaryVariant">@color/black</item>
+        <item name="colorSecondary">@color/lighter_blue</item>
+        <item name="colorSecondaryVariant">@color/lighter_blue</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?android:colorBackground</item>

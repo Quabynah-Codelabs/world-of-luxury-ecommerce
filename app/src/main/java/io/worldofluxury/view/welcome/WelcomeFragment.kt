@@ -26,27 +26,41 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
+import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.viewmodel.AuthViewModel
-import timber.log.Timber
+import kotlinx.coroutines.delay
+import java.util.*
 import javax.inject.Inject
+import kotlin.random.Random
 
 /**
- * A simple [Fragment] subclass.
- * Use the [WelcomeFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Entry Point [Fragment] for our navigation system.
+ *
  */
 @AndroidEntryPoint
 class WelcomeFragment : Fragment() {
 
     private lateinit var binding: FragmentWelcomeBinding
     private val viewModel by viewModels<AuthViewModel>()
+    private val navController by lazy { findNavController() }
+    private val images = mutableListOf(
+        R.drawable.world_of_luxury_one,
+        R.drawable.world_of_luxury_two,
+        R.drawable.world_of_luxury_three,
+        R.drawable.world_of_luxury_four
+    )
 
     @Inject
     lateinit var productDao: ProductDao
+
+    @Inject
+    lateinit var userPrefs: UserSharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,20 +68,46 @@ class WelcomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false)
+        binding.run {
+            lifecycleOwner = this@WelcomeFragment
+            vm = viewModel
+            prefs = userPrefs
+
+            val nextImageLocation = Random.nextInt(images.size)
+            image = images[nextImageLocation]
+            executePendingBindings()
+        }
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding.run {
-            lifecycleOwner = this@WelcomeFragment
-            executePendingBindings()
+        productDao.getAllProducts().observe(viewLifecycleOwner, Observer {
+            println("WorldOfLuxury: Products -> $it")
+        })
+
+        userPrefs.liveUserId.observe(viewLifecycleOwner, Observer {
+            println("WorldOfLuxury: UserId -> $it")
+        })
+
+        lifecycleScope.launchWhenCreated {
+            delay(3500)
+//             userPrefs.save(UUID.randomUUID().toString())
+            userPrefs.save(null)
         }
 
-        productDao.getAllProducts().observe(viewLifecycleOwner, Observer {
-            Timber.d("Products -> $it")
-        })
+
+        binding.run {
+
+            // Navigate to home or login route
+            getStarted.setOnClickListener {
+                navController.navigate(
+                    if (userPrefs.isLoggedIn.get()) R.id.action_nav_welcome_to_nav_home
+                    else R.id.action_nav_welcome_to_nav_auth
+                )
+            }
+        }
     }
 
 }

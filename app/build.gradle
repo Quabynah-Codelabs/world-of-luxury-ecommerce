@@ -196,7 +196,7 @@ dependencies {
 //    implementation "com.github.skydoves:whatif:$versions.whatIfVersion"
 
     // gradation
-//    implementation "com.github.skydoves:rainbow:$versions.rainbowVersion"
+    implementation "com.github.skydoves:rainbow:$versions.rainbowVersion"
 
     // custom views
 //    implementation "com.github.skydoves:androidribbon:$versions.androidRibbonVersion"

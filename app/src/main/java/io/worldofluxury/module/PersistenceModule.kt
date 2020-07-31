@@ -31,6 +31,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.database.AppDatabase
 import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.util.DATABASE_NAME
 import io.worldofluxury.worker.LoadProductsWorker
 import timber.log.Timber
 import javax.inject.Singleton
@@ -54,7 +56,7 @@ object PersistenceModule {
     @Singleton
     fun provideAppDatabase(application: Application): AppDatabase {
         return Room
-            .databaseBuilder(application, AppDatabase::class.java, "swan-wol.db")
+            .databaseBuilder(application, AppDatabase::class.java, DATABASE_NAME)
             .run {
                 fallbackToDestructiveMigration()
                 allowMainThreadQueries()
@@ -67,4 +69,8 @@ object PersistenceModule {
     @Singleton
     fun provideProductDao(appDatabase: AppDatabase): ProductDao = appDatabase.productDao()
 
+    @Provides
+    @Singleton
+    fun provideUserSharedPreferences(application: Application): UserSharedPreferences =
+        UserSharedPreferences.get(application.baseContext)
 }

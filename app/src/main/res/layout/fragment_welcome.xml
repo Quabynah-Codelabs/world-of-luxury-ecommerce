@@ -22,6 +22,21 @@
 
     <data>
 
+        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
+
+        <import type="io.worldofluxury.preferences.UserSharedPreferences" />
+
+        <variable
+            name="image"
+            type="Integer" />
+
+        <variable
+            name="prefs"
+            type="UserSharedPreferences" />
+
+        <variable
+            name="vm"
+            type="AuthViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,40 +46,80 @@
         tools:context=".view.welcome.WelcomeFragment">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/spacing_xxlarge"
-            android:src="@drawable/logo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/logo"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="@dimen/spacing_none"
+            android:layout_marginTop="@dimen/spacing_x64"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toTopOf="@id/bottom_horiz_guide"
+            app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+            app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+            app:layout_constraintTop_toBottomOf="@id/get_started"
+            app:randomImage="@{image}"
+            tools:src="@drawable/world_of_luxury_one" />
 
-        <TextView
-            android:id="@+id/app_name"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/app_desc__one"
+            android:layout_width="@dimen/spacing_none"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xxlarge"
-            android:paddingHorizontal="@dimen/spacing_xlarge"
             android:text="@string/app_desc"
             android:textAlignment="viewStart"
-            android:textAppearance="?textAppearanceHeadline3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textAppearance="?textAppearanceHeadline4"
+            app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+            app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+            app:layout_constraintTop_toBottomOf="@id/top_horiz_guide" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/app_desc__two"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:paddingHorizontal="@dimen/spacing_small"
+            android:text="@string/app_desc_long"
+            android:textAlignment="viewStart"
+            android:textAppearance="?textAppearanceBody1"
+            app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+            app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+            app:layout_constraintTop_toBottomOf="@id/app_desc__one" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/get_started"
             style="?materialButtonStyle"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/spacing_none"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/spacing_xxxlarge"
-            android:layout_marginBottom="@dimen/spacing_xlarge"
-            android:text="@string/get_started"
+            android:layout_marginTop="@dimen/spacing_xxlarge"
+            android:text="@{prefs.isLoggedIn() ? @string/continue_shopping : @string/get_started, default=`@string/get_started`}"
             app:icon="@drawable/ic_twotone_right"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+            app:layout_constraintTop_toBottomOf="@id/app_desc__two" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left_vert_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/spacing_xxxlarge" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_vert_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/spacing_xxxlarge" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_horiz_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/spacing_x128" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_horiz_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/spacing_xxxlarge" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
