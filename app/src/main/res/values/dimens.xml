@@ -18,17 +18,20 @@
 
 <resources>
     <!-- Spacing. -->
+    <dimen name="spacing_none">0dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_normal">8dp</dimen>
     <dimen name="spacing_large">16dp</dimen>
     <dimen name="spacing_xlarge">24dp</dimen>
-    <dimen name="spacing_xxlarge">36dp</dimen>
-    <dimen name="spacing_xxxlarge">48dp</dimen>
+    <dimen name="spacing_x36">36dp</dimen>
+    <dimen name="spacing_x48">48dp</dimen>
     <dimen name="spacing_x64">64dp</dimen>
+    <dimen name="spacing_x96">96dp</dimen>
     <dimen name="spacing_x128">128dp</dimen>
-    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_x256">256dp</dimen>
+    <!-- Avatar & Logo. -->
     <dimen name="large_avatar_size">128dp</dimen>
     <dimen name="logo_size">256dp</dimen>
-    <dimen name="spacing_small">4dp</dimen>
-    <dimen name="spacing_none">0dp</dimen>
     <dimen name="small_logo_size">200dp</dimen>
 
     <!-- Z-Dimensions. -->

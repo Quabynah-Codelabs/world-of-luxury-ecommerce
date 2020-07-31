@@ -35,24 +35,53 @@
         android:layout_height="match_parent"
         tools:context=".view.auth.AuthFragment">
 
+        <ImageView
+            android:id="@+id/header_image"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="@dimen/spacing_none"
+            android:layout_marginEnd="@dimen/spacing_xlarge"
+            android:contentDescription="@string/header_image"
+            android:src="@drawable/world_of_luxury_three"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/main_left_vert_guide"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            app:layout_constraintBottom_toTopOf="@id/main_bottom_horiz_guide"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/main_left_vert_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/spacing_x96" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/main_bottom_horiz_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/spacing_x256" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="5">
+            android:weightSum="7">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3">
+                android:layout_weight="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/header_text__one"
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/spacing_large"
-                    android:text="@string/app_name"
+                    android:text="@string/app_name__full"
                     android:textAppearance="?textAppearanceHeadline4"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/top_horiz_guide" />
 
@@ -67,31 +96,19 @@
                     app:layout_constraintStart_toEndOf="@id/left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/header_text__one" />
 
-                <ImageView
-                    android:id="@+id/header_image"
-                    android:layout_width="@dimen/small_logo_size"
-                    android:layout_height="@dimen/spacing_none"
-                    android:layout_marginEnd="@dimen/spacing_xlarge"
-                    android:layout_marginBottom="@dimen/spacing_xlarge"
-                    android:contentDescription="@string/header_image"
-                    android:src="@drawable/swan"
-                    app:layout_constraintBottom_toTopOf="@id/bottom_horiz_guide"
-                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
-                    app:layout_constraintTop_toBottomOf="@id/header_text__one" />
-
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/left_vert_guide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="@dimen/spacing_xxlarge" />
+                    app:layout_constraintGuide_begin="@dimen/spacing_x36" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/right_vert_guide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_end="@dimen/spacing_xxlarge" />
+                    app:layout_constraintGuide_end="@dimen/spacing_x36" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/header_right_vert_guide"
@@ -105,14 +122,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_begin="@dimen/spacing_x128" />
+                    app:layout_constraintGuide_begin="@dimen/spacing_x64" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/bottom_horiz_guide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_end="@dimen/spacing_xxlarge" />
+                    app:layout_constraintGuide_end="@dimen/spacing_normal" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -120,7 +137,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spacing_none"
-                android:layout_weight="2">
+                android:layout_weight="3">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/header_text__three"
@@ -134,19 +151,83 @@
                     app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/twitter_button"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/sign_in_with_twitter"
+                    android:text="@string/sign_in_with_twitter"
+                    app:backgroundTint="@color/twitter"
+                    app:icon="@drawable/ic_twotone_right"
+                    app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/lower_top_horiz_guide" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/google_button"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:contentDescription="@string/sign_in_with_google"
+                    android:enabled="true"
+                    android:text="@string/sign_in_with_google"
+                    app:backgroundTint="@color/google"
+                    app:icon="@drawable/ic_twotone_right"
+                    app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/twitter_button" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lower_header"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:paddingVertical="@dimen/spacing_large"
+                    android:text="@string/or_with_email"
+                    android:textAlignment="center"
+                    android:textAppearance="?textAppearanceCaption"
+                    app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/google_button"
+                    app:textAllCaps="true" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sign_in__button"
+                    style="?materialButtonOutlinedStyle"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:text="@string/sign_in"
+                    app:layout_constraintEnd_toStartOf="@id/sign_up__button"
+                    app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/lower_header" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sign_up__button"
+                    style="?materialButtonOutlinedStyle"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:text="@string/sign_up"
+                    app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/sign_in__button"
+                    app:layout_constraintTop_toBottomOf="@id/lower_header" />
+
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lower_left_vert_guide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="@dimen/spacing_xxlarge" />
+                    app:layout_constraintGuide_begin="@dimen/spacing_x36" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lower_right_vert_guide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_end="@dimen/spacing_xxlarge" />
+                    app:layout_constraintGuide_end="@dimen/spacing_x36" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lower_top_horiz_guide"
@@ -160,7 +241,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_end="@dimen/spacing_xxlarge" />
+                    app:layout_constraintGuide_end="@dimen/spacing_large" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

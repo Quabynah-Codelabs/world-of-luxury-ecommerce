@@ -17,9 +17,10 @@
   -->
 
 <resources>
-    <string name="app_name">World of Luxury</string>
+    <string name="app_name">Swan</string>
+    <string name="app_name__full">Swan - World of Luxury</string>
     <string name="app_desc">Let\'s Create\nYour Own Style</string>
-    <string name="app_desc_long">Each woman has a unique style. We help you to create your very own style because you deserve to shine like a star</string>
+    <string name="app_desc__long">Each woman has a unique style. We help you to create your very own style because you deserve to shine like a star</string>
     <string name="get_started">Get started</string>
     <string name="continue_shopping">Continue shopping</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -30,4 +31,9 @@
     <string name="header_image">header_image</string>
     <string name="app_desc__other">Discover the world\'s top products right at the comfort of your home</string>
     <string name="app_creator">Created with 🔥 by <b>Quabynah Codelabs</b>©</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_in_with_twitter">Sign in with Twitter</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="or_with_email">Or with email</string>
 </resources>

@@ -23,6 +23,9 @@
     <color name="lighter_blue">#ff22d1ee</color>
     <color name="placeholder">#ffe2f3f5</color>
 
+    <color name="twitter">#ff03A9F4</color>
+    <color name="google">#ffC2185B</color>
+
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

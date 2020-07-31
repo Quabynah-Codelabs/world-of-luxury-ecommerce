@@ -44,6 +44,7 @@
         <item name="textAppearanceOverline">@style/TextAppearance.WorldOfLuxury.Overline</item>
         <!-- Customize your theme here. -->
         <item name="materialButtonStyle">@style/Widget.WorldOfLuxury.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.WorldOfLuxury.Button.Outlined</item>
     </style>
 
     <!-- Welcome Theme. -->
