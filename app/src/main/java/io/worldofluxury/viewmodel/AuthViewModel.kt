@@ -16,27 +16,24 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.view.welcome
+package io.worldofluxury.viewmodel
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import io.worldofluxury.R
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import io.worldofluxury.base.LiveCoroutinesViewModel
+import io.worldofluxury.view.auth.AuthFragment
+import timber.log.Timber
 
 /**
- * A simple [Fragment] subclass.
- * Use the [WelcomeFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Main [ViewModel] for the [AuthFragment]
  */
-class WelcomeFragment : Fragment() {
+class AuthViewModel  @ViewModelInject constructor(@Assisted private val savedStateHandle: SavedStateHandle) :
+    LiveCoroutinesViewModel() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false)
+    init {
+        Timber.d("HomeViewModel initialized...")
     }
+
 }

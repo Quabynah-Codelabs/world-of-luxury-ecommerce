@@ -23,9 +23,47 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-kapt'
 apply from: '../dependencies.gradle'
 
+// Preparing Keystore information for bundle signing
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+            minifyEnabled true
+
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources true
+
+            // Includes the default ProGuard rules files that are packaged with
+            // the Android Gradle plugin. To learn more, go to the section about
+            // R8 configuration files.
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+
+            // Signing configuration
+            signingConfig signingConfigs.release
+        }
+    }
 
     defaultConfig {
         applicationId "io.worldofluxury"
@@ -34,6 +72,7 @@ android {
         versionCode versions.versionCode
         versionName versions.versionName
         vectorDrawables.useSupportLibrary = true
+        archivesBaseName = "wol"
         testInstrumentationRunner "com.skydoves.pokedex.AppTestRunner"
         javaCompileOptions {
             annotationProcessorOptions {

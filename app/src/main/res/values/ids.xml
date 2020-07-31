@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020.
   ~ Designed and developed by @quabynah_codelabs (Dennis Bilson)
   ~
@@ -17,12 +17,7 @@
   -->
 
 <resources>
-    <string name="app_name">World of Luxury</string>
-    <string name="app_desc">Find your beauty look…</string>
-    <string name="get_started">Get started</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_welcome">Welcome</string>
-    <string name="title_home">Home</string>
-    <string name="title_auth">Authentication</string>
+    <item name="nav_welcome" type="id" />
+    <item name="nav_home" type="id" />
+    <item name="nav_auth" type="id" />
 </resources>

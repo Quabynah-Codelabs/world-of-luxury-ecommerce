@@ -16,27 +16,30 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.view.welcome
+package io.worldofluxury.view.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import io.worldofluxury.R
+import io.worldofluxury.viewmodel.AuthViewModel
 
-/**
- * A simple [Fragment] subclass.
- * Use the [WelcomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class WelcomeFragment : Fragment() {
+class AuthFragment : Fragment() {
+    private val viewModel by viewModels<AuthViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false)
+        return inflater.inflate(R.layout.auth_fragment, container, false)
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+    }
+
 }
