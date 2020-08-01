@@ -16,9 +16,12 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.util
+package io.worldofluxury.binding
 
-const val PASSWORD_LENGTH = 4
-const val USER_ID_KEY = "user-id-key"
-const val PREFS_NAME = "swan-user-prefs"
-const val DATABASE_NAME = "swan-wol.db"
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
+import io.worldofluxury.util.PASSWORD_LENGTH
+
+fun View.showSnackBar(message: String) = Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
+
+fun String.isTooShort(): Boolean = this.length < PASSWORD_LENGTH

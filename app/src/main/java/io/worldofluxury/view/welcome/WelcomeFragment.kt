@@ -57,9 +57,6 @@ class WelcomeFragment : Fragment() {
     )
 
     @Inject
-    lateinit var productDao: ProductDao
-
-    @Inject
     lateinit var userPrefs: UserSharedPreferences
 
     override fun onCreateView(
@@ -83,19 +80,15 @@ class WelcomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        productDao.getAllProducts().observe(viewLifecycleOwner, Observer {
-            println("WorldOfLuxury: Products -> $it")
-        })
-
         userPrefs.liveUserId.observe(viewLifecycleOwner, Observer {
             println("WorldOfLuxury: UserId -> $it")
         })
 
-        lifecycleScope.launchWhenCreated {
-            delay(3500)
+//        lifecycleScope.launchWhenCreated {
+//            delay(5500)
 //             userPrefs.save(UUID.randomUUID().toString())
-            userPrefs.save(null)
-        }
+//            userPrefs.save(null)
+//        }
 
 
         binding.run {

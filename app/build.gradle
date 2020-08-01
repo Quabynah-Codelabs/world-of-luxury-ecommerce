@@ -193,7 +193,7 @@ dependencies {
 //    implementation "com.github.skydoves:baserecyclerviewadapter:$versions.baseAdapter"
 
     // whatIf
-//    implementation "com.github.skydoves:whatif:$versions.whatIfVersion"
+    implementation "com.github.skydoves:whatif:$versions.whatIfVersion"
 
     // gradation
     implementation "com.github.skydoves:rainbow:$versions.rainbowVersion"

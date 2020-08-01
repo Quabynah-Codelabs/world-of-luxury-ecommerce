@@ -18,30 +18,41 @@
 
 package io.worldofluxury.view.home
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import io.worldofluxury.R
+import io.worldofluxury.databinding.HomeFragmentBinding
+import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel by viewModels<HomeViewModel>()
+    private val authVM by viewModels<AuthViewModel>()
+    private lateinit var binding: HomeFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
+        binding.run {
+            lifecycleOwner = this@HomeFragment
+            vm = viewModel
+            authViewModel = authVM
+            executePendingBindings()
+        }
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
+
     }
 
 }

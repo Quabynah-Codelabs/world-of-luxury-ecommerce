@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020.
   ~ Designed and developed by @quabynah_codelabs (Dennis Bilson)
   ~
@@ -17,15 +16,122 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.home.HomeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+        <import type="io.worldofluxury.viewmodel.HomeViewModel" />
+
+        <import type="io.worldofluxury.viewmodel.AuthViewModel.AuthenticationState" />
+
+        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
+
+        <variable
+            name="authViewModel"
+            type="AuthViewModel" />
+
+        <variable
+            name="vm"
+            type="HomeViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:context=".view.home.HomeFragment">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/home_filter_icon"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/filter"
+                android:foreground="?attr/selectableItemBackground"
+                android:src="@drawable/ic_twotone_filter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/home_title"
+                android:layout_width="@dimen/spacing_x36"
+                android:layout_height="@dimen/spacing_x36"
+                android:background="?android:colorBackground"
+                android:foreground="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/swan"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/home_cart_icon"
+                app:layout_constraintStart_toEndOf="@id/home_filter_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/home_cart_icon"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/filter"
+                android:foreground="?attr/selectableItemBackground"
+                android:src="@drawable/ic_twotone_shopping_basket"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/user_name"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/spacing_normal"
+            android:textAlignment="viewStart"
+            android:textAppearance="?textAppearanceHeadline4"
+            app:gone="@{authViewModel.authState != AuthenticationState.AUTHENTICATED}"
+            app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+            app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+            app:layout_constraintTop_toBottomOf="@id/top_horiz_guide"
+            tools:text="Hey, Quabynah" />
+
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left_vert_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/spacing_x36" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_vert_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/spacing_x36" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_horiz_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/spacing_x96" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_horiz_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/spacing_x36" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

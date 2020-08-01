@@ -21,19 +21,37 @@ package io.worldofluxury.binding
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.snackbar.Snackbar
 import com.skydoves.rainbow.Rainbow
 import com.skydoves.rainbow.RainbowOrientation
 import com.skydoves.rainbow.color
+import com.skydoves.whatif.whatIfNotNull
+
+@BindingAdapter("toast")
+fun bindToast(view: View, text: LiveData<String>) {
+    text.value.whatIfNotNull {
+        Toast.makeText(view.context, it, Toast.LENGTH_LONG).show()
+    }
+}
+
+@BindingAdapter("snackbar")
+fun bindSnackBar(view: View, text: LiveData<String>) {
+    text.value.whatIfNotNull {
+        Snackbar.make(view, it, Snackbar.LENGTH_LONG).show()
+    }
+}
 
 @BindingAdapter("randomImage")
 fun bindRandomImage(imageView: ImageView, @DrawableRes src: Int) {
