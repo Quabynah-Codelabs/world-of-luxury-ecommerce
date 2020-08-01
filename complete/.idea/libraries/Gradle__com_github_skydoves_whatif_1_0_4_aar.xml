@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.skydoves:whatif:1.0.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/068c1f6fb452ba8dc4343c72c6871591/jetified-whatif-1.0.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/068c1f6fb452ba8dc4343c72c6871591/jetified-whatif-1.0.4/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/068c1f6fb452ba8dc4343c72c6871591/jetified-whatif-1.0.4/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.skydoves/whatif/1.0.4/c4fef84843c0c40e321d0bf777df4dbe96884f84/whatif-1.0.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.skydoves/whatif/1.0.4/6460ec7ab04b84d9ac8a0420689f6197a88cda1b/whatif-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

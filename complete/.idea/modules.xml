@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/World_of_Luxury.iml" filepath="$PROJECT_DIR$/.idea/modules/World_of_Luxury.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/World_of_Luxury.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/World_of_Luxury.app.iml" />
+    </modules>
+  </component>
+</project>
