@@ -1,13 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.auth.AuthFragment">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bg_image"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="@dimen/spacing_none"
+        android:src="@drawable/world_of_luxury_three"
+        android:layout_marginTop="@dimen/spacing_x128"
+        app:layout_constraintBottom_toTopOf="@id/bottom_horiz_guide"
+        app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+        app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+        app:layout_constraintTop_toBottomOf="@id/top_horiz_guide" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/creator_description"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:paddingVertical="@dimen/spacing_large"
+        android:text="@string/app_creator"
+        android:textAlignment="center"
+        android:textAppearance="?textAppearanceOverline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+        app:layout_constraintStart_toEndOf="@id/left_vert_guide" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_vert_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/spacing_x48" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_vert_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/spacing_x32" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_horiz_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/spacing_x64" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_horiz_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/spacing_x256" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:orientation="vertical"
+        android:weightSum="7">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_none"
+            android:layout_weight="4"
+            android:paddingHorizontal="@dimen/spacing_x48"
+            android:paddingTop="@dimen/spacing_x64">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/header_app__name"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/spacing_large"
+                android:text="@string/app_name__long"
+                android:textAppearance="?textAppearanceHeadline4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/header_app__desc"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:text="@string/app_desc__three"
+                android:textAppearance="?textAppearanceBody1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_app__name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_none"
+            android:layout_weight="3">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/twitter_button"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_in_with_twitter"
+                app:icon="@drawable/ic_twotone_arrow_right"
+                app:layout_constraintEnd_toStartOf="@id/bottom_right_vert_guide"
+                app:layout_constraintStart_toEndOf="@id/bottom_left_vert_guide"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/google_button"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:text="@string/sign_in_with_twitter"
+                app:icon="@drawable/ic_twotone_arrow_right"
+                app:layout_constraintEnd_toStartOf="@id/bottom_right_vert_guide"
+                app:layout_constraintStart_toEndOf="@id/bottom_left_vert_guide"
+                app:layout_constraintTop_toBottomOf="@id/twitter_button" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/email_auth__header"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:paddingVertical="@dimen/spacing_large"
+                android:text="@string/or_with_email"
+                android:textAlignment="center"
+                android:textAppearance="?textAppearanceCaption"
+                app:layout_constraintEnd_toStartOf="@id/bottom_right_vert_guide"
+                app:layout_constraintStart_toEndOf="@id/bottom_left_vert_guide"
+                app:layout_constraintTop_toBottomOf="@id/google_button"
+                app:textAllCaps="true" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sign_in__button"
+                style="?materialButtonOutlinedStyle"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_x32"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="@string/sign_in"
+                app:layout_constraintEnd_toStartOf="@id/sign_up__button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/email_auth__header" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sign_up__button"
+                style="?materialButtonOutlinedStyle"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_x32"
+                android:text="@string/sign_up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/sign_in__button"
+                app:layout_constraintTop_toBottomOf="@id/email_auth__header" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom_left_vert_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/spacing_x48" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom_right_vert_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/spacing_x48" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,16 @@
 <resources>
-    <string name="app_name">Swan - World of Luxury</string>
+    <string name="app_name">Swan</string>
+    <string name="app_name__long">Swan - World of Luxury</string>
+    <string name="app_desc__one">Let\'s Create Your Own Style</string>
+    <string name="app_desc__two">Each woman has a unique style. We help you to create your very own style because you deserve to shine like a star</string>
+    <string name="app_desc__three">Discover the world\'s top products right at the comfort of your home</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_started">Get started</string>
+    <string name="cd_image_welcome_page">Image on welcome page</string>
+    <string name="sign_in_with_twitter">Sign in with Twitter</string>
+    <string name="or_with_email">Or with email</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="app_creator">Created with ❤️ for <b>My Subscribers</b></string>
 </resources>

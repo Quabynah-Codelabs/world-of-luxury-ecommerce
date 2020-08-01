@@ -1,14 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.welcome.WelcomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/app_desc__one"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/spacing_large"
+        android:text="@string/app_desc__one"
+        android:textAlignment="viewStart"
+        android:textAppearance="?textAppearanceHeadline4"
+        app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+        app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+        app:layout_constraintTop_toBottomOf="@id/top_horiz_guide" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/app_desc__two"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_small"
+        android:paddingVertical="@dimen/spacing_large"
+        android:text="@string/app_desc__two"
+        android:textAlignment="viewStart"
+        android:textAppearance="?textAppearanceBody1"
+        app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+        app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+        app:layout_constraintTop_toBottomOf="@id/app_desc__one" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/get_started"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_x32"
+        android:contentDescription="@string/get_started"
+        android:text="@string/get_started"
+        app:icon="@drawable/ic_twotone_arrow_right"
+        app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+        app:layout_constraintTop_toBottomOf="@id/app_desc__two" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/logo"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="@dimen/spacing_none"
+        android:layout_marginTop="@dimen/spacing_x64"
+        android:contentDescription="@string/cd_image_welcome_page"
+        android:src="@drawable/world_of_luxury_three"
+        app:layout_constraintBottom_toTopOf="@id/bottom_horiz_guide"
+        app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+        app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+        app:layout_constraintTop_toBottomOf="@id/get_started" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_vert_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/spacing_x48" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_vert_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/spacing_x48" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_horiz_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/spacing_x128" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_horiz_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/spacing_x48" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
