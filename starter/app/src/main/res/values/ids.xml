@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="nav_welcome" type="id" />
+    <item name="nav_auth" type="id" />
+    <item name="nav_home" type="id" />
+    <item name="nav_search" type="id" />
+    <item name="nav_cart" type="id" />
+    <item name="nav_product" type="id" />
+</resources>

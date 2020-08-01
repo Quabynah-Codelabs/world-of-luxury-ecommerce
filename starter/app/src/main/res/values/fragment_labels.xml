@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_welcome">Welcome</string>
+    <string name="label_home">Home</string>
+    <string name="label_auth">Auth</string>
+    <string name="label_cart">Cart</string>
+    <string name="label_search">Search</string>
+    <string name="label_product">Product</string>
+</resources>

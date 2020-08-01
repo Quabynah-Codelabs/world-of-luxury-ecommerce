@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_welcome">
+
+    <fragment
+        android:id="@id/nav_welcome"
+        android:name="io.worldofluxury.view.welcome.WelcomeFragment"
+        android:label="@string/label_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_nav_welcome_to_nav_auth"
+            app:destination="@id/nav_auth" />
+        <action
+            android:id="@+id/action_nav_welcome_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@id/nav_auth"
+        android:name="io.worldofluxury.view.auth.AuthFragment"
+        android:label="@string/label_auth"
+        tools:layout="@layout/auth_fragment" >
+        <action
+            android:id="@+id/action_nav_auth_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@id/nav_home"
+        android:name="io.worldofluxury.view.home.HomeFragment"
+        android:label="@string/label_home"
+        tools:layout="@layout/home_fragment" />
+</navigation>
