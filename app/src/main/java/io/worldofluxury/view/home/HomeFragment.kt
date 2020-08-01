@@ -24,17 +24,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.navGraphViewModels
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.databinding.HomeFragmentBinding
+import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.util.CATEGORIES
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.HomeViewModel
+import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val viewModel by viewModels<HomeViewModel>()
-    private val authVM by viewModels<AuthViewModel>()
+    private val viewModel by navGraphViewModels<HomeViewModel>(R.id.wol_nav_graph)
     private lateinit var binding: HomeFragmentBinding
+
+    @Inject
+    lateinit var authViewModelFactory: AuthViewModelFactory
+    private val authVM by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,14 +58,32 @@ class HomeFragment : Fragment() {
             lifecycleOwner = this@HomeFragment
             vm = viewModel
             authViewModel = authVM
-            executePendingBindings()
         }
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Timber.tag(APP_TAG)
 
+        binding.run {
+            homePager.adapter = CategoriesViewPagerAdapter(requireActivity())
+            TabLayoutMediator(
+                homeTabs,
+                homePager,
+                true,
+                true
+            ) { tab, position -> tab.text = CATEGORIES[position] }.attach()
+            executePendingBindings()
+        }
     }
 
+}
+
+class CategoriesViewPagerAdapter constructor(host: FragmentActivity) : FragmentStateAdapter(host) {
+    override fun getItemCount(): Int = CATEGORIES.size
+
+    override fun createFragment(position: Int): Fragment = ProductPagerFragment.newInstance(
+        CATEGORIES[position]
+    )
 }

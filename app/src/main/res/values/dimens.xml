@@ -37,4 +37,5 @@
 
     <!-- Z-Dimensions. -->
     <dimen name="z_card">1dp</dimen>
+    <dimen name="user_headshot_size">56dp</dimen>
 </resources>

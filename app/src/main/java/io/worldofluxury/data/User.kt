@@ -16,23 +16,16 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.initializer
+package io.worldofluxury.data
 
-import android.content.Context
-import androidx.startup.Initializer
-import io.worldofluxury.BuildConfig
-import io.worldofluxury.util.APP_TAG
-import timber.log.Timber
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
-class TimberInitializer : Initializer<Unit> {
-
-    override fun create(context: Context) {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-            Timber.tag(APP_TAG)
-        }
-        Timber.d("TimberInitializer is initialized.")
-    }
-
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
-}
+@Entity(tableName = "users")
+@Parcelize
+data class User(
+    @PrimaryKey val id: String,
+    var name: String
+) : Parcelable

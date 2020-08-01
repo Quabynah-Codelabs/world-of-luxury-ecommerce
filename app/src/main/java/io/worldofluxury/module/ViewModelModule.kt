@@ -16,23 +16,26 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.initializer
+package io.worldofluxury.module
 
-import android.content.Context
-import androidx.startup.Initializer
-import io.worldofluxury.BuildConfig
-import io.worldofluxury.util.APP_TAG
-import timber.log.Timber
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import io.worldofluxury.database.dao.UserDao
+import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import javax.inject.Singleton
 
-class TimberInitializer : Initializer<Unit> {
+@Module
+@InstallIn(ApplicationComponent::class)
+object ViewModelModule {
 
-    override fun create(context: Context) {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-            Timber.tag(APP_TAG)
-        }
-        Timber.d("TimberInitializer is initialized.")
-    }
+    @Singleton
+    @Provides
+    fun provideAuthViewModelProvider(
+        userDao: UserDao,
+        prefs: UserSharedPreferences
+    ): AuthViewModelFactory = AuthViewModelFactory(userDao, prefs)
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

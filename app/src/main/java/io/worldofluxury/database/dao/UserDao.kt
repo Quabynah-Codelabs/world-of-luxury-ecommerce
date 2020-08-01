@@ -16,23 +16,25 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.initializer
+package io.worldofluxury.database.dao
 
-import android.content.Context
-import androidx.startup.Initializer
-import io.worldofluxury.BuildConfig
-import io.worldofluxury.util.APP_TAG
-import timber.log.Timber
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import io.worldofluxury.data.User
 
-class TimberInitializer : Initializer<Unit> {
+@Dao
+interface UserDao {
 
-    override fun create(context: Context) {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-            Timber.tag(APP_TAG)
-        }
-        Timber.d("TimberInitializer is initialized.")
-    }
+    @Query("select * from users where id = :id")
+    fun getUserById(id: String): LiveData<User>
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(users: MutableList<User>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(user: User)
+
 }

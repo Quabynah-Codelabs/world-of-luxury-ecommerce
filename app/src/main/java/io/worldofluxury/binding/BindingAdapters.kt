@@ -18,9 +18,11 @@
 
 package io.worldofluxury.binding
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +40,15 @@ import com.skydoves.rainbow.Rainbow
 import com.skydoves.rainbow.RainbowOrientation
 import com.skydoves.rainbow.color
 import com.skydoves.whatif.whatIfNotNull
+import io.worldofluxury.data.User
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("user")
+fun bindUser(view: TextView, user: LiveData<User>) {
+    user.value.whatIfNotNull {
+        view.text = "Hey, ${it.name.trim()}"
+    }
+}
 
 @BindingAdapter("toast")
 fun bindToast(view: View, text: LiveData<String>) {

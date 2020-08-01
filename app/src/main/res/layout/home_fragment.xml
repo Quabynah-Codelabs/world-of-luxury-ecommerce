@@ -69,7 +69,7 @@
                 android:background="?android:colorBackground"
                 android:foreground="@null"
                 android:scaleType="centerInside"
-                android:src="@drawable/swan"
+                android:src="@drawable/avatar_two"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/home_cart_icon"
                 app:layout_constraintStart_toEndOf="@id/home_filter_icon"
@@ -101,9 +101,102 @@
             app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
             app:layout_constraintStart_toEndOf="@id/left_vert_guide"
             app:layout_constraintTop_toBottomOf="@id/top_horiz_guide"
+            app:user="@{authViewModel.currentUser}"
             tools:text="Hey, Quabynah" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/search_container"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:background="@drawable/outlined_border"
+            android:clickable="true"
+            android:clipToPadding="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+            app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+            app:layout_constraintTop_toBottomOf="@id/user_name">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha="?emphasisMedium"
+                android:gravity="start|center_vertical"
+                android:text="@string/search"
+                android:textAppearance="?textAppearanceHeadline6" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/search"
+                android:src="@drawable/ic_twotone_search" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/home_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:background="?android:colorBackground"
+            android:paddingHorizontal="@dimen/spacing_normal"
+            app:layout_constraintTop_toBottomOf="@id/search_container"
+            app:tabBackground="?android:colorBackground"
+            app:tabGravity="fill"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorGravity="center"
+            app:tabInlineLabel="true"
+            app:tabMode="scrollable">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Trousers"
+                tools:visibility="visible" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Sweatshirt"
+                tools:visibility="visible" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Coat"
+                tools:visibility="visible" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Blouse"
+                tools:visibility="visible" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Shirt"
+                tools:visibility="visible" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Dress"
+                tools:visibility="visible" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/home_pager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_tabs"
+            app:snackbar="@{vm.toastLiveData}" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_vert_guide"

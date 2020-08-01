@@ -22,3 +22,15 @@ const val PASSWORD_LENGTH = 4
 const val USER_ID_KEY = "user-id-key"
 const val PREFS_NAME = "swan-user-prefs"
 const val DATABASE_NAME = "swan-wol.db"
+const val PRODUCT_JSON_FILENAME = "products.json"
+const val ARG_CATEGORY = "product-category"
+const val APP_TAG = "Swan"
+
+val CATEGORIES = mutableListOf(
+    "Trousers",
+    "Sweatshirt",
+    "Coat",
+    "Blouse",
+    "Shirt",
+    "Dress",
+)

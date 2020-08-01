@@ -23,15 +23,39 @@ import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonReader
+import io.worldofluxury.data.Product
+import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.util.PRODUCT_JSON_FILENAME
+import kotlinx.coroutines.coroutineScope
+import timber.log.Timber
+import javax.inject.Inject
 
 class LoadProductsWorker @WorkerInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams) {
 
+    @Inject
+    lateinit var productDao: ProductDao
 
-    override suspend fun doWork(): Result {
-        // TODO: Load data from json into database
-        return Result.failure()
+    override suspend fun doWork(): Result = coroutineScope {
+        try {
+            applicationContext.assets.open(PRODUCT_JSON_FILENAME).use { inputStream ->
+                JsonReader(inputStream.reader()).use { jsonReader ->
+                    val plantType = object : TypeToken<List<Product>>() {}.type
+                    val plantList: List<Product> = Gson().fromJson(jsonReader, plantType)
+
+                    productDao.insertAll(plantList.toMutableList())
+                    Timber.d("Products added to database successfully")
+                    Result.success()
+                }
+            }
+        } catch (ex: Exception) {
+            Timber.e("Error adding products to database")
+            Result.failure()
+        }
     }
 }

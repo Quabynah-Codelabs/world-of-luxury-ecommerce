@@ -16,12 +16,20 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <item name="nav_welcome" type="id" />
-    <item name="nav_home" type="id" />
-    <item name="nav_auth" type="id" />
-    <item name="nav_product" type="id" />
-    <item name="nav_checkout" type="id" />
-    <item name="nav_search" type="id" />
-    <item name="nav_cart" type="id" />
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <padding
+        android:bottom="@dimen/spacing_normal"
+        android:left="@dimen/spacing_xlarge"
+        android:right="@dimen/spacing_xlarge"
+        android:top="@dimen/spacing_normal" />
+
+    <corners android:radius="@dimen/spacing_xlarge" />
+
+    <stroke
+        android:width="1dp"
+        android:color="@color/grey"
+        android:dashWidth="@dimen/spacing_small" />
+
+</shape>

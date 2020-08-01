@@ -20,9 +20,11 @@ package io.worldofluxury.viewmodel
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import io.worldofluxury.base.LiveCoroutinesViewModel
+import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.view.home.HomeFragment
 import timber.log.Timber
 
@@ -32,7 +34,10 @@ import timber.log.Timber
 class HomeViewModel @ViewModelInject constructor(@Assisted private val savedStateHandle: SavedStateHandle) :
     LiveCoroutinesViewModel() {
 
+    val toastLiveData: MutableLiveData<String> = MutableLiveData()
+
     init {
+        Timber.tag(APP_TAG)
         Timber.d("HomeViewModel initialized...")
     }
 

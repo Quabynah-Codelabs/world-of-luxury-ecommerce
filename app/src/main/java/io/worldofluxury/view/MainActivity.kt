@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-package io.worldofluxury
+package io.worldofluxury.view
 
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
+import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.databinding.ActivityMainBinding
 

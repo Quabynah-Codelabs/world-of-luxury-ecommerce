@@ -18,6 +18,11 @@
 
 <resources>
 
+    <style name="Widget.WorldOfLuxury.Tab" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">?textAppearanceBody1</item>
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+
     <style name="Widget.WorldOfLuxury.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textAppearance">?attr/textAppearanceButton</item>
         <item name="android:paddingStart">@dimen/spacing_xlarge</item>

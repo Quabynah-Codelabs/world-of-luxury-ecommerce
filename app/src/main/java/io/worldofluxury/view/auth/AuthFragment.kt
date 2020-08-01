@@ -24,21 +24,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.skydoves.whatif.whatIfNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.binding.showSnackBar
 import io.worldofluxury.databinding.AuthFragmentBinding
+import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.AuthViewModel
+import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
-    private val viewModel by viewModels<AuthViewModel>()
     private lateinit var binding: AuthFragmentBinding
     private val navController by lazy { findNavController() }
+
+    @Inject
+    lateinit var authViewModelFactory: AuthViewModelFactory
+    private val viewModel by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,18 +62,23 @@ class AuthFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Timber.tag(APP_TAG)
 
         // Observe login state
-        viewModel.authState.observe(viewLifecycleOwner, Observer { state ->
-            state.whatIfNotNull {
-                when (it) {
+        viewModel.authState.observe(viewLifecycleOwner, { state ->
+            with(state) {
+                when (this) {
                     AuthViewModel.AuthenticationState.ERROR -> {
                     }
                     AuthViewModel.AuthenticationState.AUTHENTICATED -> {
+                        navController.navigate(R.id.action_nav_auth_to_nav_home)
                     }
                     AuthViewModel.AuthenticationState.AUTHENTICATING -> {
                     }
                     AuthViewModel.AuthenticationState.NONE -> {
+                    }
+                    else -> {
+
                     }
                 }
             }

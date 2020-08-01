@@ -19,19 +19,19 @@
 package io.worldofluxury.viewmodel
 
 import android.util.Patterns
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.binding.isTooShort
+import io.worldofluxury.data.User
+import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.view.auth.AuthFragment
 import kotlinx.coroutines.delay
 import timber.log.Timber
 import java.util.*
-import javax.inject.Inject
 import kotlin.random.Random
 
 
@@ -39,26 +39,22 @@ import kotlin.random.Random
  * Main [ViewModel] for the [AuthFragment]
  */
 class AuthViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val userPrefs: UserSharedPreferences,
+    private val userDao: UserDao
 ) :
     LiveCoroutinesViewModel() {
-    @Inject
-    lateinit var userPrefs: UserSharedPreferences
-
-    companion object {
-        const val SAVED_AUTH_STATE = "saved-auth-state-key"
-    }
 
     enum class AuthenticationState {
         NONE, AUTHENTICATING, AUTHENTICATED, ERROR
     }
 
-    val authState: MutableLiveData<AuthenticationState> get() = MutableLiveData(AuthenticationState.NONE)
+    val authState: MutableLiveData<AuthenticationState> = MutableLiveData(AuthenticationState.NONE)
     val snackbarLiveData: MutableLiveData<String> = MutableLiveData()
+    val currentUser: MutableLiveData<User> = MutableLiveData()
 
     init {
-        Timber.d("HomeViewModel initialized...")
-        savedStateHandle.set(SAVED_AUTH_STATE, AuthenticationState.NONE)
+        Timber.tag(APP_TAG)
+        Timber.d("AuthViewModel initialized...")
     }
 
     fun login(email: String, password: String) = launchOnViewModelScope<String> {
@@ -84,6 +80,9 @@ class AuthViewModel @ViewModelInject constructor(
             val uid = UUID.randomUUID().toString()
             userPrefs.save(uid)
             userId.postValue(uid)
+            val user = User(uid, "Quabynah")
+            userDao.insert(user)
+            currentUser.postValue(user)
             snackbarLiveData.postValue("Login was successful")
             authState.postValue(AuthenticationState.AUTHENTICATED)
         } else {

@@ -176,6 +176,9 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$versions.moshiVersion"
     implementation "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshiVersion"
 
+    // gson
+    implementation "com.google.code.gson:gson:$versions.gsonVersion"
+
     // coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesVersion"

@@ -30,12 +30,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
-import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
 import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.AuthViewModel
 import kotlinx.coroutines.delay
-import java.util.*
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -79,16 +79,17 @@ class WelcomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Timber.tag(APP_TAG)
 
         userPrefs.liveUserId.observe(viewLifecycleOwner, Observer {
-            println("WorldOfLuxury: UserId -> $it")
+            Timber.d("UserId -> $it")
         })
 
-//        lifecycleScope.launchWhenCreated {
-//            delay(5500)
+        lifecycleScope.launchWhenCreated {
+            delay(5500)
 //             userPrefs.save(UUID.randomUUID().toString())
-//            userPrefs.save(null)
-//        }
+            userPrefs.save(null)
+        }
 
 
         binding.run {

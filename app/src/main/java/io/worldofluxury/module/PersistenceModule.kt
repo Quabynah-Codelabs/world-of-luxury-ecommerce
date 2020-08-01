@@ -29,9 +29,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.database.AppDatabase
 import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.DATABASE_NAME
 import io.worldofluxury.worker.LoadProductsWorker
 import timber.log.Timber
@@ -44,6 +47,7 @@ object PersistenceModule {
     private fun appDatabaseCallback(context: Context) = object : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
+            Timber.tag(APP_TAG)
             Timber.d("Created Swan Database successfully")
             with(WorkManager.getInstance(context)) {
                 val worker = OneTimeWorkRequestBuilder<LoadProductsWorker>().build()
@@ -55,19 +59,32 @@ object PersistenceModule {
     @Provides
     @Singleton
     fun provideAppDatabase(application: Application): AppDatabase {
-        return Room
-            .databaseBuilder(application, AppDatabase::class.java, DATABASE_NAME)
+        return if (DEBUG) Room
+            .inMemoryDatabaseBuilder(application, AppDatabase::class.java)
             .run {
                 fallbackToDestructiveMigration()
                 allowMainThreadQueries()
                 addCallback(appDatabaseCallback(application.baseContext))
             }
             .build()
+        else
+            Room
+                .databaseBuilder(application, AppDatabase::class.java, DATABASE_NAME)
+                .run {
+                    fallbackToDestructiveMigration()
+                    allowMainThreadQueries()
+                    addCallback(appDatabaseCallback(application.baseContext))
+                }
+                .build()
     }
 
     @Provides
     @Singleton
     fun provideProductDao(appDatabase: AppDatabase): ProductDao = appDatabase.productDao()
+
+    @Provides
+    @Singleton
+    fun provideUserDao(appDatabase: AppDatabase): UserDao = appDatabase.userDao()
 
     @Provides
     @Singleton

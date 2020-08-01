@@ -21,10 +21,14 @@ package io.worldofluxury.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import io.worldofluxury.data.Product
+import io.worldofluxury.data.User
 import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.database.dao.UserDao
 
-@Database(entities = [Product::class], version = 1, exportSchema = true)
+@Database(entities = [Product::class, User::class], version = 2, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun userDao(): UserDao
 
     abstract fun productDao(): ProductDao
 
