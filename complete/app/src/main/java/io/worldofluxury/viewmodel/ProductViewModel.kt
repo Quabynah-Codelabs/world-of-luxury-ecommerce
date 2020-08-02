@@ -18,12 +18,13 @@
 
 package io.worldofluxury.viewmodel
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import io.worldofluxury.base.LiveCoroutinesViewModel
+import io.worldofluxury.data.Product
+import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.view.home.HomeFragment
 import timber.log.Timber
@@ -31,14 +32,15 @@ import timber.log.Timber
 /**
  * Main [ViewModel] for the [HomeFragment]
  */
-class HomeViewModel @ViewModelInject constructor(@Assisted private val savedStateHandle: SavedStateHandle) :
+class ProductViewModel @ViewModelInject constructor(private val productDao: ProductDao) :
     LiveCoroutinesViewModel() {
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
+    val productsLiveData: LiveData<MutableList<Product>> get() = productDao.watchAllProducts()
 
     init {
         Timber.tag(APP_TAG)
-        Timber.d("HomeViewModel initialized...")
+        Timber.d("ProductViewModel initialized...")
     }
 
 }

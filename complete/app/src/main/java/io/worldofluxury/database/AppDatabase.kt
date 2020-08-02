@@ -18,18 +18,65 @@
 
 package io.worldofluxury.database
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import io.worldofluxury.BuildConfig
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.User
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
+import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.util.DATABASE_NAME
+import io.worldofluxury.worker.LoadProductsWorker
+import timber.log.Timber
 
-@Database(entities = [Product::class, User::class], version = 2, exportSchema = true)
+@Database(entities = [Product::class, User::class], version = 3, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
 
     abstract fun productDao(): ProductDao
 
+    companion object {
+
+        private fun appDatabaseCallback(context: Context) = object : RoomDatabase.Callback() {
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+                Timber.tag(APP_TAG)
+                Timber.d("Created Swan Database successfully")
+                with(WorkManager.getInstance(context)) {
+                    val worker = OneTimeWorkRequestBuilder<LoadProductsWorker>().build()
+                    enqueue(worker)
+                }
+            }
+        }
+
+        @Volatile
+        private var instance: AppDatabase? = null
+
+        fun get(context: Context): AppDatabase = instance ?: synchronized(this) {
+            instance ?: /*if (BuildConfig.DEBUG) Room
+                .inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+                .run {
+                    fallbackToDestructiveMigration()
+                    allowMainThreadQueries()
+                    addCallback(appDatabaseCallback(context))
+                }
+                .build()
+            else
+                */Room
+                    .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+                    .run {
+                        fallbackToDestructiveMigration()
+                        allowMainThreadQueries()
+                        addCallback(appDatabaseCallback(context))
+                    }
+                    .build()
+        }
+    }
 }

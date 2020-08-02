@@ -20,9 +20,11 @@ package io.worldofluxury.viewmodel.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.viewmodel.AuthViewModel
+import io.worldofluxury.viewmodel.ProductViewModel
 
 class AuthViewModelFactory(
     private val userDao: UserDao,
@@ -30,4 +32,10 @@ class AuthViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         AuthViewModel(userPrefs, userDao) as T
+}
+class ProductViewModelFactory(
+    private val productDao: ProductDao,
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+        ProductViewModel(productDao) as T
 }

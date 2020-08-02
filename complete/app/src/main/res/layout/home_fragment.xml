@@ -22,7 +22,7 @@
 
     <data>
 
-        <import type="io.worldofluxury.viewmodel.HomeViewModel" />
+        <import type="io.worldofluxury.viewmodel.ProductViewModel" />
 
         <import type="io.worldofluxury.viewmodel.AuthViewModel.AuthenticationState" />
 
@@ -34,7 +34,7 @@
 
         <variable
             name="vm"
-            type="HomeViewModel" />
+            type="ProductViewModel" />
 
     </data>
 
@@ -42,6 +42,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.home.HomeFragment">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_scan_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xlarge"
+            android:contentDescription="@string/cd_scan_image"
+            android:enabled="@{false}"
+            android:src="@drawable/ic_twotone_image_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:enabled="true" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_action_bar"

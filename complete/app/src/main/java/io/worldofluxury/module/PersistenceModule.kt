@@ -19,64 +19,24 @@
 package io.worldofluxury.module
 
 import android.app.Application
-import android.content.Context
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.database.AppDatabase
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.UserSharedPreferences
-import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.util.DATABASE_NAME
-import io.worldofluxury.worker.LoadProductsWorker
-import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
 object PersistenceModule {
 
-    private fun appDatabaseCallback(context: Context) = object : RoomDatabase.Callback() {
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            Timber.tag(APP_TAG)
-            Timber.d("Created Swan Database successfully")
-            with(WorkManager.getInstance(context)) {
-                val worker = OneTimeWorkRequestBuilder<LoadProductsWorker>().build()
-                enqueue(worker)
-            }
-        }
-    }
-
     @Provides
     @Singleton
-    fun provideAppDatabase(application: Application): AppDatabase {
-        return if (DEBUG) Room
-            .inMemoryDatabaseBuilder(application, AppDatabase::class.java)
-            .run {
-                fallbackToDestructiveMigration()
-                allowMainThreadQueries()
-                addCallback(appDatabaseCallback(application.baseContext))
-            }
-            .build()
-        else
-            Room
-                .databaseBuilder(application, AppDatabase::class.java, DATABASE_NAME)
-                .run {
-                    fallbackToDestructiveMigration()
-                    allowMainThreadQueries()
-                    addCallback(appDatabaseCallback(application.baseContext))
-                }
-                .build()
-    }
+    fun provideAppDatabase(application: Application): AppDatabase =
+        AppDatabase.get(application.baseContext)
 
     @Provides
     @Singleton

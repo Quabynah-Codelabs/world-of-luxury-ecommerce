@@ -27,33 +27,38 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import io.worldofluxury.data.Product
-import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.database.AppDatabase
+import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.PRODUCT_JSON_FILENAME
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
-import javax.inject.Inject
+import java.io.IOException
 
 class LoadProductsWorker @WorkerInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams) {
 
-    @Inject
-    lateinit var productDao: ProductDao
+    private val productDao by lazy { AppDatabase.get(applicationContext).productDao() }
+
+    init {
+        Timber.tag(APP_TAG)
+    }
 
     override suspend fun doWork(): Result = coroutineScope {
+
         try {
             applicationContext.assets.open(PRODUCT_JSON_FILENAME).use { inputStream ->
                 JsonReader(inputStream.reader()).use { jsonReader ->
-                    val plantType = object : TypeToken<List<Product>>() {}.type
-                    val plantList: List<Product> = Gson().fromJson(jsonReader, plantType)
+                    val type = object : TypeToken<List<Product>>() {}.type
+                    val list: List<Product> = Gson().fromJson(jsonReader, type)
 
-                    productDao.insertAll(plantList.toMutableList())
+                    productDao.insertAll(list.toMutableList())
                     Timber.d("Products added to database successfully")
                     Result.success()
                 }
             }
-        } catch (ex: Exception) {
+        } catch (ex: IOException) {
             Timber.e("Error adding products to database")
             Result.failure()
         }

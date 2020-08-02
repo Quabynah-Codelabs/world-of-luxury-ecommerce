@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.skydoves:rainbow:1.0.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eaa11145db8e727b7453ac8f461b94d7/jetified-rainbow-1.0.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eaa11145db8e727b7453ac8f461b94d7/jetified-rainbow-1.0.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eaa11145db8e727b7453ac8f461b94d7/jetified-rainbow-1.0.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fb0f37d3ac524c269d8f113319b843d0/jetified-rainbow-1.0.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fb0f37d3ac524c269d8f113319b843d0/jetified-rainbow-1.0.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fb0f37d3ac524c269d8f113319b843d0/jetified-rainbow-1.0.1/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.skydoves/rainbow/1.0.1/fce3aa50ed35d8ad3e4ea854443e648625d46570/rainbow-1.0.1-javadoc.jar!/" />

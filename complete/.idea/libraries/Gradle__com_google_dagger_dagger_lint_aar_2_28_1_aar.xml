@@ -3,8 +3,9 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/91a997c611a22b4d6790e7f44797591d/jetified-dagger-lint-aar-2.28.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6ddd7f01f93f10aba05592258dafa48b/jetified-dagger-lint-aar-2.28.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6ddd7f01f93f10aba05592258dafa48b/jetified-dagger-lint-aar-2.28.1/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6ddd7f01f93f10aba05592258dafa48b/jetified-dagger-lint-aar-2.28.1/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fdf19121350b2b3d2ba8a137ecaa1ac0/jetified-dagger-lint-aar-2.28.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fdf19121350b2b3d2ba8a137ecaa1ac0/jetified-dagger-lint-aar-2.28.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fdf19121350b2b3d2ba8a137ecaa1ac0/jetified-dagger-lint-aar-2.28.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

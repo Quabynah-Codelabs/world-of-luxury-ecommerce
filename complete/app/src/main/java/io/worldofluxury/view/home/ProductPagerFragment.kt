@@ -25,13 +25,17 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.skydoves.whatif.whatIfNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.databinding.FragmentProductPagerBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.ARG_CATEGORY
+import io.worldofluxury.viewmodel.ProductViewModel
+import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import timber.log.Timber
+import javax.inject.Inject
 
 
 /**
@@ -43,6 +47,11 @@ import timber.log.Timber
 class ProductPagerFragment : Fragment() {
     private var category: String? = null
     private lateinit var binding: FragmentProductPagerBinding
+
+    @Inject
+    lateinit var productViewModelFactory: ProductViewModelFactory
+
+    private val viewModel by viewModels<ProductViewModel> { productViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +75,10 @@ class ProductPagerFragment : Fragment() {
             category = it.getString(ARG_CATEGORY)
             Timber.d("Category -> $category")
         }
+
+        viewModel.productsLiveData.observe(viewLifecycleOwner, { products ->
+            Timber.d("Products -> ${products.map { it.name }}")
+        })
     }
 
     companion object {

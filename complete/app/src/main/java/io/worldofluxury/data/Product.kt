@@ -21,8 +21,19 @@ package io.worldofluxury.data
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import io.worldofluxury.util.CATEGORIES
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "products")
 @Parcelize
-data class Product(@PrimaryKey val id: String, val name: String, val photoUrl: String) : Parcelable
+data class Product(
+    @PrimaryKey val id: String,
+    val name: String,
+    val description: String,
+    val price: Double,
+    val currencyId: String = "USD",
+    val currencyFormat: String = "$",
+    val isFreeShipping: Boolean = false,
+    val category: String = CATEGORIES[5],
+    val photoUrl: String? = null
+) : Parcelable

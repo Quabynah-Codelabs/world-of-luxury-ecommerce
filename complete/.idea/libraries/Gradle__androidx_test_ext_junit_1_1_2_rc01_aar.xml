@@ -1,9 +1,10 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.test.ext:junit:1.1.2-rc01@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5f334c2128946fb46b08062387876114/jetified-junit-1.1.2-rc01/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5f334c2128946fb46b08062387876114/jetified-junit-1.1.2-rc01/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5f334c2128946fb46b08062387876114/jetified-junit-1.1.2-rc01/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e5f282ef3c5ec4d1b2e0f13b8c42f870/jetified-junit-1.1.2-rc01/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e5f282ef3c5ec4d1b2e0f13b8c42f870/jetified-junit-1.1.2-rc01/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e5f282ef3c5ec4d1b2e0f13b8c42f870/jetified-junit-1.1.2-rc01/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.test.ext/junit/1.1.2-rc01/d6ddfadf8928e5ac79faf24d7a76710d3c556d1a/junit-1.1.2-rc01-javadoc.jar!/" />

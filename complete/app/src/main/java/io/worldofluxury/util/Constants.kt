@@ -32,5 +32,5 @@ val CATEGORIES = mutableListOf(
     "Coat",
     "Blouse",
     "Shirt",
-    "Dress",
+    "Others",
 )

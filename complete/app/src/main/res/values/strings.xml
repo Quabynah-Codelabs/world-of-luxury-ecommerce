@@ -30,7 +30,7 @@
     <string name="title_auth">Authentication</string>
     <string name="header_image">header_image</string>
     <string name="app_desc__other">Discover the world\'s top products right at the comfort of your home</string>
-    <string name="app_creator">Created with 🔥 by <b>Quabynah Codelabs</b>©</string>
+    <string name="app_creator">Created with ❤️ by <b>Quabynah Codelabs</b>©</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_in_with_twitter">Sign in with Twitter</string>
     <string name="sign_in">Sign in</string>
@@ -38,4 +38,5 @@
     <string name="or_with_email">Or with email</string>
     <string name="filter">Filter</string>
     <string name="search">Search here</string>
+    <string name="cd_scan_image">Scan image</string>
 </resources>

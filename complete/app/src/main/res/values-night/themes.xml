@@ -54,13 +54,12 @@
     <!-- Welcome Theme. -->
     <style name="Theme.WorldOfLuxury.Welcome">
         <item name="android:colorBackground">@color/placeholder</item>
-        <item name="android:textColor">@color/black</item>
         <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorPrimaryVariant">@color/blacker</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/black</item>
-        <item name="colorSecondaryVariant">@color/black</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/blacker</item>
+        <item name="colorSecondaryVariant">@color/blacker</item>
+        <item name="colorOnSecondary">@color/white</item>
     </style>
 
 </resources>

@@ -34,19 +34,24 @@ import io.worldofluxury.databinding.HomeFragmentBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.CATEGORIES
 import io.worldofluxury.viewmodel.AuthViewModel
-import io.worldofluxury.viewmodel.HomeViewModel
+import io.worldofluxury.viewmodel.ProductViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val viewModel by navGraphViewModels<HomeViewModel>(R.id.wol_nav_graph)
     private lateinit var binding: HomeFragmentBinding
 
     @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory
+
+    @Inject
+    lateinit var productViewModelFactory: ProductViewModelFactory
+
+    private val viewModel by navGraphViewModels<ProductViewModel>(R.id.wol_nav_graph) { productViewModelFactory }
     private val authVM by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
     override fun onCreateView(
@@ -67,6 +72,8 @@ class HomeFragment : Fragment() {
         Timber.tag(APP_TAG)
 
         binding.run {
+            fabScanImage.setOnClickListener { /*TODO: Allow user to scan for images*/ }
+
             homePager.adapter = CategoriesViewPagerAdapter(requireActivity())
             TabLayoutMediator(
                 homeTabs,

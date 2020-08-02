@@ -29,7 +29,10 @@ import io.worldofluxury.data.Product
 interface ProductDao {
 
     @Query("select * from products order by id desc")
-    fun getAllProducts(): LiveData<MutableList<Product>>
+    fun getAllProducts(): MutableList<Product>
+
+    @Query("select * from products order by id desc")
+    fun watchAllProducts(): LiveData<MutableList<Product>>
 
     @Query("select * from products where id = :id")
     fun getProductById(id: String): LiveData<Product?>

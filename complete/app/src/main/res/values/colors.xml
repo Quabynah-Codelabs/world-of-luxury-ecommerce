@@ -34,5 +34,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="grey">#FFcccccc</color>
     <color name="black">#FF14171A</color>
+    <color name="blacker">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

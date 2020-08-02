@@ -45,13 +45,25 @@
         android:theme="@style/Theme.WorldOfLuxury.Welcome"
         tools:context=".view.welcome.WelcomeFragment">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/header_text__three"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/spacing_large"
+            android:text="@string/app_creator"
+            android:textAlignment="center"
+            android:textAppearance="?textAppearanceOverline"
+            app:layout_constraintBottom_toTopOf="@id/bottom_horiz_guide"
+            app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+            app:layout_constraintStart_toEndOf="@id/left_vert_guide" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
             android:layout_width="@dimen/spacing_none"
             android:layout_height="@dimen/spacing_none"
-            android:layout_marginTop="@dimen/spacing_x64"
+            android:layout_marginVertical="@dimen/spacing_x36"
             android:contentDescription="@string/app_name"
-            app:layout_constraintBottom_toTopOf="@id/bottom_horiz_guide"
+            app:layout_constraintBottom_toTopOf="@id/header_text__three"
             app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
             app:layout_constraintStart_toEndOf="@id/left_vert_guide"
             app:layout_constraintTop_toBottomOf="@id/get_started"
@@ -119,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="@dimen/spacing_x48" />
+            app:layout_constraintGuide_end="@dimen/spacing_xlarge" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

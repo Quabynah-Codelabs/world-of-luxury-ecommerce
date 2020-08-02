@@ -22,9 +22,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import javax.inject.Singleton
 
 @Module
@@ -37,5 +39,11 @@ object ViewModelModule {
         userDao: UserDao,
         prefs: UserSharedPreferences
     ): AuthViewModelFactory = AuthViewModelFactory(userDao, prefs)
+
+    @Singleton
+    @Provides
+    fun provideProductViewModelProvider(
+        productDao: ProductDao
+    ): ProductViewModelFactory = ProductViewModelFactory(productDao)
 
 }
