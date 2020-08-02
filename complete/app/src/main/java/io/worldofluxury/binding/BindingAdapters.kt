@@ -42,6 +42,8 @@ import com.skydoves.rainbow.RainbowOrientation
 import com.skydoves.rainbow.color
 import com.skydoves.whatif.whatIfNotNull
 import io.worldofluxury.data.User
+import io.worldofluxury.util.APP_TAG
+import timber.log.Timber
 
 @SuppressLint("SetTextI18n")
 @BindingAdapter("user")
@@ -147,6 +149,8 @@ fun bindGone(view: View, shouldBeGone: Boolean) {
 
 @BindingAdapter("onBackPressed")
 fun bindOnBackPressed(view: View, finish: Boolean) {
+    Timber.tag(APP_TAG)
+    Timber.d("Tapped back button")
     val context = view.context
     if (finish && context is Fragment) {
         view.setOnClickListener {

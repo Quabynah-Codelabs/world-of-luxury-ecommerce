@@ -52,7 +52,8 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintTop_toTopOf="parent"
                     app:url="@{product.photoUrl}"
-                    tools:src="@tools:sample/backgrounds/scenic" />
+                    tools:scaleType="centerInside"
+                    tools:src="@drawable/swan" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/product_name"
@@ -80,16 +81,16 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/product_name"
-                    tools:text="@sample/products.json/data/name" />
+                    tools:text="@sample/products.json/data/description" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/spacing_large"
-                    android:paddingTop="@dimen/spacing_large"
-                    android:paddingEnd="@dimen/spacing_normal"
-                    android:translationZ="@dimen/z_card"
+                    android:layout_width="?actionBarSize"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:scaleType="centerInside"
+                    android:translationZ="100dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/product_image"
                     app:onBackPressed="@{true}"

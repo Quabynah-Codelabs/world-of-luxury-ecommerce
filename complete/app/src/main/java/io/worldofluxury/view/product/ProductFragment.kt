@@ -35,7 +35,7 @@ import timber.log.Timber
 class ProductFragment : Fragment() {
     private lateinit var binding: FragmentProductBinding
 
-    // private val args by navArgs<ProductNavArgs>()
+//     private val args by navArgs<NavArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
