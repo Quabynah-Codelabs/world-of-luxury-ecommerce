@@ -319,7 +319,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Android/studio/canary/plugins/android/lib/android.jar!/images/material/icons/materialiconstwotone/keyboard_backspace/twotone_keyboard_backspace_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Android/studio/canary/plugins/android/lib/android.jar!/images/material/icons/materialiconstwotone/sentiment_very_dissatisfied/twotone_sentiment_very_dissatisfied_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -329,7 +329,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_twotone_back" />
+                            <entry key="outputName" value="ic_twotone_sad" />
                             <entry key="sourceFile" value="F:\GitHub\personal-projects\android\world-of-luxury-ecommerce" />
                           </map>
                         </option>

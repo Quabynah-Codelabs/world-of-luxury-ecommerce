@@ -41,5 +41,11 @@
     <string name="search">Search here</string>
     <string name="cd_scan_image">Scan image</string>
     <string name="bag_now">Bag Now</string>
-    <string name="shipping_not_available">Shipping unavailable</string>
+    <string name="out_of_stock">Out of stock</string>
+    <string name="select_size">Select size</string>
+    <string name="select_color">Select Color</string>
+    <string name="x">x</string>
+    <string name="m">m</string>
+    <string name="l">l</string>
+    <string name="xl">xl</string>
 </resources>

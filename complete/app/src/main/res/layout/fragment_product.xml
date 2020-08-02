@@ -42,7 +42,29 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:descendantFocusability="blocksDescendants">
+                android:descendantFocusability="blocksDescendants"
+                android:paddingBottom="@dimen/spacing_x128">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/right_vert_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/spacing_x36" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/left_vert_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/spacing_x36" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/bottom_horiz_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="@dimen/spacing_xlarge" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/product_image"
@@ -59,73 +81,206 @@
                     android:id="@+id/product_name"
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
                     android:paddingHorizontal="@dimen/spacing_large"
                     android:paddingVertical="@dimen/spacing_normal"
                     android:text="@{product.name}"
-                    android:textAppearance="?textAppearanceHeadline4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:textAlignment="center"
+                    android:textAppearance="?textAppearanceHeadline5"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/product_image"
                     tools:text="@sample/products.json/data/name" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/product_price"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/spacing_large"
+                    android:paddingVertical="@dimen/spacing_small"
+                    android:text="@{product.formattedPrice}"
+                    android:textAlignment="center"
+                    android:textAppearance="?textAppearanceHeadline4"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/product_name"
+                    tools:text="@sample/products.json/data/price" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/product_desc"
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingHorizontal="@dimen/spacing_large"
+                    android:paddingTop="@dimen/spacing_large"
                     android:paddingBottom="@dimen/spacing_xlarge"
                     android:text="@{product.description}"
+                    android:textAlignment="viewStart"
                     android:textAppearance="?textAppearanceBody1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/product_name"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/product_price"
                     tools:text="@sample/products.json/data/description" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/arrow"
-                    android:layout_width="?actionBarSize"
-                    android:layout_height="?actionBarSize"
-                    android:layout_marginStart="@dimen/spacing_normal"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/color_header"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_large"
-                    android:scaleType="centerInside"
-                    android:translationZ="100dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/product_image"
-                    app:onBackPressed="@{true}"
-                    app:srcCompat="@drawable/ic_twotone_back" />
+                    android:paddingVertical="@dimen/spacing_large"
+                    android:text="@string/select_color"
+                    android:textAppearance="?textAppearanceCaption"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/product_desc"
+                    app:textAllCaps="true" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/colors_list"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:checkedButton="@id/color_blue"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/color_header"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/color_blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_large"
+                        android:text=""
+                        app:backgroundTint="@color/light_blue" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/color_amber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_large"
+                        android:text=""
+                        app:backgroundTint="@color/amber" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/color_green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_large"
+                        android:text=""
+                        app:backgroundTint="@color/green" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/color_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        app:backgroundTint="@color/black" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/size_header"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:paddingVertical="@dimen/spacing_large"
+                    android:text="@string/select_size"
+                    android:textAppearance="?textAppearanceCaption"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/colors_list"
+                    app:textAllCaps="true" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/size_list"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:checkedButton="@id/size_l"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/size_header"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/size_x"
+                        style="?materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_large"
+                        android:text="@string/x" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/size_m"
+                        style="?materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_large"
+                        android:text="@string/m" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/size_l"
+                        style="?materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_large"
+                        android:text="@string/l" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/size_xl"
+                        style="?materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/xl" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/arrow"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:scaleType="centerInside"
+            android:translationZ="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onBackPressed="@{true}"
+            app:srcCompat="@drawable/ic_twotone_back" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/favorite"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:scaleType="centerInside"
+            android:translationZ="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_twotone_favorite_border" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_to_bag"
+            style="?floatingActionButtonStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/spacing_large"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/spacing_large"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <!-- <com.google.android.material.button.MaterialButton
-                 style="?materialButtonOutlinedStyle"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="23"
-                 app:icon="@drawable/ic_twotone_favorite_border" />-->
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/add_to_bag"
-                android:layout_width="@dimen/spacing_none"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:enabled="@{product.freeShipping}"
-                android:text="@{product.freeShipping ? @string/bag_now : @string/shipping_not_available}"
-                app:icon="@drawable/ic_twotone_shopping_basket"
-                tools:text="@string/bag_now" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_marginBottom="@dimen/spacing_xlarge"
+            android:enabled="@{product.freeShipping}"
+            android:gravity="center"
+            android:text="@{product.freeShipping ? @string/bag_now : @string/out_of_stock}"
+            android:textAllCaps="true"
+            app:icon="@{product.freeShipping ? @drawable/ic_twotone_shopping_basket : @drawable/ic_twotone_sad }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:enabled="false"
+            tools:icon="@drawable/ic_twotone_sad"
+            tools:text="@string/out_of_stock" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -53,5 +53,16 @@ class ProductFragment : Fragment() {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        binding.run {
+            container.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                if (scrollY != 0) addToBag.shrink()
+                else addToBag.extend()
+            }
+        }
+    }
+
 
 }

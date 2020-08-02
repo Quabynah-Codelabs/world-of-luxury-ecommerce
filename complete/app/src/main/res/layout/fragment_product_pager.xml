@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="none"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:spanCount="2"
             tools:itemCount="5"
             tools:listitem="@layout/item_product" />
