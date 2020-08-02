@@ -33,9 +33,11 @@
     <!-- Avatar & Logo. -->
     <dimen name="large_avatar_size">128dp</dimen>
     <dimen name="logo_size">256dp</dimen>
+    <dimen name="product_size">350dp</dimen>
     <dimen name="small_logo_size">200dp</dimen>
 
     <!-- Z-Dimensions. -->
     <dimen name="z_card">1dp</dimen>
+    <dimen name="z_product_card">9dp</dimen>
     <dimen name="user_headshot_size">56dp</dimen>
 </resources>

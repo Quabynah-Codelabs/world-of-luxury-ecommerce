@@ -16,20 +16,95 @@
   ~ limitations under the License.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="io.worldofluxury.data.Product" />
+
+        <variable
+            name="product"
+            type="Product" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_normal">
+        android:layout_margin="@dimen/spacing_normal"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <!--<com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/productCover"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/logo_size"
+                android:background="?attr/colorPrimary"
+                android:elevation="@dimen/z_product_card"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CardView" />-->
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/product_size"
+                android:contentDescription="@{product.name}"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:url="@{product.photoUrl}" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/z_product_card"
+                android:paddingHorizontal="@dimen/spacing_xlarge"
+                android:paddingVertical="@dimen/spacing_x36"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/product_name"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:text="@{product.name}"
+                    android:textAppearance="?textAppearanceHeadline6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@sample/products.json/data/name" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/product_desc"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{product.description}"
+                    android:textAppearance="?textAppearanceCaption"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/product_name"
+                    tools:text="@sample/products.json/data/description" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/product_price"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xlarge"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{product.getFormattedPrice}"
+                    android:textAppearance="?textAppearanceHeadline5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/product_desc"
+                    tools:text="@sample/products.json/data/price" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

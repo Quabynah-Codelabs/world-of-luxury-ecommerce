@@ -19,6 +19,7 @@
 package io.worldofluxury.data
 
 import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import io.worldofluxury.util.CATEGORIES
@@ -36,4 +37,18 @@ data class Product(
     val isFreeShipping: Boolean = false,
     val category: String = CATEGORIES[5],
     val photoUrl: String? = null
-) : Parcelable
+) : Parcelable {
+
+    fun getFormattedPrice(): String = "$currencyFormat $price"
+
+    companion object {
+        val PRODUCT_DIFF: DiffUtil.ItemCallback<Product> =
+            object : DiffUtil.ItemCallback<Product>() {
+                override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean =
+                    oldItem.id == newItem.id
+
+                override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean =
+                    oldItem == newItem
+            }
+    }
+}

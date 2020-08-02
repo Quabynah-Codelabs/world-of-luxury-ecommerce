@@ -22,14 +22,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.skydoves.whatif.whatIfNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
+import io.worldofluxury.data.Product
 import io.worldofluxury.databinding.FragmentProductPagerBinding
+import io.worldofluxury.databinding.ItemProductBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.ARG_CATEGORY
 import io.worldofluxury.viewmodel.ProductViewModel
@@ -71,14 +77,35 @@ class ProductPagerFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         Timber.tag(APP_TAG)
 
-        arguments.whatIfNotNull {
-            category = it.getString(ARG_CATEGORY)
+        // Setup adapter
+        val productsAdapter = ProductsGridAdapter()
+
+        // Observe live data
+        arguments.whatIfNotNull { bundle ->
+            category = bundle.getString(ARG_CATEGORY)
             Timber.d("Category -> $category")
+            category.whatIfNotNull {
+                viewModel.watchProductsLiveData(it).observe(viewLifecycleOwner, { products ->
+                    Timber.d("Products -> ${products.map { it.name }}")
+                    productsAdapter.submitList(products)
+                })
+            }
         }
 
-        viewModel.productsLiveData.observe(viewLifecycleOwner, { products ->
-            Timber.d("Products -> ${products.map { it.name }}")
-        })
+        // Setup recyclerview
+        binding.run {
+            with(productsGrid) {
+                adapter = productsAdapter
+                setHasFixedSize(true)
+                layoutManager = GridLayoutManager(requireContext(), 2).apply {
+//                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//                        override fun getSpanSize(position: Int): Int {
+//                            return 2
+//                        }
+//                    }
+                }
+            }
+        }
     }
 
     companion object {
@@ -92,4 +119,38 @@ class ProductPagerFragment : Fragment() {
                 arguments = bundleOf(ARG_CATEGORY to category)
             }
     }
+}
+
+
+class ProductsGridAdapter : ListAdapter<Product, ProductViewHolder>(Product.PRODUCT_DIFF) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        val binding = DataBindingUtil.inflate<ItemProductBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.item_product,
+            parent,
+            false
+        )
+        return ProductViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+        val product = getItem(position)
+        holder.bind(product)
+    }
+
+}
+
+class ProductViewHolder(private val binding: ItemProductBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(item: Product) {
+        binding.run {
+            product = item
+            root.setOnClickListener {
+                Toast.makeText(it.context, item.name, Toast.LENGTH_SHORT).show()
+            }
+            executePendingBindings()
+        }
+    }
+
 }

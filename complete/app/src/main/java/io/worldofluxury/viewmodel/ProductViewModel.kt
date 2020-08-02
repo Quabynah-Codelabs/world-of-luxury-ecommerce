@@ -26,6 +26,7 @@ import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.data.Product
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.util.CATEGORIES
 import io.worldofluxury.view.home.HomeFragment
 import timber.log.Timber
 
@@ -36,11 +37,18 @@ class ProductViewModel @ViewModelInject constructor(private val productDao: Prod
     LiveCoroutinesViewModel() {
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
-    val productsLiveData: LiveData<MutableList<Product>> get() = productDao.watchAllProducts()
+    val productsLiveData: LiveData<MutableList<Product>>
+        get() = productDao.watchAllProducts(
+            CATEGORIES[5]
+        )
 
     init {
         Timber.tag(APP_TAG)
         Timber.d("ProductViewModel initialized...")
     }
 
+    fun watchProductsLiveData(category: String): LiveData<MutableList<Product>> =
+        launchOnViewModelScope {
+            productDao.watchAllProducts(category)
+        }
 }

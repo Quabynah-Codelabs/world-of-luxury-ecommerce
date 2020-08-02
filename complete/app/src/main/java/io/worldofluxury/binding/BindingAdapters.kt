@@ -69,6 +69,24 @@ fun bindRandomImage(imageView: ImageView, @DrawableRes src: Int) {
     imageView.setImageDrawable(imageView.resources.getDrawable(src, null))
 }
 
+@BindingAdapter("url")
+fun bindLoadImageUrl(view: AppCompatImageView, url: String) {
+    Glide.with(view.context)
+        .load(url)
+        .listener(
+            GlidePalette.with(url)
+                .use(BitmapPalette.Profile.MUTED_LIGHT)
+//                .intoCallBack { palette ->
+//                    val rgb = palette?.dominantSwatch?.rgb
+//                    if (rgb != null) {
+//                        paletteCard.setCardBackgroundColor(rgb)
+//                    }
+//                }
+                .crossfade(true)
+        )
+        .into(view)
+}
+
 @BindingAdapter("paletteImage", "paletteCard")
 fun bindLoadImagePalette(view: AppCompatImageView, url: String, paletteCard: MaterialCardView) {
     Glide.with(view.context)

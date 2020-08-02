@@ -18,6 +18,11 @@
 
 <resources>
 
+    <style name="ShapeAppearanceOverlay.CardView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20%</item>
+    </style>
+
     <style name="Widget.WorldOfLuxury.Tab" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabTextAppearance">?textAppearanceBody1</item>
         <item name="fontFamily">@font/rubik_medium</item>

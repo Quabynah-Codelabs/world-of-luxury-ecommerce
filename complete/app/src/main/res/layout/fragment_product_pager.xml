@@ -36,6 +36,7 @@
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             tools:itemCount="5"
             tools:listitem="@layout/item_product" />
 
