@@ -21,6 +21,7 @@ package io.worldofluxury.binding
 import android.annotation.SuppressLint
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -31,7 +32,6 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
@@ -41,6 +41,8 @@ import com.skydoves.rainbow.Rainbow
 import com.skydoves.rainbow.RainbowOrientation
 import com.skydoves.rainbow.color
 import com.skydoves.whatif.whatIfNotNull
+import io.worldofluxury.R
+import io.worldofluxury.core.glide.GlideApp
 import io.worldofluxury.data.User
 import io.worldofluxury.util.APP_TAG
 import timber.log.Timber
@@ -74,7 +76,7 @@ fun bindRandomImage(imageView: ImageView, @DrawableRes src: Int) {
 
 @BindingAdapter("url")
 fun bindLoadImageUrl(view: AppCompatImageView, url: String) {
-    Glide.with(view.context)
+    GlideApp.with(view.context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .listener(
@@ -91,9 +93,26 @@ fun bindLoadImageUrl(view: AppCompatImageView, url: String) {
         .into(view)
 }
 
+@BindingAdapter("avatar")
+fun bindLoadAvatar(view: ImageButton, url: String?) {
+    GlideApp.with(view.context)
+        .load(url)
+        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+        .circleCrop()
+        .placeholder(R.drawable.avatar_one)
+        .error(R.drawable.avatar_two)
+        .fallback(R.drawable.avatar_three)
+        .listener(
+            GlidePalette.with(url)
+                .use(BitmapPalette.Profile.MUTED_LIGHT)
+                .crossfade(true)
+        )
+        .into(view)
+}
+
 @BindingAdapter("paletteImage", "paletteCard")
 fun bindLoadImagePalette(view: AppCompatImageView, url: String, paletteCard: MaterialCardView) {
-    Glide.with(view.context)
+    GlideApp.with(view.context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .listener(
@@ -112,7 +131,7 @@ fun bindLoadImagePalette(view: AppCompatImageView, url: String, paletteCard: Mat
 @BindingAdapter("paletteImage", "paletteView")
 fun bindLoadImagePaletteView(view: AppCompatImageView, url: String, paletteView: View) {
     val context = view.context
-    Glide.with(context)
+    GlideApp.with(context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .listener(

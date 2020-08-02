@@ -96,7 +96,6 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/get_started"
-            style="?materialButtonStyle"
             android:layout_width="@dimen/spacing_none"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_x36"

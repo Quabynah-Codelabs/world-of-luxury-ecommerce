@@ -35,7 +35,7 @@ import io.worldofluxury.util.DATABASE_NAME
 import io.worldofluxury.worker.LoadProductsWorker
 import timber.log.Timber
 
-@Database(entities = [Product::class, User::class], version = 3, exportSchema = true)
+@Database(entities = [Product::class, User::class], version = 4, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
