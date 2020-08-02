@@ -28,6 +28,7 @@
     <string name="title_welcome">Welcome</string>
     <string name="title_home">Home</string>
     <string name="title_auth">Authentication</string>
+    <string name="title_product">Product Details</string>
     <string name="header_image">header_image</string>
     <string name="app_desc__other">Discover the world\'s top products right at the comfort of your home</string>
     <string name="app_creator">Created with ❤️ by <b>Quabynah Codelabs</b>©</string>
@@ -39,4 +40,6 @@
     <string name="filter">Filter</string>
     <string name="search">Search here</string>
     <string name="cd_scan_image">Scan image</string>
+    <string name="bag_now">Bag Now</string>
+    <string name="shipping_not_available">Shipping unavailable</string>
 </resources>

@@ -16,18 +16,17 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.view.home
+package io.worldofluxury.view.product
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.skydoves.whatif.whatIfNotNull
@@ -97,13 +96,6 @@ class ProductPagerFragment : Fragment() {
             with(productsGrid) {
                 adapter = productsAdapter
                 setHasFixedSize(true)
-                layoutManager = GridLayoutManager(requireContext(), 2).apply {
-//                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//                        override fun getSpanSize(position: Int): Int {
-//                            return 2
-//                        }
-//                    }
-                }
             }
         }
     }
@@ -147,7 +139,8 @@ class ProductViewHolder(private val binding: ItemProductBinding) :
         binding.run {
             product = item
             root.setOnClickListener {
-                Toast.makeText(it.context, item.name, Toast.LENGTH_SHORT).show()
+                it.findNavController()
+                    .navigate(R.id.action_nav_home_to_nav_product, bundleOf("product" to item))
             }
             executePendingBindings()
         }

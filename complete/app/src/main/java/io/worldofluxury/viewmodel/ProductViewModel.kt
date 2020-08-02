@@ -27,7 +27,7 @@ import io.worldofluxury.data.Product
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.CATEGORIES
-import io.worldofluxury.view.home.HomeFragment
+import io.worldofluxury.view.product.HomeFragment
 import timber.log.Timber
 
 /**

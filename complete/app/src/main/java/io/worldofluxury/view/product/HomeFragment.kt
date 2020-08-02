@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.view.home
+package io.worldofluxury.view.product
 
 import android.os.Bundle
 import android.view.LayoutInflater

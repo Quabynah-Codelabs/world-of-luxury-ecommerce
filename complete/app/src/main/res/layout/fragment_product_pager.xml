@@ -27,7 +27,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.home.ProductPagerFragment">
+        tools:context=".view.product.ProductPagerFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/products_grid"

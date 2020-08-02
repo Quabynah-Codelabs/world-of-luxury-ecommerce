@@ -40,4 +40,5 @@
     <dimen name="z_card">1dp</dimen>
     <dimen name="z_product_card">9dp</dimen>
     <dimen name="user_headshot_size">56dp</dimen>
+    <dimen name="large_product_size">450dp</dimen>
 </resources>

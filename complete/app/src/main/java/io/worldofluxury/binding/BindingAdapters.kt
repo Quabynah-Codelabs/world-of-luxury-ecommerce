@@ -30,8 +30,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
@@ -73,6 +74,7 @@ fun bindRandomImage(imageView: ImageView, @DrawableRes src: Int) {
 fun bindLoadImageUrl(view: AppCompatImageView, url: String) {
     Glide.with(view.context)
         .load(url)
+        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .listener(
             GlidePalette.with(url)
                 .use(BitmapPalette.Profile.MUTED_LIGHT)
@@ -91,6 +93,7 @@ fun bindLoadImageUrl(view: AppCompatImageView, url: String) {
 fun bindLoadImagePalette(view: AppCompatImageView, url: String, paletteCard: MaterialCardView) {
     Glide.with(view.context)
         .load(url)
+        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .listener(
             GlidePalette.with(url)
                 .use(BitmapPalette.Profile.MUTED_LIGHT)
@@ -109,6 +112,7 @@ fun bindLoadImagePaletteView(view: AppCompatImageView, url: String, paletteView:
     val context = view.context
     Glide.with(context)
         .load(url)
+        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .listener(
             GlidePalette.with(url)
                 .use(BitmapPalette.Profile.MUTED_LIGHT)
@@ -146,7 +150,7 @@ fun bindOnBackPressed(view: View, finish: Boolean) {
     val context = view.context
     if (finish && context is Fragment) {
         view.setOnClickListener {
-            context.findNavController().popBackStack()
+            view.findNavController().popBackStack()
         }
     }
 }

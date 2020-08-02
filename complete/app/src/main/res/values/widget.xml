@@ -20,7 +20,7 @@
 
     <style name="ShapeAppearanceOverlay.CardView" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">20%</item>
+        <item name="cornerSize">8%</item>
     </style>
 
     <style name="Widget.WorldOfLuxury.Tab" parent="Widget.MaterialComponents.TabLayout">
