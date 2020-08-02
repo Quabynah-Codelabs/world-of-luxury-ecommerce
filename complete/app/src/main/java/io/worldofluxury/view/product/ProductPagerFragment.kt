@@ -83,8 +83,8 @@ class ProductPagerFragment : Fragment() {
         arguments.whatIfNotNull { bundle ->
             category = bundle.getString(ARG_CATEGORY)
             Timber.d("Category -> $category")
-            category.whatIfNotNull {
-                viewModel.watchProductsLiveData(it).observe(viewLifecycleOwner, { products ->
+            category.whatIfNotNull { s ->
+                viewModel.watchProductsLiveData(s).observe(viewLifecycleOwner, { products ->
                     Timber.d("Products -> ${products.map { it.name }}")
                     productsAdapter.submitList(products)
                 })
@@ -101,10 +101,6 @@ class ProductPagerFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         */
         @JvmStatic
         fun newInstance(category: String) =
             ProductPagerFragment().apply {
