@@ -97,7 +97,7 @@ class WelcomeFragment : Fragment() {
 
         if (DEBUG)
             lifecycleScope.launchWhenCreated {
-                try {
+                /*try {
                     requireActivity().assets.open(PRODUCT_JSON_FILENAME).use { inputStream ->
                         JsonReader(inputStream.reader()).use { jsonReader ->
                             val type = object : TypeToken<List<Product>>() {}.type
@@ -109,7 +109,7 @@ class WelcomeFragment : Fragment() {
                     }
                 } catch (ex: Exception) {
                     Timber.e("Error adding products to database. ${ex.message}")
-                }
+                }*/
                 delay(1500)
 //             userPrefs.save(UUID.randomUUID().toString())
                 userPrefs.save(null)
