@@ -1,0 +1,121 @@
+def targetFolder = "src/main/assets"
+def modelFloatDownloadUrl = "http://download.tensorflow.org/models/mobilenet_v1_2018_02_22/mobilenet_v1_1.0_224.tgz"
+def modelQuantDownloadUrl = "http://download.tensorflow.org/models/mobilenet_v1_2018_08_02/mobilenet_v1_1.0_224_quant.tgz"
+def modelEfficientNetFloatDownloadUrl = "http://download.tensorflow.org/models/tflite/efficientnet-lite/efficientnet-lite0-fp32_2020_03_03.zip"
+def modelEfficientNetQuantDownloadUrl = "http://download.tensorflow.org/models/tflite/efficientnet-lite/efficientnet-lite0-int8_2020_03_03.zip"
+def localCacheFloat = "build/intermediates/mobilenet_v1_1.0_224.tgz"
+def localCacheQuant = "build/intermediates/mobilenet_v1_1.0_224_quant.tgz"
+def localCacheEfficientNetFloat = "build/intermediates/efficientnet-lite0-fp32_2020_03_03.zip"
+def localCacheEfficientNetQuant = "build/intermediates/efficientnet-lite0-int8_2020_03_03.zip"
+
+
+task downloadModelFloat(type: DownloadUrlTask) {
+    doFirst {
+        println "Downloading ${modelFloatDownloadUrl}"
+    }
+    sourceUrl = "${modelFloatDownloadUrl}"
+    target = file("${localCacheFloat}")
+}
+
+task downloadModelQuant(type: DownloadUrlTask) {
+    doFirst {
+        println "Downloading ${modelQuantDownloadUrl}"
+    }
+    sourceUrl = "${modelQuantDownloadUrl}"
+    target = file("${localCacheQuant}")
+}
+
+task downloadEfficientNetFloat(type: DownloadUrlTask) {
+    doFirst {
+        println "Downloading ${modelEfficientNetFloatDownloadUrl}"
+    }
+    sourceUrl = "${modelEfficientNetFloatDownloadUrl}"
+    target = file("${localCacheEfficientNetFloat}")
+}
+
+task downloadEfficientNetQuant(type: DownloadUrlTask) {
+    doFirst {
+        println "Downloading ${modelEfficientNetQuantDownloadUrl}"
+    }
+    sourceUrl = "${modelEfficientNetQuantDownloadUrl}"
+    target = file("${localCacheEfficientNetQuant}")
+}
+
+task unzipModelFloat(type: Copy, dependsOn: 'downloadModelFloat') {
+    doFirst {
+        println "Unzipping ${localCacheFloat}"
+    }
+    from tarTree("${localCacheFloat}")
+    into "${targetFolder}"
+}
+
+task unzipModelQuant(type: Copy, dependsOn: 'downloadModelQuant') {
+    doFirst {
+        println "Unzipping ${localCacheQuant}"
+    }
+    from tarTree("${localCacheQuant}")
+    into "${targetFolder}"
+}
+
+task unzipModelEfficientNetFloat(type: Copy, dependsOn: 'downloadEfficientNetFloat') {
+    doFirst {
+        println "Unzipping ${localCacheEfficientNetFloat}"
+    }
+    from zipTree("${localCacheEfficientNetFloat}")
+    into "${targetFolder}"
+}
+
+task unzipModelEfficientNetQuant(type: Copy, dependsOn: 'downloadEfficientNetQuant') {
+    doFirst {
+        println "Unzipping ${localCacheEfficientNetQuant}"
+    }
+    from zipTree("${localCacheEfficientNetQuant}")
+    into "${targetFolder}"
+}
+
+task cleanUnusedFiles(type: Delete, dependsOn: ['unzipModelFloat', 'unzipModelQuant', 'unzipModelEfficientNetFloat', 'unzipModelEfficientNetQuant']) {
+    delete fileTree("${targetFolder}").matching {
+        include "*.pb"
+        include "*.ckpt.*"
+        include "*.pbtxt*"
+        include "*.quant_info.*"
+        include "*.meta"
+    }
+}
+
+/*
+ * Copyright (c) 2020.
+ * Designed and developed by @quabynah_codelabs (Dennis Bilson)
+ *
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+class DownloadUrlTask extends DefaultTask {
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File target
+
+    @TaskAction
+    void download() {
+        ant.get(src: sourceUrl, dest: target)
+    }
+}
+
+preBuild.dependsOn unzipModelFloat
+preBuild.dependsOn unzipModelQuant
+preBuild.dependsOn unzipModelEfficientNetFloat
+preBuild.dependsOn unzipModelEfficientNetQuant
+preBuild.dependsOn cleanUnusedFiles

@@ -80,8 +80,18 @@ android {
             }
         }
 
+        // This AAR includes binaries for all of the Android ABIs. You can reduce the
+        // size of your application's binary by only including the ABIs you need
+        // to support.
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+
         buildConfigField("String", "UNSPLASH_ACCESS_KEY", "\"" + getUnsplashAccess() + "\"")
         buildConfigField("String", "UNSPLASH_SECRET_KEY", "\"" + getUnsplashSecret() + "\"")
+    }
+    aaptOptions {
+        noCompress "tflite"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -122,6 +132,10 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
 }
+
+// Download default models; if you wish to use your own models then
+// place them in the "assets" directory and comment out this line.
+apply from:'download.gradle'
 
 dependencies {
 
@@ -179,6 +193,20 @@ dependencies {
     // gson
     implementation "com.google.code.gson:gson:$versions.gsonVersion"
 
+    // tensorflow
+    implementation('org.tensorflow:tensorflow-lite:0.0.0-nightly') { changing = true }
+    implementation('org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly') { changing = true }
+    implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly') { changing = true }
+
+    // twitter
+    implementation "com.twitter.sdk.android:twitter:$versions.twitterVersion"
+
+    // google
+    implementation "com.google.android.gms:play-services-auth:$versions.googleVersion"
+
+    // stripe
+    implementation "com.stripe:stripe-android:$versions.stripeVersion"
+
     // coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesVersion"
@@ -227,4 +255,3 @@ def getUnsplashAccess() {
 def getUnsplashSecret() {
     return project.findProperty("unsplash_secret_key")
 }
-
