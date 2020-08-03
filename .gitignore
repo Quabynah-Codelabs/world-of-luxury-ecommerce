@@ -1,3 +1,10 @@
+**/*.pyc
+**/.DS_Store
+**/.idea
+**/.ipynb_checkpoints
+# Tensorflow
+**/*.tflite
+**/*.txt
 # Built application files
 *.apk
 *.ap_
@@ -6,9 +13,7 @@
 # Files for the ART/Dalvik VM
 *.dex
 
-# Tensorflow
-*.tflite
-*.txt
+
 
 # Java class files
 *.class
