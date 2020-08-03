@@ -3,10 +3,9 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/547101f32c708a3e989b96e3e7b3eda3/jetified-sandwich-1.0.3/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a97b7b3eb950ee88a3b2134234e8b1ee/jetified-sandwich-1.0.3/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c367011486c0d2fd4070de4a372da8ed/jetified-sandwich-1.0.3/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/06f118fb4f0ba78d7fe8668ab6670f45/jetified-sandwich-1.0.3/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c367011486c0d2fd4070de4a372da8ed/jetified-sandwich-1.0.3/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c367011486c0d2fd4070de4a372da8ed/jetified-sandwich-1.0.3/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c367011486c0d2fd4070de4a372da8ed/jetified-sandwich-1.0.3/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.skydoves/sandwich/1.0.3/29cf05d7b4fbe584e66407c1b203e820220f223a/sandwich-1.0.3-javadoc.jar!/" />
