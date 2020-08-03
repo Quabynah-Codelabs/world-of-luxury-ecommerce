@@ -21,9 +21,9 @@ package io.worldofluxury.core
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.stripe.android.PaymentConfiguration
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
-import com.stripe.android.PaymentConfiguration
 
 @HiltAndroidApp
 class WorldOfLuxuryApp : Application(), Configuration.Provider {
