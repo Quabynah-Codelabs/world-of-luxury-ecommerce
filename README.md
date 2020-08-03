@@ -9,16 +9,10 @@ Introduction
 ![Swan](artwork/banners/Wallpaper.png "Swan - World of Luxury")
 
 Swan is an e-commerce platform for an imaginary store called "World of Luxury". This app will have/use:
-* [Stripe][0] -  Payment API integration
-* [Firebase ML Kit][1] - Machine learning capabilities for recommending products to buy based on scanned images
-* [MongoDB][2] - A backend created in NodeJS and powered by MongoDB
-* [Android Jetpack][3] - Modern Android architecture components
-
-[0]: https://stripe.com/docs/mobile/android/basic
-[1]: https://firebase.google.com/docs/ml-kit/android/label-images
-[2]: https://www.mongodb.com/
-[3]: https://developer.android.com/jetpack/components
-
+* [Stripe][100] -  Payment API integration
+* [Firebase ML Kit][101] - Machine learning capabilities for recommending products to buy based on scanned images
+* [MongoDB][102] - A backend created in NodeJS and powered by MongoDB
+* [Android Jetpack][103] - Modern Android architecture components
 
 
 Libraries Used
@@ -65,6 +59,16 @@ Libraries Used
 [35]: https://developer.android.com/guide/topics/ui/declaring-layout
 [90]: https://bumptech.github.io/glide/
 [91]: https://kotlinlang.org/docs/reference/coroutines-overview.html
+[100]: https://stripe.com/docs/mobile/android/basic
+[101]: https://firebase.google.com/docs/ml-kit/android/label-images
+[102]: https://www.mongodb.com/
+[103]: https://developer.android.com/jetpack/components
+
+
+YouTube
+-------
+
+
 
 Support
 -------
