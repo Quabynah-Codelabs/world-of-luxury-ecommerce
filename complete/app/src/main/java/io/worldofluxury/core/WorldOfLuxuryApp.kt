@@ -23,6 +23,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
+import com.stripe.android.PaymentConfiguration
 
 @HiltAndroidApp
 class WorldOfLuxuryApp : Application(), Configuration.Provider {
@@ -34,4 +35,11 @@ class WorldOfLuxuryApp : Application(), Configuration.Provider {
             .setWorkerFactory(workerFactory)
             .build()
 
+    override fun onCreate() {
+        super.onCreate()
+        PaymentConfiguration.init(
+            applicationContext,
+            "pk_test_grtB26SrFsx17L3PnQzn6wtr"
+        )
+    }
 }
