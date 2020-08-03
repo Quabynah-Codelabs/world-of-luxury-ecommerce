@@ -64,20 +64,20 @@ Swan is an e-commerce platform for an imaginary store called "World of Luxury". 
 [200]: https://youtu.be/ebD5poqW2wM
 [201]: https://youtu.be/UA5OpjqJNQk
 [202]: https://youtu.be/P9tGUNzFNPM
-[202]: 
+[202]: https://youtu.be/4A-T5Mvq80U
 
 <!-- [203]:  -->
 
 ## YouTube
 
 ![Swan](artwork/banners/Episode1.png "Episode 1")
-[Episode 3: Swan - Designing our Welcome Page][200]
+[Episode 1: Swan - Project Introduction][200]
 ![Swan](artwork/banners/Episode2.png "Episode 2")
-[Episode 3: Swan - Designing our Welcome Page][201]
+[Episode 2: Swan - Project Setup With Navigation Components][201]
 ![Swan](artwork/banners/Episode3.png "Episode 3")
 [Episode 3: Swan - Designing our Welcome Page][202]
 ![Swan](artwork/banners/Episode4.png "Episode 4")
-[Episode 3: Swan - Designing our Welcome Page][203]
+[Episode 4: Swan - Designing our Authentication Page][203]
 
 ## Support
 
