@@ -20,13 +20,17 @@ package io.worldofluxury.view
 
 import android.os.Bundle
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.databinding.ActivityMainBinding
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.util.APP_TAG
+import kotlinx.coroutines.delay
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -44,15 +48,20 @@ class MainActivity : DataBindingActivity() {
         binding.apply {
             lifecycleOwner = this@MainActivity
             prefs = userSharedPrefs
-            /*findNavController(R.id.nav_host_fragment).run {
-                addOnDestinationChangedListener { _, destination, _ ->
-                    with(themeFab) {
-                        isVisible =
-                            destination.id != R.id.nav_auth || destination.id != R.id.nav_welcome
+            lifecycleScope.launchWhenCreated {
+                delay(850)
+                findNavController(R.id.nav_host_fragment).run {
+                    addOnDestinationChangedListener { _, destination, _ ->
+                        with(themeFab) {
+                            isVisible =
+                                destination.id != R.id.nav_auth || destination.id != R.id.nav_welcome
+                        }
                     }
                 }
-            }*/
+            }
             executePendingBindings()
         }
+
+        userSharedPrefs.liveTheme.observe(this, { state -> Timber.d("Theme state -> $state") })
     }
 }
