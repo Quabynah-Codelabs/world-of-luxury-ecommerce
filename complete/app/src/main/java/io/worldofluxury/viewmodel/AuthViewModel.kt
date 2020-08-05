@@ -36,7 +36,6 @@ import io.worldofluxury.view.auth.AuthFragment
 import kotlinx.coroutines.delay
 import timber.log.Timber
 import java.util.*
-import kotlin.random.Random
 
 
 /**
@@ -59,6 +58,8 @@ class AuthViewModel @ViewModelInject constructor(
     init {
         Timber.tag(APP_TAG)
         Timber.d("AuthViewModel initialized...")
+        val isLoggedIn = userPrefs.isLoggedIn.get()
+        if (isLoggedIn) authState.value = AuthenticationState.AUTHENTICATED
     }
 
     // TODO: Implement login
@@ -82,14 +83,14 @@ class AuthViewModel @ViewModelInject constructor(
 
         // Complete login process
 //        if (Random.nextBoolean()) {
-            val uid = UUID.randomUUID().toString()
-            userPrefs.save(uid)
-            userId.postValue(uid)
-            val user = User(uid, "Quabynah")
-            userDao.insert(user)
-            currentUser.postValue(user)
-            snackbarLiveData.postValue("Login was successful")
-            authState.postValue(AuthenticationState.AUTHENTICATED)
+        val uid = UUID.randomUUID().toString()
+        userPrefs.save(uid)
+        userId.postValue(uid)
+        val user = User(uid, "Quabynah")
+        userDao.insert(user)
+        currentUser.postValue(user)
+        snackbarLiveData.postValue("Login was successful")
+        authState.postValue(AuthenticationState.AUTHENTICATED)
 //        } else {
 //            authState.postValue(AuthenticationState.ERROR)
 //            userPrefs.save(null)

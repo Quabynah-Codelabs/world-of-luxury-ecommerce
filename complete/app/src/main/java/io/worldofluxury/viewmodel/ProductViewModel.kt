@@ -45,4 +45,8 @@ class ProductViewModel @ViewModelInject constructor(private val productDao: Prod
         launchOnViewModelScope {
             productDao.watchAllProducts(category)
         }
+
+    fun updateProduct(item: Product) {
+        productDao.update(item.copy(isFavorite = !item.isFavorite))
+    }
 }

@@ -26,6 +26,7 @@
     <dimen name="spacing_x36">36dp</dimen>
     <dimen name="spacing_x48">48dp</dimen>
     <dimen name="spacing_x64">64dp</dimen>
+    <dimen name="spacing_x72">72dp</dimen>
     <dimen name="spacing_x96">96dp</dimen>
     <dimen name="spacing_x128">128dp</dimen>
     <dimen name="spacing_x196">196dp</dimen>
@@ -43,4 +44,6 @@
     <dimen name="user_headshot_size">56dp</dimen>
     <dimen name="large_product_size">450dp</dimen>
     <dimen name="promo_header_height">380dp</dimen>
+
+    <dimen name="fab_size">56dp</dimen>
 </resources>

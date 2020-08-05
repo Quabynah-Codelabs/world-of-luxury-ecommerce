@@ -31,10 +31,11 @@ import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.DATABASE_NAME
+import io.worldofluxury.util.DATABASE_VERSION
 import io.worldofluxury.worker.LoadProductsWorker
 import timber.log.Timber
 
-@Database(entities = [Product::class, User::class], version = 4, exportSchema = true)
+@Database(entities = [Product::class, User::class], version = DATABASE_VERSION, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

@@ -78,7 +78,7 @@ class ProductPagerFragment : Fragment() {
         Timber.tag(APP_TAG)
 
         // Setup adapter
-        val productsAdapter = ProductsGridAdapter()
+        val productsAdapter = ProductsGridAdapter(viewModel)
 
         // Observe live data
         arguments.whatIfNotNull { bundle ->
@@ -112,7 +112,8 @@ class ProductPagerFragment : Fragment() {
 }
 
 
-class ProductsGridAdapter : ListAdapter<Product, ProductViewHolder>(Product.PRODUCT_DIFF) {
+class ProductsGridAdapter(private val viewModel: ProductViewModel) :
+    ListAdapter<Product, ProductViewHolder>(Product.PRODUCT_DIFF) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = DataBindingUtil.inflate<ItemProductBinding>(
             LayoutInflater.from(parent.context),
@@ -120,7 +121,7 @@ class ProductsGridAdapter : ListAdapter<Product, ProductViewHolder>(Product.PROD
             parent,
             false
         )
-        return ProductViewHolder(binding)
+        return ProductViewHolder(binding, viewModel)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
@@ -130,12 +131,16 @@ class ProductsGridAdapter : ListAdapter<Product, ProductViewHolder>(Product.PROD
 
 }
 
-class ProductViewHolder(private val binding: ItemProductBinding) :
+class ProductViewHolder(
+    private val binding: ItemProductBinding,
+    private val viewModel: ProductViewModel
+) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Product) {
         binding.run {
             product = item
+            vm = viewModel
             root.setOnClickListener {
                 it.findNavController()
                     .navigate(R.id.action_nav_home_to_nav_product, bundleOf("product" to item))

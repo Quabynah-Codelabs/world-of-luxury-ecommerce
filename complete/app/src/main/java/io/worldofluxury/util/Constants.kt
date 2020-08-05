@@ -18,16 +18,17 @@
 
 package io.worldofluxury.util
 
-const val PASSWORD_LENGTH = 4
+const val DATABASE_VERSION = 5
+const val DATABASE_NAME = "swan-wol.db"
+
 const val USER_ID_KEY = "user-id-key"
 const val APP_THEME_KEY = "app-theme-key"
 const val PREFS_NAME = "swan-user-prefs"
-const val DATABASE_NAME = "swan-wol.db"
+
+const val PASSWORD_LENGTH = 4
 const val PRODUCT_JSON_FILENAME = "products.json"
 const val ARG_CATEGORY = "product-category"
 const val APP_TAG = "Swan"
-const val DEFAULT_PROMO_IMAGE =
-    "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
 
 val CATEGORIES = mutableListOf(
     "Shirt",

@@ -19,10 +19,7 @@
 package io.worldofluxury.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import io.worldofluxury.data.Product
 
 @Dao
@@ -40,4 +37,6 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(items: MutableList<Product>)
 
+    @Update
+    fun update(item: Product)
 }

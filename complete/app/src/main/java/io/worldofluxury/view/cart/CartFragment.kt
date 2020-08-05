@@ -24,7 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.databinding.FragmentCartBinding
@@ -38,7 +38,7 @@ class CartFragment : Fragment() {
 
     @Inject
     lateinit var factory: ProductViewModelFactory
-    private val viewModel by viewModels<ProductViewModel> { factory }
+    private val viewModel by navGraphViewModels<ProductViewModel>(R.id.wol_nav_graph) { factory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

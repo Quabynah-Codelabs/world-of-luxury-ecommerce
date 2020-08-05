@@ -36,7 +36,8 @@ data class Product(
     val currencyFormat: String = "$",
     val isFreeShipping: Boolean = false,
     val category: String = CATEGORIES[5],
-    val photoUrl: String? = null
+    val photoUrl: String? = null,
+    var isFavorite: Boolean = false
 ) : Parcelable {
 
     fun getFormattedPrice(): String = "$currencyFormat $price"

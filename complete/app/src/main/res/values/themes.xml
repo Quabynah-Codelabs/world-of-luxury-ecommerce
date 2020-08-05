@@ -52,6 +52,7 @@
         <item name="materialButtonStyle">@style/Widget.WorldOfLuxury.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.WorldOfLuxury.Button.Outlined</item>
         <item name="appBarLayoutStyle">@style/Widget.MaterialComponents.ActionBar.Primary</item>
+        <item name="fabSize">@dimen/fab_size</item>
     </style>
 
 
@@ -59,11 +60,6 @@
     <style name="Theme.WorldOfLuxury.Welcome">
         <item name="android:colorBackground">@color/placeholder</item>
         <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Theme.WorldOfLuxury.Product">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
 </resources>

@@ -26,7 +26,13 @@
 
         <import type="io.worldofluxury.viewmodel.AuthViewModel" />
 
+        <import type="io.worldofluxury.viewmodel.ProductViewModel" />
+
         <import type="io.worldofluxury.viewmodel.AuthViewModel.AuthenticationState" />
+
+        <variable
+            name="productViewModel"
+            type="ProductViewModel" />
 
         <variable
             name="authViewModel"
@@ -40,7 +46,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:theme="@style/Theme.WorldOfLuxury.Product"
         tools:context=".view.product.ProductFragment">
 
         <androidx.core.widget.NestedScrollView
@@ -75,7 +80,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintGuide_end="@dimen/spacing_xlarge" />
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/product_image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/large_product_size"
@@ -249,31 +254,35 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/arrow"
-            android:layout_width="?actionBarSize"
-            android:layout_height="?actionBarSize"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_width="@dimen/spacing_x72"
+            android:layout_height="@dimen/spacing_x72"
+            android:background="?android:colorBackground"
+            android:backgroundTint="?android:colorBackground"
             android:scaleType="centerInside"
-            android:translationZ="100dp"
+            android:src="@drawable/ic_twotone_back"
+            android:translationZ="@dimen/z_product_card"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:onBackPressed="@{true}"
-            app:srcCompat="@drawable/ic_twotone_back" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/favorite"
-            android:layout_width="?actionBarSize"
-            android:layout_height="?actionBarSize"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_width="@dimen/spacing_x72"
+            android:layout_height="@dimen/spacing_x72"
+            android:background="?android:colorBackground"
+            android:backgroundTint="?android:colorBackground"
+            android:onClick="@{() -> productViewModel.updateProduct(product)}"
             android:scaleType="centerInside"
-            android:translationZ="100dp"
+            android:src="@{product.favorite ? @drawable/ic_twotone_favorite : @drawable/ic_twotone_favorite_border}"
+            android:translationZ="@dimen/z_product_card"
             app:gone="@{authViewModel.authState != AuthenticationState.AUTHENTICATED}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_twotone_favorite_border" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Favorites"
+            tools:src="@drawable/ic_twotone_favorite_border" />
 
         <!--<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_to_bag"

@@ -25,7 +25,12 @@
 
     <style name="ShapeAppearanceOverlay.Favorites" parent="">
         <item name="cornerFamilyBottomLeft">rounded</item>
-        <item name="cornerSizeBottomLeft">12%</item>
+        <item name="cornerSizeBottomLeft">40%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Nav" parent="">
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeBottomRight">40%</item>
     </style>
 
     <style name="Widget.WorldOfLuxury.Tab" parent="Widget.MaterialComponents.TabLayout">

@@ -24,16 +24,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.data.Product
 import io.worldofluxury.databinding.FragmentProductBinding
 import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.viewmodel.AuthViewModel
+import io.worldofluxury.viewmodel.ProductViewModel
+import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProductFragment : Fragment() {
     private lateinit var binding: FragmentProductBinding
+
+    @Inject
+    lateinit var authViewModelFactory: AuthViewModelFactory
+
+    @Inject
+    lateinit var productViewModelFactory: ProductViewModelFactory
+
+    private val viewModel by navGraphViewModels<ProductViewModel>(R.id.wol_nav_graph) { productViewModelFactory }
+    private val authVM by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
 //     private val args by navArgs<NavArgs>()
 
@@ -47,7 +62,8 @@ class ProductFragment : Fragment() {
         binding.run {
             lifecycleOwner = this@ProductFragment
             product = arguments?.getParcelable("product") as? Product
-            Timber.d("Product viewed -> ${product?.name}")
+            authViewModel = authVM
+            productViewModel = viewModel
             executePendingBindings()
         }
         return binding.root
@@ -61,8 +77,6 @@ class ProductFragment : Fragment() {
                 if (scrollY != 0) addToBag.shrink()
                 else addToBag.extend()
             }*/
-
-
         }
     }
 
