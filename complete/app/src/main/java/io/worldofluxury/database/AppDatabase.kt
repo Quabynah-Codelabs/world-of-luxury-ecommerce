@@ -25,7 +25,6 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import io.worldofluxury.BuildConfig
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.User
 import io.worldofluxury.database.dao.ProductDao
@@ -59,24 +58,16 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var instance: AppDatabase? = null
 
+        @JvmStatic
         fun get(context: Context): AppDatabase = instance ?: synchronized(this) {
-            instance ?: /*if (BuildConfig.DEBUG) Room
-                .inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+            instance ?: Room
+                .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .run {
                     fallbackToDestructiveMigration()
                     allowMainThreadQueries()
                     addCallback(appDatabaseCallback(context))
                 }
                 .build()
-            else
-                */Room
-                    .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
-                    .run {
-                        fallbackToDestructiveMigration()
-                        allowMainThreadQueries()
-                        addCallback(appDatabaseCallback(context))
-                    }
-                    .build()
         }
     }
 }

@@ -23,6 +23,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.stripe.android.PaymentConfiguration
 import dagger.hilt.android.HiltAndroidApp
+import io.worldofluxury.BuildConfig
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -39,7 +40,7 @@ class WorldOfLuxuryApp : Application(), Configuration.Provider {
         super.onCreate()
         PaymentConfiguration.init(
             applicationContext,
-            "pk_test_grtB26SrFsx17L3PnQzn6wtr"
+            BuildConfig.STRIPE_PUB_KEY
         )
     }
 }

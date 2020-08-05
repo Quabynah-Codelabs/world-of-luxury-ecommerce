@@ -87,8 +87,8 @@ android {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
 
-        buildConfigField("String", "UNSPLASH_ACCESS_KEY", "\"" + getUnsplashAccess() + "\"")
-        buildConfigField("String", "UNSPLASH_SECRET_KEY", "\"" + getUnsplashSecret() + "\"")
+        buildConfigField("String", "STRIPE_PUB_KEY", "\"" + keystoreProperties["stripe_pub_key"] + "\"")
+        buildConfigField("String", "STRIPE_PUB_SECRET", "\"" + keystoreProperties["stripe_pub_secret"] + "\"")
     }
     aaptOptions {
         noCompress "tflite"
@@ -246,12 +246,4 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$versions.androidxTestJunit"
     androidTestImplementation "com.android.support.test:runner:$versions.androidTestRunner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoVersion"
-}
-
-def getUnsplashAccess() {
-    return project.findProperty("unsplash_access_key")
-}
-
-def getUnsplashSecret() {
-    return project.findProperty("unsplash_secret_key")
 }

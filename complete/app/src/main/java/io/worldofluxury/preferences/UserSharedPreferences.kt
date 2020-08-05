@@ -32,6 +32,7 @@ class UserSharedPreferences private constructor(context: Context) {
         @Volatile
         private var instance: UserSharedPreferences? = null
 
+        @JvmStatic
         fun get(context: Context): UserSharedPreferences = instance ?: synchronized(this) {
             instance ?: UserSharedPreferences(context).also { instance = it }
         }
