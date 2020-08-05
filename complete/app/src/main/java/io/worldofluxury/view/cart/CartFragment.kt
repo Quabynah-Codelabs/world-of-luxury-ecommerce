@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.view.product
+package io.worldofluxury.view.cart
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,30 +24,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
-import io.worldofluxury.data.Product
-import io.worldofluxury.databinding.FragmentProductBinding
-import io.worldofluxury.util.APP_TAG
-import timber.log.Timber
+import io.worldofluxury.databinding.FragmentCartBinding
+import io.worldofluxury.viewmodel.ProductViewModel
+import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProductFragment : Fragment() {
-    private lateinit var binding: FragmentProductBinding
+class CartFragment : Fragment() {
+    private lateinit var binding: FragmentCartBinding
 
-//     private val args by navArgs<NavArgs>()
+    @Inject
+    lateinit var factory: ProductViewModelFactory
+    private val viewModel by viewModels<ProductViewModel> { factory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Timber.tag(APP_TAG)
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart, container, false)
         binding.run {
-            lifecycleOwner = this@ProductFragment
-            product = arguments?.getParcelable("product") as? Product
-            Timber.d("Product viewed -> ${product?.name}")
+            lifecycleOwner = this@CartFragment
+            productViewModel = viewModel
             executePendingBindings()
         }
         return binding.root
@@ -57,14 +58,8 @@ class ProductFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         binding.run {
-            /*container.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-                if (scrollY != 0) addToBag.shrink()
-                else addToBag.extend()
-            }*/
-
-
+            // Add additional binding here
         }
     }
-
 
 }

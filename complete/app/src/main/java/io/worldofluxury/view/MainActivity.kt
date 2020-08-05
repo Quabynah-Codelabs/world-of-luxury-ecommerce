@@ -19,20 +19,40 @@
 package io.worldofluxury.view
 
 import android.os.Bundle
+import androidx.core.view.isVisible
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.databinding.ActivityMainBinding
+import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.util.APP_TAG
+import timber.log.Timber
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : DataBindingActivity() {
     private val binding: ActivityMainBinding by binding(R.layout.activity_main)
 
+    @Inject
+    lateinit var userSharedPrefs: UserSharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.tag(APP_TAG)
         super.onCreate(savedInstanceState)
         binding.apply {
             lifecycleOwner = this@MainActivity
+            prefs = userSharedPrefs
+            /*findNavController(R.id.nav_host_fragment).run {
+                addOnDestinationChangedListener { _, destination, _ ->
+                    with(themeFab) {
+                        isVisible =
+                            destination.id != R.id.nav_auth || destination.id != R.id.nav_welcome
+                    }
+                }
+            }*/
+            executePendingBindings()
         }
     }
 }

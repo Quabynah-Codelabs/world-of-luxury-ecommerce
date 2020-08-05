@@ -42,10 +42,18 @@
         android:id="@id/nav_home"
         android:name="io.worldofluxury.view.product.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/home_fragment" >
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_nav_home_to_nav_product"
             app:destination="@id/nav_product" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_auth"
+            app:destination="@id/nav_auth"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_cart"
+            app:destination="@id/nav_cart" />
     </fragment>
     <fragment
         android:id="@id/nav_auth"
@@ -62,9 +70,14 @@
         android:id="@id/nav_product"
         android:name="io.worldofluxury.view.product.ProductFragment"
         android:label="@string/title_product"
-        tools:layout="@layout/fragment_product" >
+        tools:layout="@layout/fragment_product">
         <argument
             android:name="product"
             app:argType="io.worldofluxury.data.Product" />
     </fragment>
+    <fragment
+        android:id="@id/nav_cart"
+        android:name="io.worldofluxury.view.cart.CartFragment"
+        android:label="@string/title_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>

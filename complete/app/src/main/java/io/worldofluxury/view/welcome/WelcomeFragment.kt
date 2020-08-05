@@ -25,21 +25,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.JsonReader
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.R
-import io.worldofluxury.data.Product
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.util.PRODUCT_JSON_FILENAME
 import io.worldofluxury.viewmodel.AuthViewModel
 import kotlinx.coroutines.delay
 import timber.log.Timber
@@ -89,41 +83,11 @@ class WelcomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Timber.tag(APP_TAG)
-
-        userPrefs.liveUserId.observe(viewLifecycleOwner, Observer {
-            Timber.d("UserId -> $it")
-        })
-
         if (DEBUG)
             lifecycleScope.launchWhenCreated {
-                /*try {
-                    requireActivity().assets.open(PRODUCT_JSON_FILENAME).use { inputStream ->
-                        JsonReader(inputStream.reader()).use { jsonReader ->
-                            val type = object : TypeToken<List<Product>>() {}.type
-                            val list: List<Product> = Gson().fromJson(jsonReader, type)
-
-                            productDao.insertAll(list.toMutableList())
-                            Timber.d("Products added to database successfully")
-                        }
-                    }
-                } catch (ex: Exception) {
-                    Timber.e("Error adding products to database. ${ex.message}")
-                }*/
                 delay(1500)
-//             userPrefs.save(UUID.randomUUID().toString())
                 userPrefs.save(null)
             }
-
-        binding.run {
-            // Navigate to home or login route
-            getStarted.setOnClickListener {
-                navController.navigate(
-                    if (userPrefs.isLoggedIn.get()) R.id.action_nav_welcome_to_nav_home
-                    else R.id.action_nav_welcome_to_nav_auth
-                )
-            }
-        }
     }
 
 }

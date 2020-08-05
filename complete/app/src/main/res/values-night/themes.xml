@@ -62,4 +62,9 @@
         <item name="colorOnSecondary">@color/white</item>
     </style>
 
+    <style name="Theme.WorldOfLuxury.Product">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
 </resources>

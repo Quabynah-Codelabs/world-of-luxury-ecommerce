@@ -29,7 +29,6 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -71,25 +70,39 @@ fun bindSnackBar(view: View, text: LiveData<String>) {
 
 @BindingAdapter("randomImage")
 fun bindRandomImage(imageView: ImageView, @DrawableRes src: Int) {
-    imageView.setImageDrawable(imageView.resources.getDrawable(src, null))
+    imageView.setImageDrawable(imageView.resources.getDrawable(src, imageView.context.theme))
 }
 
 @BindingAdapter("url")
 fun bindLoadImageUrl(view: AppCompatImageView, url: String) {
+    val context = view.context
     GlideApp.with(view.context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
         .listener(
             GlidePalette.with(url)
                 .use(BitmapPalette.Profile.MUTED_LIGHT)
-//                .intoCallBack { palette ->
-//                    val rgb = palette?.dominantSwatch?.rgb
-//                    if (rgb != null) {
-//                        paletteCard.setCardBackgroundColor(rgb)
-//                    }
-//                }
-                .crossfade(true)
-        )
+                .intoCallBack { palette ->
+                    val light = palette?.lightVibrantSwatch?.rgb
+                    val domain = palette?.dominantSwatch?.rgb
+                    if (domain != null) {
+                        if (light != null) {
+                            Rainbow(view).palette {
+                                +color(domain)
+                                +color(light)
+                            }.background(orientation = RainbowOrientation.TOP_BOTTOM)
+                        } else {
+                            view.setBackgroundColor(domain)
+                        }
+                        if (context is AppCompatActivity) {
+                            context.window.apply {
+                                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                                statusBarColor = domain
+                            }
+                        }
+                    }
+                }
+                .crossfade(true))
         .into(view)
 }
 
@@ -170,8 +183,7 @@ fun bindGone(view: View, shouldBeGone: Boolean) {
 fun bindOnBackPressed(view: View, finish: Boolean) {
     Timber.tag(APP_TAG)
     Timber.d("Tapped back button")
-    val context = view.context
-    if (finish && context is Fragment) {
+    if (finish) {
         view.setOnClickListener {
             view.findNavController().popBackStack()
         }

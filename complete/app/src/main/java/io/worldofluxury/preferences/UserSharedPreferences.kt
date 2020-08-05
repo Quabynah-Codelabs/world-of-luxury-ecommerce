@@ -19,10 +19,12 @@
 package io.worldofluxury.preferences
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.worldofluxury.util.APP_THEME_KEY
 import io.worldofluxury.util.PREFS_NAME
 import io.worldofluxury.util.USER_ID_KEY
 
@@ -47,13 +49,21 @@ class UserSharedPreferences private constructor(context: Context) {
 
     private val _liveUserId: MutableLiveData<String> = MutableLiveData()
     val liveUserId: LiveData<String> get() = _liveUserId
+    private val _liveTheme: MutableLiveData<Int> = MutableLiveData()
+    val liveTheme: LiveData<Int> get() = _liveTheme
 
     val isLoggedIn: ObservableBoolean = ObservableBoolean(false)
+    val isDarkMode: ObservableBoolean = ObservableBoolean(false)
 
     init {
         with(prefs.getString(USER_ID_KEY, null)) {
             isLoggedIn.set(!this.isNullOrEmpty())
             _liveUserId.postValue(this)
+        }
+
+        with(prefs.getBoolean(APP_THEME_KEY, false)) {
+            isDarkMode.set(!this)
+            _liveTheme.postValue(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 
@@ -64,6 +74,20 @@ class UserSharedPreferences private constructor(context: Context) {
         }
         isLoggedIn.set(!id.isNullOrEmpty())
         _liveUserId.postValue(id)
+    }
+
+    fun updateTheme() {
+        with(isDarkMode) {
+            val mode =
+                if (get()) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
+            _liveTheme.postValue(mode)
+            AppCompatDelegate.setDefaultNightMode(mode)
+            set(mode == AppCompatDelegate.MODE_NIGHT_YES)
+            prefs.edit {
+                putBoolean(APP_THEME_KEY, get())
+                apply()
+            }
+        }
     }
 
 }

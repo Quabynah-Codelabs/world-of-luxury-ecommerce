@@ -20,6 +20,7 @@ package io.worldofluxury.util
 
 const val PASSWORD_LENGTH = 4
 const val USER_ID_KEY = "user-id-key"
+const val APP_THEME_KEY = "app-theme-key"
 const val PREFS_NAME = "swan-user-prefs"
 const val DATABASE_NAME = "swan-wol.db"
 const val PRODUCT_JSON_FILENAME = "products.json"
@@ -27,10 +28,10 @@ const val ARG_CATEGORY = "product-category"
 const val APP_TAG = "Swan"
 
 val CATEGORIES = mutableListOf(
+    "Shirt",
     "Trousers",
     "Sweatshirt",
     "Coat",
     "Blouse",
-    "Shirt",
     "Others",
 )

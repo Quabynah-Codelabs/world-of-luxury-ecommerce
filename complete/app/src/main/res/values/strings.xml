@@ -29,6 +29,7 @@
     <string name="title_home">Home</string>
     <string name="title_auth">Authentication</string>
     <string name="title_product">Product Details</string>
+    <string name="title_cart">Cart</string>
     <string name="header_image">header_image</string>
     <string name="app_desc__other">Discover the world\'s top products right at the comfort of your home</string>
     <string name="app_creator">Created with ❤️ by <b>Quabynah Codelabs</b>©</string>
@@ -48,4 +49,5 @@
     <string name="m">m</string>
     <string name="l">l</string>
     <string name="xl">xl</string>
+    <string name="cd_toggle_theme">Toggle theme</string>
 </resources>

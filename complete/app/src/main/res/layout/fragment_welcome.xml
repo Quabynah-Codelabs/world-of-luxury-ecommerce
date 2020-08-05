@@ -99,6 +99,7 @@
             android:layout_width="@dimen/spacing_none"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_x36"
+            android:onClick="@{(v) -> vm.navLoginOrHome(v)}"
             android:text="@{prefs.isLoggedIn() ? @string/continue_shopping : @string/get_started, default=`@string/get_started`}"
             app:icon="@drawable/ic_twotone_right"
             app:layout_constraintStart_toEndOf="@id/left_vert_guide"

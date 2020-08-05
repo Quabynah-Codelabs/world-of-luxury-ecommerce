@@ -24,6 +24,14 @@
 
         <import type="io.worldofluxury.data.Product" />
 
+        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
+
+        <import type="io.worldofluxury.viewmodel.AuthViewModel.AuthenticationState" />
+
+        <variable
+            name="authViewModel"
+            type="AuthViewModel" />
+
         <variable
             name="product"
             type="Product" />
@@ -31,13 +39,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:theme="@style/Theme.WorldOfLuxury.Product"
+        tools:context=".view.product.ProductFragment">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".view.product.ProductFragment">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -82,7 +91,7 @@
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="@dimen/spacing_large"
-                    android:paddingVertical="@dimen/spacing_normal"
+                    android:paddingVertical="@dimen/spacing_large"
                     android:text="@{product.name}"
                     android:textAlignment="center"
                     android:textAppearance="?textAppearanceHeadline5"
@@ -173,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        app:backgroundTint="@color/black" />
+                        app:backgroundTint="@color/blacker" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -260,11 +269,12 @@
             android:layout_marginEnd="@dimen/spacing_normal"
             android:scaleType="centerInside"
             android:translationZ="100dp"
+            app:gone="@{authViewModel.authState != AuthenticationState.AUTHENTICATED}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_twotone_favorite_border" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <!--<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_to_bag"
             style="?floatingActionButtonStyle"
             android:layout_width="wrap_content"
@@ -280,7 +290,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:enabled="false"
             tools:icon="@drawable/ic_twotone_sad"
-            tools:text="@string/out_of_stock" />
+            tools:text="@string/out_of_stock" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

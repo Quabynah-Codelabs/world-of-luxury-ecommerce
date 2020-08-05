@@ -20,7 +20,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data />
+    <data>
+
+        <import type="io.worldofluxury.preferences.UserSharedPreferences" />
+
+        <variable
+            name="prefs"
+            type="UserSharedPreferences" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,6 +46,18 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/wol_nav_graph" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/theme_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_large"
+            android:contentDescription="@string/cd_toggle_theme"
+            android:onClick="@{() -> prefs.updateTheme()}"
+            android:src="@{prefs.isDarkMode() ? @drawable/ic_twotone_sun : @drawable/ic_twotone_moon}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:src="@drawable/ic_twotone_sun" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

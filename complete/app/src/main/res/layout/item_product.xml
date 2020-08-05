@@ -39,16 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!--<com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/productCover"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/logo_size"
-                android:background="?attr/colorPrimary"
-                android:elevation="@dimen/z_product_card"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CardView" />-->
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/product_size"
@@ -64,6 +54,7 @@
                 android:elevation="@dimen/z_product_card"
                 android:paddingHorizontal="@dimen/spacing_xlarge"
                 android:paddingVertical="@dimen/spacing_x36"
+                app:gone="@{true}"
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <androidx.appcompat.widget.AppCompatTextView

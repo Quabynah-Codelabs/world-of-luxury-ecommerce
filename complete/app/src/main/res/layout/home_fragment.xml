@@ -96,6 +96,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/filter"
                 android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{(v) -> authViewModel.navLoginOrCart(v)}"
                 android:src="@drawable/ic_twotone_shopping_basket"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -19,9 +19,13 @@
 package io.worldofluxury.viewmodel
 
 import android.util.Patterns
+import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import io.worldofluxury.R
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.binding.isTooShort
 import io.worldofluxury.data.User
@@ -94,6 +98,33 @@ class AuthViewModel @ViewModelInject constructor(
 
         // Send live data to observer
         userId
+    }
+
+
+    fun navLoginOrHome(view: View) {
+        view.findNavController().navigate(
+            if (authState.value == AuthenticationState.AUTHENTICATED) R.id.action_nav_welcome_to_nav_home
+            else R.id.action_nav_welcome_to_nav_auth
+        )
+    }
+
+    fun navLoginOrCart(view: View) {
+        val context = view.context
+        if (authState.value == AuthenticationState.AUTHENTICATED) {
+            view.findNavController().navigate(R.id.action_nav_home_to_nav_cart)
+        } else {
+            MaterialAlertDialogBuilder(context).apply {
+                setTitle("Oops...")
+                setMessage("Sign in to start shopping with ${context.getString(R.string.app_name)}")
+                setPositiveButton("Sign in") { d, _ ->
+                    d.dismiss()
+                    view.findNavController().navigate(R.id.action_nav_home_to_nav_auth)
+                }
+                setNegativeButton("Cancel") { d, _ ->
+                    d.dismiss()
+                }
+            }.show()
+        }
     }
 
 }
