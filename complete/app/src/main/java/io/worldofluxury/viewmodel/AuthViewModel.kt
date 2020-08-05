@@ -61,6 +61,7 @@ class AuthViewModel @ViewModelInject constructor(
         Timber.d("AuthViewModel initialized...")
     }
 
+    // TODO: Implement login
     fun login(email: String, password: String) = launchOnViewModelScope<String> {
         // Create live object
         val userId = MutableLiveData<String>()
@@ -80,7 +81,7 @@ class AuthViewModel @ViewModelInject constructor(
         delay(3500)
 
         // Complete login process
-        if (Random.nextBoolean()) {
+//        if (Random.nextBoolean()) {
             val uid = UUID.randomUUID().toString()
             userPrefs.save(uid)
             userId.postValue(uid)
@@ -89,12 +90,12 @@ class AuthViewModel @ViewModelInject constructor(
             currentUser.postValue(user)
             snackbarLiveData.postValue("Login was successful")
             authState.postValue(AuthenticationState.AUTHENTICATED)
-        } else {
-            authState.postValue(AuthenticationState.ERROR)
-            userPrefs.save(null)
-            userId.postValue(null)
-            snackbarLiveData.postValue("Sorry, we couldn't complete this process")
-        }
+//        } else {
+//            authState.postValue(AuthenticationState.ERROR)
+//            userPrefs.save(null)
+//            userId.postValue(null)
+//            snackbarLiveData.postValue("Sorry, we couldn't complete this process")
+//        }
 
         // Send live data to observer
         userId

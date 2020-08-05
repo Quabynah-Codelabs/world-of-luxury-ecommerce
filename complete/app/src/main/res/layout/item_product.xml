@@ -44,6 +44,7 @@
                 android:layout_height="@dimen/product_size"
                 android:contentDescription="@{product.name}"
                 android:scaleType="centerCrop"
+                android:transitionName="@{product.id}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:url="@{product.photoUrl}" />
@@ -96,6 +97,18 @@
                     tools:text="@sample/products.json/data/price" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:alpha="?emphasisMedium"
+                android:background="?android:colorBackground"
+                android:backgroundTint="?android:colorBackground"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_twotone_favorite_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Favorites" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

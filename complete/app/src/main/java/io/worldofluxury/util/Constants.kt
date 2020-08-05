@@ -26,6 +26,8 @@ const val DATABASE_NAME = "swan-wol.db"
 const val PRODUCT_JSON_FILENAME = "products.json"
 const val ARG_CATEGORY = "product-category"
 const val APP_TAG = "Swan"
+const val DEFAULT_PROMO_IMAGE =
+    "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
 
 val CATEGORIES = mutableListOf(
     "Shirt",

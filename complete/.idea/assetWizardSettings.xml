@@ -319,7 +319,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Android/studio/canary/plugins/android/lib/android.jar!/images/material/icons/materialiconstwotone/brightness_2/twotone_brightness_2_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Android/studio/canary/plugins/android/lib/android.jar!/images/material/icons/materialiconstwotone/help/twotone_help_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -329,7 +329,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_twotone_moon" />
+                            <entry key="outputName" value="ic_twotone_help" />
                             <entry key="sourceFile" value="F:\GitHub\personal-projects\android\world-of-luxury-ecommerce" />
                           </map>
                         </option>

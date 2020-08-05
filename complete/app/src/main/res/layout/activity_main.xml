@@ -55,6 +55,7 @@
             android:contentDescription="@string/cd_toggle_theme"
             android:onClick="@{() -> prefs.updateTheme()}"
             android:src="@{prefs.isDarkMode() ? @drawable/ic_twotone_sun : @drawable/ic_twotone_moon}"
+            app:gone="@{!prefs.isLoggedIn()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:src="@drawable/ic_twotone_sun" />

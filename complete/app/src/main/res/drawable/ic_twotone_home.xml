@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~ Copyright (c) 2020.
   ~ Designed and developed by @quabynah_codelabs (Dennis Bilson)
   ~
@@ -16,16 +16,18 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <item name="nav_welcome" type="id" />
-    <item name="nav_home" type="id" />
-    <item name="nav_auth" type="id" />
-    <item name="nav_product" type="id" />
-    <item name="nav_checkout" type="id" />
-    <item name="nav_search" type="id" />
-    <item name="nav_cart" type="id" />
-    <item name="nav_fav" type="id" />
-    <item name="nav_user" type="id" />
-    <item name="nav_help" type="id" />
-    <item name="nav_history" type="id" />
-</resources>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="?attr/colorControlNormal">
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M12,3L2,12h3v8h6v-6h2v6h6v-8h3L12,3zM17,18h-2v-6L9,12v6L7,18v-7.81l5,-4.5 5,4.5L17,18z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M7,10.19V18h2v-6h6v6h2v-7.81l-5,-4.5z"
+      android:strokeAlpha="0.3"
+      android:fillAlpha="0.3"/>
+</vector>

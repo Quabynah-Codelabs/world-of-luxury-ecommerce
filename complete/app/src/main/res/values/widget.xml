@@ -23,6 +23,11 @@
         <item name="cornerSize">8%</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.Favorites" parent="">
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomLeft">12%</item>
+    </style>
+
     <style name="Widget.WorldOfLuxury.Tab" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabTextAppearance">?textAppearanceBody1</item>
         <item name="fontFamily">@font/rubik_medium</item>

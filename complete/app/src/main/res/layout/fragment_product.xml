@@ -81,6 +81,7 @@
                     android:layout_height="@dimen/large_product_size"
                     android:contentDescription="@{product.name}"
                     android:scaleType="centerCrop"
+                    android:transitionName="@{product.id}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:url="@{product.photoUrl}"
                     tools:scaleType="centerInside"

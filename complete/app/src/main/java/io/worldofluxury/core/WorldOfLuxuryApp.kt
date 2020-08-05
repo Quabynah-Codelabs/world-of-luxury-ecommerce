@@ -19,17 +19,22 @@
 package io.worldofluxury.core
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.stripe.android.PaymentConfiguration
 import dagger.hilt.android.HiltAndroidApp
 import io.worldofluxury.BuildConfig
+import io.worldofluxury.preferences.UserSharedPreferences
 import javax.inject.Inject
 
 @HiltAndroidApp
 class WorldOfLuxuryApp : Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
+
+    @Inject
+    lateinit var prefs: UserSharedPreferences
 
     override fun getWorkManagerConfiguration() =
         Configuration.Builder()
@@ -38,9 +43,15 @@ class WorldOfLuxuryApp : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        // Initialize Stripe payment SDK
         PaymentConfiguration.init(
             applicationContext,
             BuildConfig.STRIPE_PUB_KEY
         )
+
+        // Setup app theme
+        val mode =
+            if (prefs.isDarkMode.get()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 }

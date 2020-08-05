@@ -62,11 +62,15 @@ class UserSharedPreferences private constructor(context: Context) {
         }
 
         with(prefs.getBoolean(APP_THEME_KEY, false)) {
-            isDarkMode.set(!this)
-            _liveTheme.postValue(AppCompatDelegate.MODE_NIGHT_NO)
+            isDarkMode.set(this)
+            val mode =
+                if (this) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
+            _liveTheme.postValue(mode)
+            AppCompatDelegate.setDefaultNightMode(mode)
         }
     }
 
+    // save user id
     fun save(id: String?) {
         prefs.edit {
             putString(USER_ID_KEY, id)
@@ -76,6 +80,7 @@ class UserSharedPreferences private constructor(context: Context) {
         _liveUserId.postValue(id)
     }
 
+    // update theme
     fun updateTheme() {
         with(isDarkMode) {
             val mode =

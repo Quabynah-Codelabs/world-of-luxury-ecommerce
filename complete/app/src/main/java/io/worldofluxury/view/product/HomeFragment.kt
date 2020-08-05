@@ -19,9 +19,9 @@
 package io.worldofluxury.view.product
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -72,8 +72,20 @@ class HomeFragment : Fragment() {
         Timber.tag(APP_TAG)
 
         binding.run {
-            fabScanImage.setOnClickListener { /*TODO: Allow user to scan for images*/ }
-
+            with((requireActivity() as AppCompatActivity)) {
+                setSupportActionBar(toolbar)
+            }
+            with(homeDrawer) {
+                val toggler = ActionBarDrawerToggle(
+                    requireActivity(),
+                    this,
+                    toolbar,
+                    R.string.nav_app_bar_open_drawer_description,
+                    R.string.nav_app_bar_navigate_up_description
+                )
+                toggler.syncState()
+                addDrawerListener(toggler)
+            }
             homePager.adapter = CategoriesViewPagerAdapter(requireActivity())
             TabLayoutMediator(
                 homeTabs,

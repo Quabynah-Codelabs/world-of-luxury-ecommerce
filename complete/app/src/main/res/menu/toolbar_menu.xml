@@ -16,16 +16,16 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <item name="nav_welcome" type="id" />
-    <item name="nav_home" type="id" />
-    <item name="nav_auth" type="id" />
-    <item name="nav_product" type="id" />
-    <item name="nav_checkout" type="id" />
-    <item name="nav_search" type="id" />
-    <item name="nav_cart" type="id" />
-    <item name="nav_fav" type="id" />
-    <item name="nav_user" type="id" />
-    <item name="nav_help" type="id" />
-    <item name="nav_history" type="id" />
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/show_filter"
+        android:icon="@drawable/ic_twotone_filter"
+        android:title="@string/filter"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@id/nav_search"
+        android:icon="@drawable/ic_twotone_search"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+</menu>
