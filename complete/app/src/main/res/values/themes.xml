@@ -59,5 +59,9 @@
         <item name="fabSize">@dimen/fab_size</item>
     </style>
 
+    <!-- Splash Theme. -->
+    <style name="Theme.WorldOfLuxury.Splash">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
 
 </resources>

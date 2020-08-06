@@ -26,7 +26,6 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
-import com.skydoves.whatif.whatIfNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
@@ -46,6 +45,8 @@ class MainActivity : DataBindingActivity(), NavHost {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.tag(APP_TAG)
+        // override theme to remove splash image from background
+        setTheme(R.style.Theme_WorldOfLuxury)
         super.onCreate(savedInstanceState)
 
         binding.apply {

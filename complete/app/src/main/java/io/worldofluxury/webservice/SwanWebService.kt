@@ -22,13 +22,14 @@ import com.skydoves.sandwich.ApiResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import io.worldofluxury.data.Product
+import io.worldofluxury.data.User
 import retrofit2.http.*
 
 /**
  * Web service interface required to setup Retrofit
  * This serves as the app's endpoint to the database server
  */
-interface ProductWebService {
+interface SwanWebService {
 
     @POST("/products")
     @FormUrlEncoded
@@ -39,6 +40,9 @@ interface ProductWebService {
 
     @GET("/products/{id}")
     suspend fun getProductById(@Path("id") id: String): ApiResponse<WebServiceResponse<Product>>
+
+    @GET("/users/{id}")
+    suspend fun getUserById(@Path("id") userId: String?): ApiResponse<WebServiceResponse<User>>
 
     companion object {
         const val BASE_URL = "https://api.swan.com/"
