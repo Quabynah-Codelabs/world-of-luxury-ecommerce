@@ -52,7 +52,11 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         listOf(
             R.id.nav_auth,
             R.id.nav_welcome,
-            R.id.nav_search
+            R.id.nav_search,
+            R.id.nav_checkout,
+            R.id.nav_fav,
+            R.id.nav_help,
+            R.id.nav_history
         )
     }
 

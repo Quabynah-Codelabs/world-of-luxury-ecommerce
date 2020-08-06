@@ -62,4 +62,20 @@
         <item name="iconPadding">@dimen/spacing_x36</item>
         <item name="iconGravity">textEnd</item>
     </style>
+
+    <style name="Widget.WorldOfLuxury.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">?android:colorBackground</item>
+        <item name="submitBackground">?android:colorBackground</item>
+        <item name="voiceIcon">@drawable/ic_twotone_voice</item>
+        <item name="closeIcon">@drawable/ic_twotone_close</item>
+        <item name="closeIconEnabled">true</item>
+        <item name="suggestionRowLayout">@layout/search_suggestion</item>
+        <item name="searchIcon">@drawable/ic_twotone_search</item>
+        <item name="searchHintIcon">@drawable/ic_twotone_search</item>
+        <item name="goIcon">@drawable/ic_twotone_right</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="queryHint">@string/search_hint</item>
+        <item name="defaultQueryHint">@string/search_hint</item>
+    </style>
+
 </resources>

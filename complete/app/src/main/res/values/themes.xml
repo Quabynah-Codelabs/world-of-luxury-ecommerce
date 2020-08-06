@@ -35,6 +35,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?android:colorBackground</item>
         <item name="android:windowLightStatusBar">@bool/is_light_status</item>
+        <item name="scrimBackground">@color/scrim</item>
         <!-- Typography. -->
         <item name="textAppearanceHeadline3">@style/TextAppearance.WorldOfLuxury.Headline3</item>
         <item name="textAppearanceHeadline4">@style/TextAppearance.WorldOfLuxury.Headline4</item>
@@ -56,12 +57,19 @@
         <item name="materialButtonStyle">@style/Widget.WorldOfLuxury.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.WorldOfLuxury.Button.Outlined</item>
         <item name="appBarLayoutStyle">@style/Widget.MaterialComponents.ActionBar.Primary</item>
+        <item name="searchViewStyle">@style/Widget.WorldOfLuxury.SearchView</item>
         <item name="fabSize">@dimen/fab_size</item>
     </style>
 
     <!-- Splash Theme. -->
     <style name="Theme.WorldOfLuxury.Splash">
         <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <!-- Search Theme. -->
+    <style name="Theme.WorldOfLuxury.Search">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
 </resources>
