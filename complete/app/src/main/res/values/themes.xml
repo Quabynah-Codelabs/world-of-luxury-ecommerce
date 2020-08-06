@@ -25,6 +25,9 @@
         <item name="colorPrimary">@color/deep_blue</item>
         <item name="colorPrimaryVariant">@color/light_blue</item>
         <item name="colorOnPrimary">@color/white</item>
+        <!-- Error brand color. -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/lighter_blue</item>
         <item name="colorSecondaryVariant">@color/lighter_blue</item>

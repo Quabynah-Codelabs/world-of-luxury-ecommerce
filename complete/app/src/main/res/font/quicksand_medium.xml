@@ -17,10 +17,9 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <array name="preloaded_fonts" translatable="false">
-        <item>@font/quicksand_medium</item>
-        <item>@font/rubik</item>
-        <item>@font/rubik_medium</item>
-    </array>
-</resources>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:fontProviderAuthority="com.google.android.gms.fonts"
+        app:fontProviderPackage="com.google.android.gms"
+        app:fontProviderQuery="name=Quicksand&amp;weight=500"
+        app:fontProviderCerts="@array/com_google_android_gms_fonts_certs">
+</font-family>

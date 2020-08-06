@@ -23,7 +23,8 @@ ext.versions = [
         versionName             : '1.0.4-production',
 
         // gradle plugins
-        gradleBuildTool         : '4.2.0-alpha07',
+        gradleBuildTool         : '4.0.1',
+        // gradleBuildTool         : '4.2.0-alpha07',
         spotlessGradle          : '4.5.1',
         versionPlugin           : '0.28.0',
 

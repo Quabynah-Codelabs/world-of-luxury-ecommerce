@@ -1,11 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.work:work-testing:2.4.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/566f188ef4b1a46a26aea6c1209444c5/work-testing-2.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa2419f7cb5600c1787a9cd25fe919c7/work-testing-2.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aafbd2242a7e56cff3faf7ac046754b5/work-testing-2.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa2419f7cb5600c1787a9cd25fe919c7/work-testing-2.4.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa2419f7cb5600c1787a9cd25fe919c7/work-testing-2.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aff3dede5f8162dcf2c4764d36e05400/work-testing-2.4.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aff3dede5f8162dcf2c4764d36e05400/work-testing-2.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aff3dede5f8162dcf2c4764d36e05400/work-testing-2.4.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

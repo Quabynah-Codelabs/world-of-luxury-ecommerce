@@ -258,8 +258,8 @@
             android:id="@+id/arrow"
             android:layout_width="@dimen/spacing_x72"
             android:layout_height="@dimen/spacing_x72"
-            android:background="?android:colorBackground"
-            android:backgroundTint="?android:colorBackground"
+            android:background="@color/content_placeholder"
+            android:backgroundTint="@color/content_placeholder"
             android:scaleType="centerInside"
             android:src="@drawable/ic_twotone_back"
             android:translationZ="@dimen/z_product_card"
@@ -267,40 +267,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:onBackPressed="@{true}"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/favorite"
-            android:layout_width="@dimen/spacing_x72"
-            android:layout_height="@dimen/spacing_x72"
-            android:background="?android:colorBackground"
-            android:backgroundTint="?android:colorBackground"
-            android:onClick="@{() -> productViewModel.updateProduct(product)}"
-            android:scaleType="centerInside"
-            android:src="@{product.favorite ? @drawable/ic_twotone_favorite : @drawable/ic_twotone_favorite_border}"
-            android:translationZ="@dimen/z_product_card"
-            app:gone="@{authViewModel.authState != AuthenticationState.AUTHENTICATED}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Favorites"
-            tools:src="@drawable/ic_twotone_favorite_border" />
-
-        <!--<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/add_to_bag"
-            style="?floatingActionButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xlarge"
-            android:enabled="@{product.freeShipping}"
-            android:gravity="center"
-            android:text="@{product.freeShipping ? @string/bag_now : @string/out_of_stock}"
-            android:textAllCaps="true"
-            app:icon="@{product.freeShipping ? @drawable/ic_twotone_shopping_basket : @drawable/ic_twotone_sad }"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:enabled="false"
-            tools:icon="@drawable/ic_twotone_sad"
-            tools:text="@string/out_of_stock" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

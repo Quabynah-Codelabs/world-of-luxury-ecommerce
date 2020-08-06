@@ -18,9 +18,5 @@
   -->
 
 <resources>
-    <array name="preloaded_fonts" translatable="false">
-        <item>@font/quicksand_medium</item>
-        <item>@font/rubik</item>
-        <item>@font/rubik_medium</item>
-    </array>
+    <color name="error">#ffEC407A</color>
 </resources>

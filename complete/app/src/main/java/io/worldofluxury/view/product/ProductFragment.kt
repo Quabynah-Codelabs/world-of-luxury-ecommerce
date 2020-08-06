@@ -61,6 +61,7 @@ class ProductFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
         binding.run {
             lifecycleOwner = this@ProductFragment
+            // fixme: use nav args to get arguments from fragment
             product = arguments?.getParcelable("product") as? Product
             authViewModel = authVM
             productViewModel = viewModel
