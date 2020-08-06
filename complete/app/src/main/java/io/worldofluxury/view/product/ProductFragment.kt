@@ -24,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +38,9 @@ import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Shows [Product] details
+ */
 @AndroidEntryPoint
 class ProductFragment : Fragment() {
     private lateinit var binding: FragmentProductBinding
@@ -52,7 +54,7 @@ class ProductFragment : Fragment() {
     private val viewModel by navGraphViewModels<ProductViewModel>(R.id.wol_nav_graph) { productViewModelFactory }
     private val authVM by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
-//     private val args by navArgs<NavArgs>()
+    private val args by navArgs<ProductFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,25 +65,12 @@ class ProductFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
         binding.run {
             lifecycleOwner = this@ProductFragment
-            // fixme: use nav args to get arguments from fragment
-            product = arguments?.getParcelable("product") as? Product
+            product = args.product
             authViewModel = authVM
             productViewModel = viewModel
             executePendingBindings()
         }
         return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        binding.run {
-            /*container.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-                if (scrollY != 0) addToBag.shrink()
-                else addToBag.extend()
-            }*/
-        }
-    }
-
 
 }

@@ -43,8 +43,6 @@ import com.skydoves.whatif.whatIfNotNull
 import io.worldofluxury.R
 import io.worldofluxury.core.glide.GlideApp
 import io.worldofluxury.data.User
-import io.worldofluxury.util.APP_TAG
-import timber.log.Timber
 
 @SuppressLint("SetTextI18n")
 @BindingAdapter("user")
@@ -181,8 +179,6 @@ fun bindGone(view: View, shouldBeGone: Boolean) {
 
 @BindingAdapter("onBackPressed")
 fun bindOnBackPressed(view: View, finish: Boolean) {
-    Timber.tag(APP_TAG)
-    Timber.d("Tapped back button")
     if (finish) {
         view.setOnClickListener {
             view.findNavController().popBackStack()

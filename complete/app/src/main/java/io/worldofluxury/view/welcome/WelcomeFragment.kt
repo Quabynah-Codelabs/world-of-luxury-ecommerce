@@ -24,26 +24,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.work.ListenableWorker
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.JsonReader
+import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.R
-import io.worldofluxury.data.Product
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
 import io.worldofluxury.preferences.UserSharedPreferences
-import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.util.PRODUCT_JSON_FILENAME
 import io.worldofluxury.viewmodel.AuthViewModel
-import kotlinx.coroutines.delay
-import timber.log.Timber
-import java.io.IOException
+import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -55,8 +43,12 @@ import kotlin.random.Random
 class WelcomeFragment : Fragment() {
 
     private lateinit var binding: FragmentWelcomeBinding
-    private val viewModel by viewModels<AuthViewModel>()
-    private val navController by lazy { findNavController() }
+
+    @Inject
+    lateinit var authViewModelFactory: AuthViewModelFactory
+
+    private val viewModel by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
+
     private val images = mutableListOf(
         R.drawable.world_of_luxury_one,
         R.drawable.world_of_luxury_two,
@@ -86,30 +78,6 @@ class WelcomeFragment : Fragment() {
             executePendingBindings()
         }
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-//        if (DEBUG)
-//            lifecycleScope.launchWhenCreated {
-//                delay(1500)
-//                userPrefs.save(null)
-//            }
-//            try {
-//                requireActivity().assets.open(PRODUCT_JSON_FILENAME).use { inputStream ->
-//                    JsonReader(inputStream.reader()).use { jsonReader ->
-//                        val type = object : TypeToken<List<Product>>() {}.type
-//                        val list: List<Product> = Gson().fromJson(jsonReader, type)
-//
-//                        productDao.insertAll(list.toMutableList())
-//                        Timber.d("Products added to database successfully")
-//                        ListenableWorker.Result.success()
-//                    }
-//                }
-//            } catch (ex: IOException) {
-//                Timber.e("Error adding products to database")
-//                ListenableWorker.Result.failure()
-//            }
     }
 
 }

@@ -20,21 +20,21 @@
     <!-- Base application theme. -->
     <style name="Theme.WorldOfLuxury" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- System UI -->
-        <item name="android:colorBackground">@color/placeholder</item>
+        <item name="android:colorBackground">@color/background</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/deep_blue</item>
-        <item name="colorPrimaryVariant">@color/light_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
         <!-- Error brand color. -->
         <item name="colorError">@color/error</item>
-        <item name="colorOnError">@color/white</item>
+        <item name="colorOnError">@color/on_error</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/lighter_blue</item>
-        <item name="colorSecondaryVariant">@color/lighter_blue</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?android:colorBackground</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">@bool/is_light_status</item>
         <!-- Typography. -->
         <item name="textAppearanceHeadline3">@style/TextAppearance.WorldOfLuxury.Headline3</item>
         <item name="textAppearanceHeadline4">@style/TextAppearance.WorldOfLuxury.Headline4</item>
@@ -59,11 +59,5 @@
         <item name="fabSize">@dimen/fab_size</item>
     </style>
 
-
-    <!-- Welcome Theme. -->
-    <style name="Theme.WorldOfLuxury.Welcome">
-        <item name="android:colorBackground">@color/placeholder</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
 
 </resources>

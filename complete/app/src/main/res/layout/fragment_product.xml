@@ -96,11 +96,11 @@
                     android:id="@+id/product_name"
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/spacing_large"
-                    android:paddingVertical="@dimen/spacing_large"
+                    android:paddingHorizontal="@dimen/spacing_normal"
+                    android:paddingVertical="@dimen/spacing_normal"
                     android:text="@{product.name}"
                     android:textAlignment="center"
-                    android:textAppearance="?textAppearanceHeadline5"
+                    android:textAppearance="?textAppearanceHeadline4"
                     app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/product_image"
@@ -152,20 +152,12 @@
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:checkedButton="@id/color_blue"
+                    app:checkedButton="@id/color_amber"
                     app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/color_header"
                     app:selectionRequired="true"
                     app:singleSelection="true">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/color_blue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_large"
-                        android:text=""
-                        app:backgroundTint="@color/light_blue" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/color_amber"

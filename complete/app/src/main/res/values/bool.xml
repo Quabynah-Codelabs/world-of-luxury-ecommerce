@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2020.
   ~ Designed and developed by @quabynah_codelabs (Dennis Bilson)
   ~
@@ -17,14 +18,5 @@
   -->
 
 <resources>
-    <!-- monotone color for night mode -->
-    <color name="primary">#FFBB86FC</color>
-    <color name="primary_variant">#FFBB86FC</color>
-    <color name="secondary">#FFBB86FC</color>
-    <color name="secondary_variant">#FFBB86FC</color>
-    <color name="on_secondary">@color/blacker</color>
-    <color name="on_primary">@color/blacker</color>
-    <color name="on_error">@color/blacker</color>
-    <color name="background">#ff151515</color>
-    <color name="error">#ffEC407A</color>
+    <bool name="is_light_status">true</bool>
 </resources>

@@ -64,8 +64,8 @@
         <item name="fontFamily">@font/rubik_medium</item>
     </style>
 
-    <style name="TextAppearance.WorldOfLuxury.Price" parent="TextAppearance.MaterialComponents.Headline4">
+    <style name="TextAppearance.WorldOfLuxury.Price" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="fontFamily">@font/rubik_medium</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
     </style>
 </resources>

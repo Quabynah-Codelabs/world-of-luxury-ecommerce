@@ -27,6 +27,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -142,8 +143,9 @@ class ProductViewHolder(
             product = item
             vm = viewModel
             root.setOnClickListener {
+                val extras = FragmentNavigatorExtras(binding.productImage to item.id)
                 it.findNavController()
-                    .navigate(R.id.action_nav_home_to_nav_product, bundleOf("product" to item))
+                    .navigate(HomeFragmentDirections.actionNavHomeToNavProduct(item), extras)
             }
             executePendingBindings()
         }
