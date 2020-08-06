@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -35,8 +36,15 @@ import io.worldofluxury.util.DATABASE_VERSION
 import io.worldofluxury.worker.LoadProductsWorker
 import timber.log.Timber
 
+/**
+ * [Database] implementation
+ */
 @Database(entities = [Product::class, User::class], version = DATABASE_VERSION, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
+
+    init {
+        Timber.tag(APP_TAG)
+    }
 
     abstract fun userDao(): UserDao
 
@@ -47,7 +55,6 @@ abstract class AppDatabase : RoomDatabase() {
         private fun appDatabaseCallback(context: Context) = object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                Timber.tag(APP_TAG)
                 Timber.d("Created Swan Database successfully")
                 with(WorkManager.getInstance(context)) {
                     val worker = OneTimeWorkRequestBuilder<LoadProductsWorker>().build()
@@ -55,6 +62,15 @@ abstract class AppDatabase : RoomDatabase() {
                 }
             }
         }
+
+        private val migrations: Migration =
+            object : Migration(DATABASE_VERSION.minus(1), DATABASE_VERSION) {
+                override fun migrate(database: SupportSQLiteDatabase) {
+                    Timber.d("Version -> ${database.version}")
+                    database.execSQL("alter table users add column email text")
+                    database.beginTransaction()
+                }
+            }
 
         @Volatile
         private var instance: AppDatabase? = null
@@ -65,7 +81,7 @@ abstract class AppDatabase : RoomDatabase() {
                 .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .run {
                     fallbackToDestructiveMigration()
-                    allowMainThreadQueries()
+                    addMigrations(migrations)
                     addCallback(appDatabaseCallback(context))
                 }
                 .build()

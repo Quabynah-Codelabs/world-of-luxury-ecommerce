@@ -23,8 +23,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.database.dao.UserDao
+import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.repository.product.ProductRepository
+import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.webservice.SwanWebService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -45,7 +48,18 @@ object RepositoryModule {
     @Provides
     fun provideProductRepository(
         productDao: ProductDao,
-        webService: SwanWebService
-    ): ProductRepository = ProductRepository(webService, productDao)
+        webService: SwanWebService,
+        thread: CoroutineScope
+    ): ProductRepository = ProductRepository(webService, productDao, thread)
+
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(
+        userDao: UserDao,
+        webService: SwanWebService,
+        prefs: UserSharedPreferences,
+        thread: CoroutineScope
+    ): UserRepository = UserRepository(userDao, prefs, webService, thread)
 
 }

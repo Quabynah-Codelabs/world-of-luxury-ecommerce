@@ -21,7 +21,6 @@ package io.worldofluxury.binding
 import android.annotation.SuppressLint
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -105,7 +104,7 @@ fun bindLoadImageUrl(view: AppCompatImageView, url: String) {
 }
 
 @BindingAdapter("avatar")
-fun bindLoadAvatar(view: ImageButton, url: String?) {
+fun bindLoadAvatar(view: ImageView, url: String?) {
     GlideApp.with(view.context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)

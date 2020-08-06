@@ -19,9 +19,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/show_filter"
-        android:icon="@drawable/ic_twotone_filter"
-        android:title="@string/filter"
+        android:id="@+id/toggle_theme"
+        android:icon="@drawable/ic_twotone_sun"
+        android:title="@string/cd_toggle_theme"
         app:showAsAction="ifRoom" />
     <item
         android:id="@id/nav_search"

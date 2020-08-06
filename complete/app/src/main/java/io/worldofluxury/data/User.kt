@@ -21,12 +21,20 @@ package io.worldofluxury.data
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * User data model
+ */
 @Entity(tableName = "users")
 @Parcelize
+@JsonClass(generateAdapter = true)
 data class User(
     @PrimaryKey val id: String,
     var name: String,
+    var email: String?,
+    @Json(name = "photo_url")
     var avatar: String? = null
 ) : Parcelable

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.view.product
+package io.worldofluxury.view.home
 
 import android.os.Bundle
 import android.view.*
@@ -33,6 +33,8 @@ import io.worldofluxury.R
 import io.worldofluxury.databinding.HomeFragmentBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.CATEGORIES
+import io.worldofluxury.view.MainActivity
+import io.worldofluxury.view.product.ProductPagerFragment
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.ProductViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
@@ -72,14 +74,11 @@ class HomeFragment : Fragment() {
         Timber.tag(APP_TAG)
 
         binding.run {
-            with((requireActivity() as AppCompatActivity)) {
-                setSupportActionBar(toolbar)
-            }
             with(homeDrawer) {
                 val toggler = ActionBarDrawerToggle(
                     requireActivity(),
                     this,
-                    toolbar,
+                    (requireActivity() as MainActivity).binding.bottomAppBar,
                     R.string.nav_app_bar_open_drawer_description,
                     R.string.nav_app_bar_navigate_up_description
                 )

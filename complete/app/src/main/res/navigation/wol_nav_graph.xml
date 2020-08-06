@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@id/nav_home"
-        android:name="io.worldofluxury.view.product.HomeFragment"
+        android:name="io.worldofluxury.view.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/home_fragment">
         <action
@@ -54,6 +54,12 @@
         <action
             android:id="@+id/action_nav_home_to_nav_cart"
             app:destination="@id/nav_cart" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_user"
+            app:destination="@id/nav_user" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_search"
+            app:destination="@id/nav_search" />
     </fragment>
     <fragment
         android:id="@id/nav_auth"
@@ -80,4 +86,14 @@
         android:name="io.worldofluxury.view.cart.CartFragment"
         android:label="@string/title_cart"
         tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@id/nav_user"
+        android:name="io.worldofluxury.view.user.UserFragment"
+        android:label="@string/title_user"
+        tools:layout="@layout/user_fragment" />
+    <fragment
+        android:id="@id/nav_search"
+        android:name="io.worldofluxury.view.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

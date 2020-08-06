@@ -30,8 +30,10 @@ import io.worldofluxury.R
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
 import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -41,6 +43,10 @@ import kotlin.random.Random
  */
 @AndroidEntryPoint
 class WelcomeFragment : Fragment() {
+
+    init {
+        Timber.tag(APP_TAG)
+    }
 
     private lateinit var binding: FragmentWelcomeBinding
 
@@ -79,5 +85,28 @@ class WelcomeFragment : Fragment() {
         }
         return binding.root
     }
+
+    /*override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        lifecycleScope.launchWhenStarted {
+            userPrefs.save(null)
+            try {
+                requireActivity().assets.open(PRODUCT_JSON_FILENAME).use { inputStream ->
+                    JsonReader(inputStream.reader()).use { jsonReader ->
+                        val type = object : TypeToken<List<Product>>() {}.type
+                        val list: List<Product> = Gson().fromJson(jsonReader, type)
+
+                        productDao.insertAll(list.toMutableList())
+                        Timber.d("Products added to database successfully")
+                        ListenableWorker.Result.success()
+                    }
+                }
+            } catch (ex: IOException) {
+                Timber.e("Error adding products to database")
+                ListenableWorker.Result.failure()
+            }
+        }
+    }*/
 
 }

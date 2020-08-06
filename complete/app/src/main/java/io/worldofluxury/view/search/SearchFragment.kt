@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.view.user
+package io.worldofluxury.view.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,46 +24,36 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
-import io.worldofluxury.databinding.UserFragmentBinding
-import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.viewmodel.factory.UserViewModelFactory
-import timber.log.Timber
+import io.worldofluxury.databinding.FragmentSearchBinding
+import io.worldofluxury.viewmodel.ProductViewModel
+import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class UserFragment : Fragment() {
-    private lateinit var binding: UserFragmentBinding
-
-    init {
-        Timber.tag(APP_TAG)
-    }
+class SearchFragment : Fragment() {
+    private lateinit var binding: FragmentSearchBinding
 
     @Inject
-    lateinit var userViewModelFactory: UserViewModelFactory
+    lateinit var productViewModelFactory: ProductViewModelFactory
 
-    private val viewModel by navGraphViewModels<UserViewModel>(R.id.wol_nav_graph) { userViewModelFactory }
+    private val viewModel by navGraphViewModels<ProductViewModel>(R.id.wol_nav_graph) { productViewModelFactory }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.user_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         binding.run {
-            lifecycleOwner = this@UserFragment
+            lifecycleOwner = this@SearchFragment
             vm = viewModel
             executePendingBindings()
         }
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-         viewModel.currentUser.observe(viewLifecycleOwner, { user -> Timber.d("User is  -> $user") })
-    }
 
 }

@@ -17,6 +17,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -30,18 +31,105 @@
             type="UserViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.user.UserFragment">
+        android:layout_height="match_parent">
 
-        <TextView
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/spacing_large"
-            android:text="@string/app_name__full"
-            android:textAppearance="?textAppearanceHeadline3" />
+            tools:context=".view.user.UserFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/spacing_x72"
+                app:snackbar="@{vm.toastLiveData}">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/left_vert_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/spacing_x48" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/right_vert_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/spacing_x48" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/top_horiz_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="@dimen/spacing_x36" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/bottom_horiz_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="@dimen/spacing_xlarge" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/user_avatar"
+                    android:layout_width="@dimen/large_avatar_size"
+                    android:layout_height="@dimen/large_avatar_size"
+                    app:avatar="@{vm.currentUser.avatar}"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/top_horiz_guide" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/user_name"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/spacing_normal"
+                    android:text="@{vm.currentUser.name}"
+                    android:textAppearance="?textAppearanceHeadline4"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/user_avatar"
+                    tools:text="@tools:sample/full_names" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/user_email"
+                    android:layout_width="@dimen/spacing_none"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/spacing_normal"
+                    android:paddingVertical="@dimen/spacing_normal"
+                    android:text="@{vm.currentUser.email, default=`No email associated with account`}"
+                    android:textAppearance="?textAppearanceCaption"
+                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
+                    app:layout_constraintTop_toBottomOf="@id/user_name"
+                    tools:text="@tools:sample/us_phones" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/arrow"
+            android:layout_width="@dimen/spacing_x72"
+            android:layout_height="@dimen/spacing_x72"
+            android:layout_gravity="top|start"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_twotone_back"
+            android:translationZ="@dimen/z_product_card"
+            app:onBackPressed="@{true}"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav" />
+
+    </FrameLayout>
 </layout>

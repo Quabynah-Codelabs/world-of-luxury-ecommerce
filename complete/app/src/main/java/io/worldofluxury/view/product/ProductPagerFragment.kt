@@ -39,6 +39,7 @@ import io.worldofluxury.databinding.FragmentProductPagerBinding
 import io.worldofluxury.databinding.ItemProductBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.ARG_CATEGORY
+import io.worldofluxury.view.home.HomeFragmentDirections
 import io.worldofluxury.viewmodel.ProductViewModel
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import timber.log.Timber

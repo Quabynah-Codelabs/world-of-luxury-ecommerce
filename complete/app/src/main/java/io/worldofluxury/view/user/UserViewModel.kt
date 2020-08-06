@@ -21,17 +21,17 @@ package io.worldofluxury.view.user
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.data.User
 import io.worldofluxury.repository.user.UserRepository
 
+/**
+ * [ViewModel] for [UserRepository]
+ */
 class UserViewModel @ViewModelInject constructor(
     private val repository: UserRepository
 ) : LiveCoroutinesViewModel() {
-
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
-
-    fun watchCurrentUser(): LiveData<User> =
-        launchOnViewModelScope { repository.watchCurrentUser(toastLiveData) }
-
+    val currentUser: LiveData<User> = repository.watchCurrentUser(toastLiveData)
 }

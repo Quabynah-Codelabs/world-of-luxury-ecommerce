@@ -24,13 +24,16 @@ import io.worldofluxury.BuildConfig
 import io.worldofluxury.util.APP_TAG
 import timber.log.Timber
 
+/**
+ * Logging initializer with [Timber]
+ */
 class TimberInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-            Timber.tag(APP_TAG)
         }
+        Timber.tag(APP_TAG)
         Timber.d("TimberInitializer is initialized.")
     }
 

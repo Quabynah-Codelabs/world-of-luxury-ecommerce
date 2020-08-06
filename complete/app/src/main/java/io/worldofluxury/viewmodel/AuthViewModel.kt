@@ -33,6 +33,8 @@ import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.view.auth.AuthFragment
+import io.worldofluxury.view.home.HomeFragmentDirections
+import io.worldofluxury.view.welcome.WelcomeFragmentDirections
 import kotlinx.coroutines.delay
 import timber.log.Timber
 import java.util.*
@@ -86,7 +88,7 @@ class AuthViewModel @ViewModelInject constructor(
         val uid = UUID.randomUUID().toString()
         userPrefs.save(uid)
         userId.postValue(uid)
-        val user = User(uid, "Quabynah")
+        val user = User(uid, "Quabynah", "quabynahdennis@gmail.com")
         userDao.insert(user)
         currentUser.postValue(user)
         snackbarLiveData.postValue("Login was successful")
@@ -105,22 +107,23 @@ class AuthViewModel @ViewModelInject constructor(
 
     fun navLoginOrHome(view: View) {
         view.findNavController().navigate(
-            if (authState.value == AuthenticationState.AUTHENTICATED) R.id.action_nav_welcome_to_nav_home
-            else R.id.action_nav_welcome_to_nav_auth
+            if (authState.value == AuthenticationState.AUTHENTICATED) WelcomeFragmentDirections.actionNavWelcomeToNavHome()
+            else WelcomeFragmentDirections.actionNavWelcomeToNavAuth()
         )
     }
 
     fun navLoginOrCart(view: View) {
         val context = view.context
         if (authState.value == AuthenticationState.AUTHENTICATED) {
-            view.findNavController().navigate(R.id.action_nav_home_to_nav_cart)
+            view.findNavController().navigate(HomeFragmentDirections.actionNavHomeToNavCart())
         } else {
             MaterialAlertDialogBuilder(context).apply {
                 setTitle("Oops...")
                 setMessage("Sign in to start shopping with ${context.getString(R.string.app_name)}")
                 setPositiveButton("Sign in") { d, _ ->
                     d.dismiss()
-                    view.findNavController().navigate(R.id.action_nav_home_to_nav_auth)
+                    view.findNavController()
+                        .navigate(HomeFragmentDirections.actionNavHomeToNavAuth())
                 }
                 setNegativeButton("Cancel") { d, _ ->
                     d.dismiss()
