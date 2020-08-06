@@ -19,10 +19,7 @@
 package io.worldofluxury.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import io.worldofluxury.data.User
 
 @Dao
@@ -32,9 +29,12 @@ interface UserDao {
     fun getUserById(id: String): LiveData<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(users: MutableList<User>)
+    suspend fun insertAll(users: MutableList<User>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: User)
+    suspend fun insert(user: User)
+
+    @Update
+    suspend fun update(user: User)
 
 }

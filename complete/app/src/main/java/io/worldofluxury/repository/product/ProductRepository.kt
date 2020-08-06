@@ -30,18 +30,20 @@ import io.worldofluxury.data.Product
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.webservice.ProductWebService
+import io.worldofluxury.webservice.SwanWebService
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * [Repository] for [Product] data source
+ */
 class ProductRepository @Inject constructor(
-    private val webService: ProductWebService,
-    private val dao: ProductDao
+    private val webService: SwanWebService,
+    private val dao: ProductDao,
+    private val scope: CoroutineScope
 ) : Repository {
-    private val ioScope = CoroutineScope(IO)
 
     init {
         Timber.tag(APP_TAG)
@@ -62,23 +64,22 @@ class ProductRepository @Inject constructor(
             Timber.d("Fetching data from server...")
             // fetch products from server and update local database
             webService.getProducts(category, page)
-
                 .whatIfNotNull { apiResponse ->
                     apiResponse.onSuccess {
-                        // add response data to local database
-                        ioScope.launch { dao.insertAll(data?.results ?: emptyList()) }
+                        // save data to local database
+                        scope.launch { data.whatIfNotNull { dao.insertAll(it.results) } }
                     }
                     apiResponse.onException {
                         toastLiveData.postValue("Cannot retrieve products at this time")
-                        Timber.d("An exception occurred while retrieving data from the products web service endpoint -> $message")
+                        Timber.e("An exception occurred while retrieving data from the products web service endpoint -> $message")
                     }
                     apiResponse.onFailure {
                         toastLiveData.postValue("Cannot retrieve products at this time")
-                        Timber.d("Failed to retrieve data from the products web service endpoint")
+                        Timber.e("Failed to retrieve data from the products web service endpoint")
                     }
                     apiResponse.onError {
                         toastLiveData.postValue("Cannot retrieve products at this time")
-                        Timber.d("An error occurred while retrieving data from the products web service endpoint -> $errorBody")
+                        Timber.e("An error occurred while retrieving data from the products web service endpoint -> $errorBody")
                     }
                 }
         }

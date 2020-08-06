@@ -25,7 +25,9 @@ import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.repository.product.ProductRepository
-import io.worldofluxury.webservice.ProductWebService
+import io.worldofluxury.webservice.SwanWebService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import javax.inject.Singleton
 
 /**
@@ -37,9 +39,13 @@ object RepositoryModule {
 
     @Singleton
     @Provides
+    fun provideBackgroundThread(): CoroutineScope = CoroutineScope(IO)
+
+    @Singleton
+    @Provides
     fun provideProductRepository(
         productDao: ProductDao,
-        webService: ProductWebService
+        webService: SwanWebService
     ): ProductRepository = ProductRepository(webService, productDao)
 
 }

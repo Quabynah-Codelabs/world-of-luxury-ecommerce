@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.worldofluxury.util.APP_THEME_KEY
@@ -54,10 +55,12 @@ class UserSharedPreferences private constructor(context: Context) {
 
     val isLoggedIn: ObservableBoolean = ObservableBoolean(false)
     val isDarkMode: ObservableBoolean = ObservableBoolean(false)
+    val userId: ObservableField<String> = ObservableField()
 
     init {
         with(prefs.getString(USER_ID_KEY, null)) {
             isLoggedIn.set(!this.isNullOrEmpty())
+            userId.set(this)
             _liveUserId.postValue(this)
         }
 
@@ -77,6 +80,7 @@ class UserSharedPreferences private constructor(context: Context) {
             apply()
         }
         isLoggedIn.set(!id.isNullOrEmpty())
+        userId.set(id)
         _liveUserId.postValue(id)
     }
 

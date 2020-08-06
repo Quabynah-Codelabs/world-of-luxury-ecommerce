@@ -24,7 +24,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import io.worldofluxury.webservice.ProductWebService
+import io.worldofluxury.webservice.SwanWebService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -65,7 +65,7 @@ object NetworkModule {
         client: OkHttpClient,
         converterFactory: MoshiConverterFactory
     ): Retrofit = Retrofit.Builder()
-        .baseUrl(ProductWebService.BASE_URL)
+        .baseUrl(SwanWebService.BASE_URL)
         .client(client)
         .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory())
         .addConverterFactory(converterFactory)
@@ -73,8 +73,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideProductWebService(
+    fun productWebService(
         retrofit: Retrofit
-    ): ProductWebService = retrofit
-        .create(ProductWebService::class.java)
+    ): SwanWebService = retrofit
+        .create(SwanWebService::class.java)
 }

@@ -18,6 +18,7 @@
 
 package io.worldofluxury.module
 
+import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,10 +26,15 @@ import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.repository.product.ProductRepository
+import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import javax.inject.Singleton
 
+/**
+ * [Module] for [ViewModel]s
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
 object ViewModelModule {
@@ -45,5 +51,11 @@ object ViewModelModule {
     fun provideProductViewModelProvider(
         repository: ProductRepository
     ): ProductViewModelFactory = ProductViewModelFactory(repository)
+
+    @Singleton
+    @Provides
+    fun provideUserViewModelProvider(
+        repository: UserRepository
+    ): UserViewModelFactory = UserViewModelFactory(repository)
 
 }
