@@ -155,9 +155,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycleVersion"
+    implementation "androidx.paging:paging-runtime-ktx:$versions.pagingVersion"
+    testImplementation "androidx.paging:paging-common-ktx:$versions.pagingVersion"
     implementation "androidx.room:room-runtime:$versions.roomVersion"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.room:room-ktx:$versions.roomVersion"
     kapt "androidx.room:room-compiler:$versions.roomVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.navVersion"
     androidTestImplementation "androidx.navigation:navigation-testing:$versions.navVersion"

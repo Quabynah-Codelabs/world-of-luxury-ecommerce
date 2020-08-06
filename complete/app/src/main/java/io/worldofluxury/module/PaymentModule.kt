@@ -19,31 +19,10 @@
 package io.worldofluxury.module
 
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.UserSharedPreferences
-import io.worldofluxury.repository.product.ProductRepository
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
-import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object ViewModelModule {
-
-    @Singleton
-    @Provides
-    fun provideAuthViewModelProvider(
-        userDao: UserDao,
-        prefs: UserSharedPreferences
-    ): AuthViewModelFactory = AuthViewModelFactory(userDao, prefs)
-
-    @Singleton
-    @Provides
-    fun provideProductViewModelProvider(
-        repository: ProductRepository
-    ): ProductViewModelFactory = ProductViewModelFactory(repository)
-
+object PaymentModule {
 }

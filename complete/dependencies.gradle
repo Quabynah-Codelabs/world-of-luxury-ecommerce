@@ -48,6 +48,7 @@ ext.versions = [
         fragmentVersion         : '1.2.5',
         lifecycleVersion        : '2.2.0',
         roomVersion             : '2.2.5',
+        pagingVersion           : '2.1.2',
         workVersion             : '2.4.0',
         navVersion              : '2.3.0',
         archCompomentVersion    : '2.1.0',

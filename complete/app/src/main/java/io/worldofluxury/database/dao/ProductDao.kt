@@ -26,17 +26,14 @@ import io.worldofluxury.data.Product
 interface ProductDao {
 
     @Query("select * from products where category = :category order by id desc")
-    fun getAllProducts(category: String): MutableList<Product>
-
-    @Query("select * from products where category = :category order by id desc")
-    fun watchAllProducts(category: String): LiveData<MutableList<Product>>
+    fun watchAllProducts(category: String): LiveData<List<Product>>
 
     @Query("select * from products where id = :id")
     fun getProductById(id: String): LiveData<Product?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(items: MutableList<Product>)
+    suspend fun insertAll(items: List<Product>)
 
     @Update
-    fun update(item: Product)
+    suspend fun update(item: Product)
 }

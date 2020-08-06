@@ -22,28 +22,24 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.repository.Repository
 import io.worldofluxury.repository.product.ProductRepository
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
-import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
+import io.worldofluxury.webservice.ProductWebService
 import javax.inject.Singleton
 
+/**
+ * [Module] for all [Repository] subclasses
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
-object ViewModelModule {
+object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideAuthViewModelProvider(
-        userDao: UserDao,
-        prefs: UserSharedPreferences
-    ): AuthViewModelFactory = AuthViewModelFactory(userDao, prefs)
-
-    @Singleton
-    @Provides
-    fun provideProductViewModelProvider(
-        repository: ProductRepository
-    ): ProductViewModelFactory = ProductViewModelFactory(repository)
+    fun provideProductRepository(
+        productDao: ProductDao,
+        webService: ProductWebService
+    ): ProductRepository = ProductRepository(webService, productDao)
 
 }

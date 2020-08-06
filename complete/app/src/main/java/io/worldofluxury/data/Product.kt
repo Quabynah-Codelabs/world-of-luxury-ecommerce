@@ -21,28 +21,45 @@ package io.worldofluxury.data
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import io.worldofluxury.util.CATEGORIES
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Product data model
+ */
 @Entity(tableName = "products")
 @Parcelize
+@JsonClass(generateAdapter = true)
 data class Product(
     @PrimaryKey val id: String,
     val name: String,
     val description: String,
     val price: Double,
+    @Json(name = "currency_id")
     val currencyId: String = "USD",
+    @Json(name = "currency_format")
     val currencyFormat: String = "$",
+    @Json(name = "shippable")
     val isFreeShipping: Boolean = false,
     val category: String = CATEGORIES[5],
+    @Json(name = "photo_url")
     val photoUrl: String? = null,
+    @Json(name = "favorite")
     var isFavorite: Boolean = false
 ) : Parcelable {
 
+    @Ignore
     fun getFormattedPrice(): String = "$currencyFormat $price"
 
     companion object {
+        /**
+         * For recyclerview's adapter use
+         * Helps to de-duplicate data in a list
+         */
         val PRODUCT_DIFF: DiffUtil.ItemCallback<Product> =
             object : DiffUtil.ItemCallback<Product>() {
                 override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean =

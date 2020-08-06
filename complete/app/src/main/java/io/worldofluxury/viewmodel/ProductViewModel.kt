@@ -23,16 +23,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.worldofluxury.base.LiveCoroutinesViewModel
+import io.worldofluxury.base.launchOnBackground
 import io.worldofluxury.data.Product
-import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.util.APP_TAG
 import timber.log.Timber
 
 /**
  * Main [ViewModel] for all [Product]s
  */
-class ProductViewModel @ViewModelInject constructor(private val productDao: ProductDao) :
-    LiveCoroutinesViewModel() {
+class ProductViewModel @ViewModelInject constructor(
+    private val repository: ProductRepository
+) : LiveCoroutinesViewModel() {
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
@@ -41,12 +43,9 @@ class ProductViewModel @ViewModelInject constructor(private val productDao: Prod
         Timber.d("ProductViewModel initialized...")
     }
 
-    fun watchProductsLiveData(category: String): LiveData<MutableList<Product>> =
-        launchOnViewModelScope {
-            productDao.watchAllProducts(category)
-        }
+    fun watchProductsLiveData(category: String): LiveData<List<Product>> =
+        launchOnViewModelScope { repository.watchAllProducts(category, toastLiveData) }
 
-    fun updateProduct(item: Product) {
-        productDao.update(item.copy(isFavorite = !item.isFavorite))
-    }
+    fun updateProduct(item: Product) =
+        launchOnBackground { repository.update(item.copy(isFavorite = !item.isFavorite)) }
 }

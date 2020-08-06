@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 abstract class LiveCoroutinesViewModel : ViewModel() {
 
@@ -31,4 +32,8 @@ abstract class LiveCoroutinesViewModel : ViewModel() {
             emitSource(block())
         }
     }
+}
+
+fun LiveCoroutinesViewModel.launchOnBackground(block: suspend () -> Unit) {
+    viewModelScope.launch(Dispatchers.IO) { block() }
 }
