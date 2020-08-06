@@ -20,4 +20,5 @@
     <attr name="emphasisLow" format="float" />
     <attr name="emphasisMedium" format="float" />
     <attr name="emphasisHigh" format="float" />
+    <attr name="textAppearancePrice" format="reference" />
 </resources>

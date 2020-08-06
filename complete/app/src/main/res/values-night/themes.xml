@@ -45,6 +45,7 @@
         <item name="textAppearanceSubtitle2">@style/TextAppearance.WorldOfLuxury.Subtitle2</item>
         <item name="textAppearanceCaption">@style/TextAppearance.WorldOfLuxury.Caption</item>
         <item name="textAppearanceOverline">@style/TextAppearance.WorldOfLuxury.Overline</item>
+        <item name="textAppearancePrice">@style/TextAppearance.WorldOfLuxury.Price</item>
         <!-- Customize your theme here. -->
         <item name="emphasisLow">0.35</item>
         <item name="emphasisMedium">0.65</item>

@@ -114,7 +114,7 @@
                     android:paddingVertical="@dimen/spacing_small"
                     android:text="@{product.formattedPrice}"
                     android:textAlignment="center"
-                    android:textAppearance="?textAppearanceHeadline4"
+                    android:textAppearance="?textAppearancePrice"
                     app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/product_name"

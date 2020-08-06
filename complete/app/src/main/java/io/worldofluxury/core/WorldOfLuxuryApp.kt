@@ -19,6 +19,7 @@
 package io.worldofluxury.core
 
 import android.app.Application
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
@@ -39,6 +40,7 @@ class WorldOfLuxuryApp : Application(), Configuration.Provider {
     override fun getWorkManagerConfiguration() =
         Configuration.Builder()
             .setWorkerFactory(workerFactory)
+            .setMinimumLoggingLevel(Log.INFO)
             .build()
 
     override fun onCreate() {

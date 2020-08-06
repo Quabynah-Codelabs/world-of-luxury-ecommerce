@@ -60,7 +60,11 @@ android {
                     'proguard-android-optimize.txt'),
                     'proguard-rules.pro'
 
-            // fixme: remove this before app release
+            // Signing configuration
+            signingConfig signingConfigs.release
+        }
+
+        debug {
             debuggable true
 
             // Signing configuration

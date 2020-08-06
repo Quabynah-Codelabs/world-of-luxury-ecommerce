@@ -27,7 +27,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import io.worldofluxury.data.Product
-import io.worldofluxury.database.AppDatabase
+import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.PRODUCT_JSON_FILENAME
 import kotlinx.coroutines.coroutineScope
@@ -36,10 +36,9 @@ import java.io.IOException
 
 class LoadProductsWorker @WorkerInject constructor(
     @Assisted appContext: Context,
-    @Assisted workerParams: WorkerParameters
+    @Assisted workerParams: WorkerParameters,
+    private val productDao: ProductDao
 ) : CoroutineWorker(appContext, workerParams) {
-
-    private val productDao by lazy { AppDatabase.get(applicationContext).productDao() }
 
     init {
         Timber.tag(APP_TAG)

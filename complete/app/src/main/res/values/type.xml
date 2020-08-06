@@ -19,21 +19,21 @@
 <resources>
 
     <style name="TextAppearance.WorldOfLuxury.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
-        <item name="fontFamily">@font/quicksand_medium</item>
+        <item name="fontFamily">@font/maven_pro_medium</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
     </style>
 
     <style name="TextAppearance.WorldOfLuxury.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="fontFamily">@font/quicksand_medium</item>
+        <item name="fontFamily">@font/maven_pro_medium</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
     </style>
 
     <style name="TextAppearance.WorldOfLuxury.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="fontFamily">@font/quicksand_medium</item>
+        <item name="fontFamily">@font/maven_pro_medium</item>
     </style>
 
     <style name="TextAppearance.WorldOfLuxury.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="fontFamily">@font/quicksand_medium</item>
+        <item name="fontFamily">@font/rubik_medium</item>
     </style>
 
     <style name="TextAppearance.WorldOfLuxury.Body1" parent="TextAppearance.MaterialComponents.Body1">
@@ -62,5 +62,10 @@
 
     <style name="TextAppearance.WorldOfLuxury.Overline" parent="TextAppearance.MaterialComponents.Overline">
         <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+
+    <style name="TextAppearance.WorldOfLuxury.Price" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
     </style>
 </resources>
