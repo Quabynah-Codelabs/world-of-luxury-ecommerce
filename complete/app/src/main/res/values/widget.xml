@@ -76,6 +76,7 @@
         <item name="iconifiedByDefault">false</item>
         <item name="queryHint">@string/search_hint</item>
         <item name="defaultQueryHint">@string/search_hint</item>
+        <item name="android:background">?android:colorBackground</item>
     </style>
 
 </resources>

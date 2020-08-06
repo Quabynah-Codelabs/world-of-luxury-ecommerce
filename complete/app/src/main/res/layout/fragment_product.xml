@@ -46,6 +46,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:theme="@style/Theme.WorldOfLuxury.Swipeable"
         tools:context=".view.product.ProductFragment">
 
         <androidx.core.widget.NestedScrollView

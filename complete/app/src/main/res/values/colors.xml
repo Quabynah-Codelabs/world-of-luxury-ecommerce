@@ -27,7 +27,7 @@
     <color name="background">#ffe2f3f5</color>
 
     <color name="placeholder">#ffe2f3f5</color>
-    <color name="scrim">#40ffffff</color>
+    <color name="scrim">@android:color/transparent</color>
 
     <color name="twitter">#ff03A9F4</color>
     <color name="google">#ffDB4437</color>

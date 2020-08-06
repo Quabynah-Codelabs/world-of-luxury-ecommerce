@@ -56,7 +56,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             R.id.nav_checkout,
             R.id.nav_fav,
             R.id.nav_help,
-            R.id.nav_history
+            R.id.nav_history,
+            R.id.nav_product
         )
     }
 

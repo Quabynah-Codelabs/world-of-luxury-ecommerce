@@ -35,10 +35,13 @@
         android:layout_height="match_parent"
         tools:context=".view.MainActivity">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment"
@@ -54,6 +57,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
@@ -61,6 +65,7 @@
             android:layout_gravity="bottom|center_horizontal"
             app:fabAlignmentMode="center"
             app:hideOnScroll="true"
+            app:fabAnimationMode="slide"
             app:menu="@menu/toolbar_menu" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -68,10 +73,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/cd_toggle_theme"
-            app:layout_anchor="@id/bottom_app_bar"
             android:enabled="@{prefs.isFeatureAvailable()}"
-            tools:enabled="false"
-            android:src="@drawable/ic_twotone_image_search" />
+            android:src="@drawable/ic_twotone_image_search"
+            app:layout_anchor="@id/bottom_app_bar"
+            tools:enabled="false" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

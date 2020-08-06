@@ -35,24 +35,12 @@
         android:theme="@style/Theme.WorldOfLuxury.Search"
         tools:context=".view.search.SearchFragment">
 
-        <View
-            android:id="@+id/scrim"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?scrimBackground" />
-
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
+            android:background="?android:colorBackground"
             android:layout_height="?actionBarSize"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/title_search"
-            android:textAppearance="?textAppearanceHeadline3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
