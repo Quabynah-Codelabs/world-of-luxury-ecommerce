@@ -58,7 +58,7 @@ class UserRepository @Inject constructor(
     fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User> = liveData {
         if (!prefs.isLoggedIn.get()) return@liveData
         // get live user instance
-        val user: LiveData<User> = prefs.liveUserId.switchMap { dao.getUserById(it) }
+        val user: LiveData<User> = prefs.liveUserId.switchMap { dao.watchUserById(it) }
         // pass it to live data
         emitSource(user)
 

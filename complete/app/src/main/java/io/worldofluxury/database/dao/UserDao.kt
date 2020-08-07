@@ -26,13 +26,16 @@ import io.worldofluxury.data.User
 interface UserDao {
 
     @Query("select * from users where id = :id")
-    fun getUserById(id: String): LiveData<User>
+    fun getUserById(id: String): User?
+
+    @Query("select * from users where id = :id")
+    fun watchUserById(id: String): LiveData<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(users: MutableList<User>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: User)
+    fun insert(user: User)
 
     @Update
     suspend fun update(user: User)

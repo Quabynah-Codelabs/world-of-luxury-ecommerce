@@ -81,7 +81,8 @@ android {
         versionName versions.versionName
         vectorDrawables.useSupportLibrary = true
         archivesBaseName = "swan-wol"
-        testInstrumentationRunner "com.skydoves.pokedex.AppTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "io.worldofluxury.SwanTestRunner"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
@@ -128,6 +129,9 @@ android {
             returnDefaultValues = true
         }
     }
+    hilt {
+        enableTransformForLocalTests = true
+    }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -137,6 +141,8 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
         exclude("META-INF/*.kotlin_module")
     }
 }
@@ -196,6 +202,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttpVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttpVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttpVersion"
 
     // moshi
     implementation "com.squareup.moshi:moshi-kotlin:$versions.moshiVersion"
@@ -222,6 +229,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutinesVersion"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutinesVersion"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$versions.glideVersion"

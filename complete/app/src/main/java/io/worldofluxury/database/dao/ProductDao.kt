@@ -25,6 +25,9 @@ import io.worldofluxury.data.Product
 @Dao
 interface ProductDao {
 
+    @Query("select * from products order by id desc")
+    fun getAllProducts(): List<Product>
+
     @Query("select * from products where category = :category order by id desc")
     fun watchAllProducts(category: String): LiveData<List<Product>>
 

@@ -64,11 +64,10 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         private val migrations: Migration =
-            object : Migration(DATABASE_VERSION.minus(1), DATABASE_VERSION) {
+            object : Migration(6, 7) {
                 override fun migrate(database: SupportSQLiteDatabase) {
                     Timber.d("Version -> ${database.version}")
                     database.execSQL("alter table users add column email text")
-                    database.beginTransaction()
                 }
             }
 

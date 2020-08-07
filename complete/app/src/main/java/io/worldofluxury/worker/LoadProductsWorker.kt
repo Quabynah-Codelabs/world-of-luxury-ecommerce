@@ -30,6 +30,7 @@ import io.worldofluxury.data.Product
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.PRODUCT_JSON_FILENAME
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
 import java.io.IOException

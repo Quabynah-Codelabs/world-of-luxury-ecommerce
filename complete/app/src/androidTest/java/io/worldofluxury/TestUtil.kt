@@ -18,18 +18,11 @@
 
 package io.worldofluxury
 
-import org.junit.Test
+import io.worldofluxury.data.User
 
-import org.junit.Assert.*
+object TestUtil {
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+    @JvmStatic
+    fun createUser(uid: String): User = User(uid, "Quabynah", "quabynahdennis@gmail.com", "")
+
 }
