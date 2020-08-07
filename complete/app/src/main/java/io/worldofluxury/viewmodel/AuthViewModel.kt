@@ -37,7 +37,6 @@ import io.worldofluxury.view.home.HomeFragmentDirections
 import io.worldofluxury.view.welcome.WelcomeFragmentDirections
 import kotlinx.coroutines.delay
 import timber.log.Timber
-import java.util.*
 
 
 /**
@@ -62,6 +61,11 @@ class AuthViewModel @ViewModelInject constructor(
         Timber.d("AuthViewModel initialized...")
         val isLoggedIn = userPrefs.isLoggedIn.get()
         if (isLoggedIn) authState.value = AuthenticationState.AUTHENTICATED
+    }
+
+    // todo: implement logout
+    fun logout() {
+        userPrefs.save(null)
     }
 
     // TODO: Implement login

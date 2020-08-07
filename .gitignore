@@ -153,3 +153,10 @@ bower_components
 
 # dotenv environment variables file
 .env
+
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle.kts
+**/*.iml
+**/.idea/*
+**/!.idea/copyright
+**/!.idea/codeStyles/codeStyleConfig.xml

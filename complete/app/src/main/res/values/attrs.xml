@@ -21,4 +21,19 @@
     <attr name="emphasisMedium" format="float" />
     <attr name="emphasisHigh" format="float" />
     <attr name="textAppearancePrice" format="reference" />
+
+    <declare-styleable name="Theme">
+        <!-- Navigation bar divider color, used by NavigationBarContentFrameLayout -->
+        <attr name="navigationBarDividerColor" format="color" />
+
+        <attr name="colorControlLight" format="color" />
+
+        <attr name="colorSurfaceSecondary" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="NavigationBarContentFrameLayout">
+        <attr name="navigationBarBorderColor" format="color" />
+        <attr name="navigationBarBorderSize" format="dimension" />
+    </declare-styleable>
+
 </resources>

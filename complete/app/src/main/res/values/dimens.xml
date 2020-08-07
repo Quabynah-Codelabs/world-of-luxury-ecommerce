@@ -32,7 +32,7 @@
     <dimen name="spacing_x196">196dp</dimen>
     <dimen name="spacing_x256">256dp</dimen>
     <!-- Avatar & Logo. -->
-    <dimen name="large_avatar_size">128dp</dimen>
+    <dimen name="large_avatar_size">112dp</dimen>
     <dimen name="logo_size">256dp</dimen>
     <dimen name="color_icon_size">36dp</dimen>
     <dimen name="product_size">350dp</dimen>
@@ -46,4 +46,24 @@
     <dimen name="promo_header_height">380dp</dimen>
 
     <dimen name="fab_size">56dp</dimen>
+
+    <!-- Dialogs -->
+    <dimen name="dialog_corner_radius">8dp</dimen>
+    <dimen name="dialogPreferredPadding">24dp</dimen>
+    <dimen name="dialogPreferredPaddingLarge">36dp</dimen> <!-- dialogPreferredPadding + 12dp -->
+
+    <!-- Navigation -->
+    <dimen name="nav_drawer_width">@dimen/match_parent</dimen>
+    <dimen name="nav_account_image_size">32dp</dimen>
+    <dimen name="nav_header_logo_size">36dp</dimen>
+    <dimen name="nav_item_horizontal_padding">24dp</dimen>
+    <!-- Intrinsic height may vary. Use a large radius to ensure a semicircle. -->
+    <dimen name="nav_item_background_corner_radius_left">0dp</dimen>
+    <dimen name="nav_item_background_corner_radius_right">100dp</dimen>
+    <dimen name="nav_item_background_inset_left">0dp</dimen>
+    <dimen name="nav_item_background_inset_right">8dp</dimen>>
+
+    <!-- per android.view.ViewGroup.LayoutParams -->
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
 </resources>

@@ -22,6 +22,8 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import io.worldofluxury.util.PASSWORD_LENGTH
 
+fun View.isRtl() = layoutDirection == View.LAYOUT_DIRECTION_RTL
+
 /**
  * shows a [Snackbar] message
  */

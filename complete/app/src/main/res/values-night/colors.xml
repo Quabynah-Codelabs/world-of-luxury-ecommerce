@@ -27,5 +27,5 @@
     <color name="on_error">@color/blacker</color>
     <color name="background">#ff151515</color>
     <color name="error">#ffEC407A</color>
-    <color name="scrim">#40000000</color>
+    <color name="scrim">#40000000</color><!-- 25% black -->
 </resources>

@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.florent37:glidepalette:2.1.2@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fd4ee5d01f398cd6903bcd0f0f6101b1/jetified-glidepalette-2.1.2/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2d704bde8235ffa4a908e1a585a9661d/jetified-glidepalette-2.1.2/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fd4ee5d01f398cd6903bcd0f0f6101b1/jetified-glidepalette-2.1.2/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fd4ee5d01f398cd6903bcd0f0f6101b1/jetified-glidepalette-2.1.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fd4ee5d01f398cd6903bcd0f0f6101b1/jetified-glidepalette-2.1.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2d704bde8235ffa4a908e1a585a9661d/jetified-glidepalette-2.1.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2d704bde8235ffa4a908e1a585a9661d/jetified-glidepalette-2.1.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2d704bde8235ffa4a908e1a585a9661d/jetified-glidepalette-2.1.2/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.florent37/glidepalette/2.1.2/8e36bd9084537819afac0eed2c577e8ab0460c50/glidepalette-2.1.2-javadoc.jar!/" />

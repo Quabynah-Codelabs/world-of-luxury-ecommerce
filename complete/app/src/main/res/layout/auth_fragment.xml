@@ -159,7 +159,7 @@
                     android:contentDescription="@string/sign_in_with_twitter"
                     android:text="@string/sign_in_with_twitter"
                     app:backgroundTint="@color/twitter"
-                    app:icon="@drawable/ic_twotone_right"
+                    app:icon="@drawable/ic_twotone_login"
                     app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/lower_top_horiz_guide" />
@@ -174,7 +174,7 @@
                     android:enabled="true"
                     android:text="@string/sign_in_with_google"
                     app:backgroundTint="@color/google"
-                    app:icon="@drawable/ic_twotone_right"
+                    app:icon="@drawable/ic_twotone_login"
                     app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/twitter_button" />

@@ -19,9 +19,9 @@
 package io.worldofluxury.view.home
 
 import android.os.Bundle
-import android.view.*
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -33,7 +33,6 @@ import io.worldofluxury.R
 import io.worldofluxury.databinding.HomeFragmentBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.CATEGORIES
-import io.worldofluxury.view.MainActivity
 import io.worldofluxury.view.product.ProductPagerFragment
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.ProductViewModel
@@ -49,12 +48,16 @@ class HomeFragment : Fragment() {
 
     @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory
+    private val authVM by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
     @Inject
     lateinit var productViewModelFactory: ProductViewModelFactory
-
     private val viewModel by navGraphViewModels<ProductViewModel>(R.id.wol_nav_graph) { productViewModelFactory }
-    private val authVM by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
+
+
+    init {
+        Timber.tag(APP_TAG)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,26 +68,8 @@ class HomeFragment : Fragment() {
             lifecycleOwner = this@HomeFragment
             vm = viewModel
             authViewModel = authVM
-        }
-        return binding.root
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        Timber.tag(APP_TAG)
-
-        binding.run {
-            with(homeDrawer) {
-                val toggler = ActionBarDrawerToggle(
-                    requireActivity(),
-                    this,
-                    (requireActivity() as MainActivity).binding.bottomAppBar,
-                    R.string.nav_app_bar_open_drawer_description,
-                    R.string.nav_app_bar_navigate_up_description
-                )
-                toggler.syncState()
-                addDrawerListener(toggler)
-            }
+            // setup pager
             homePager.adapter = CategoriesViewPagerAdapter(requireActivity())
             TabLayoutMediator(
                 homeTabs,
@@ -93,7 +78,9 @@ class HomeFragment : Fragment() {
                 true
             ) { tab, position -> tab.text = CATEGORIES[position] }.attach()
             executePendingBindings()
+
         }
+        return binding.root
     }
 
 }

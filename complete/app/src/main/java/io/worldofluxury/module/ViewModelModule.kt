@@ -44,7 +44,8 @@ object ViewModelModule {
     fun provideAuthViewModelProvider(
         userDao: UserDao,
         prefs: UserSharedPreferences
-    ): AuthViewModelFactory = AuthViewModelFactory(userDao, prefs)
+    ): AuthViewModelFactory =
+        AuthViewModelFactory(userDao, prefs)
 
     @Singleton
     @Provides

@@ -21,20 +21,27 @@ package io.worldofluxury.view
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.skydoves.whatif.whatIfNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.binding.gone
 import io.worldofluxury.databinding.ActivityMainBinding
+import io.worldofluxury.databinding.DrawerHeaderBinding
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.view.home.HomeFragmentDirections
+import io.worldofluxury.viewmodel.AuthViewModel
+import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -65,6 +72,10 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     @Inject
     lateinit var userSharedPrefs: UserSharedPreferences
 
+    @Inject
+    lateinit var authViewModelFactory: AuthViewModelFactory
+    private val authVM by viewModels<AuthViewModel> { authViewModelFactory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.tag(APP_TAG)
         // override theme to remove splash image from background
@@ -79,10 +90,36 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                 controller.addOnDestinationChangedListener(this@MainActivity)
                 Timber.d("Controller -> ${controller.currentDestination}")
             }
+            setSupportActionBar(bottomAppBar)
+
+            // setup drawer
+            with(drawer) {
+                val toggler = ActionBarDrawerToggle(
+                    this@MainActivity,
+                    this,
+                    bottomAppBar,
+                    R.string.nav_app_bar_open_drawer_description,
+                    R.string.nav_app_bar_navigate_up_description
+                )
+                toggler.syncState()
+                addDrawerListener(toggler)
+
+                // setup header in drawer navigation view
+                DataBindingUtil.bind<DrawerHeaderBinding>(sidebar.getHeaderView(0)).run {
+                    if (this != null) {
+                        Timber.d("Binding for header started")
+                        vm = authVM
+                        executePendingBindings()
+                    }
+                }
+            }
             executePendingBindings()
         }
 
         userSharedPrefs.liveTheme.observe(this, { state -> Timber.d("Theme state -> $state") })
+        authVM.currentUser.observe(
+            this,
+            { user -> user.whatIfNotNull { Timber.d("MainActivity user -> ${it.name}") } })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
