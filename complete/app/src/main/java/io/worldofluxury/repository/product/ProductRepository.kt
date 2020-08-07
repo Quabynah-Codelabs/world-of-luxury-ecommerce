@@ -18,6 +18,7 @@
 
 package io.worldofluxury.repository.product
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
@@ -52,6 +53,7 @@ class ProductRepository @Inject constructor(
     /**
      * fetch all products from [category]
      */
+    @VisibleForTesting
     fun watchAllProducts(
         category: String,
         toastLiveData: MutableLiveData<String>,

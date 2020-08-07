@@ -85,7 +85,6 @@ class UserRepository @Inject constructor(
                     scope.launch {
                         data.whatIfNotNull {
                             dao.insert(it.results)
-                            prefs.save(it.results.id)
                         }
                     }
                 }

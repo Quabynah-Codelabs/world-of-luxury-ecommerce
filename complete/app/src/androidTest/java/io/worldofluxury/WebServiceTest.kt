@@ -25,8 +25,10 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.util.CATEGORIES
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.withContext
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.After
 import org.junit.Before
@@ -35,7 +37,6 @@ import org.junit.Test
 import java.io.IOException
 import javax.inject.Inject
 
-// https://images.unsplash.com/photo-1514222709107-a180c68d72b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
 class WebServiceTest {
@@ -63,10 +64,12 @@ class WebServiceTest {
     }
 
     @Test
-    fun fetchAllProducts() = coroutinesTestRule.testDispatcher.runBlockingTest {
-//        val toastLiveData = MutableLiveData<String>()
-//        productRepository.watchAllProducts(CATEGORIES[0], toastLiveData).observeOnce {
-//            assertThat(it.size, equalTo(0))
-//        }
+    fun fetchAllProducts() = coroutinesTestRule.runBlockingTest {
+        val toastLiveData = MutableLiveData<String>()
+        withContext(Dispatchers.Main) {
+            productRepository.watchAllProducts(CATEGORIES[0], toastLiveData).observeOnce {
+                assertThat(it.size, equalTo(0))
+            }
+        }
     }
 }

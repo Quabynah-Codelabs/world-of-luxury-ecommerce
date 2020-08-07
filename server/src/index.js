@@ -2,6 +2,7 @@
 let app = require("express")();
 //Import the mongoose module
 var mongoose = require("mongoose");
+var morgan = require("morgan");
 // Import product routes
 let productsRoute = require("./routes/product");
 // Import user routes
@@ -17,6 +18,7 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
+app.use(morgan("dev"));
 app.use("/products", productsRoute);
 app.use("/users", usersRoute);
 

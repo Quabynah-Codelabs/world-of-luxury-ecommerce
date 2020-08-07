@@ -73,7 +73,7 @@ class DatabaseTest {
     // passed
     @Test
     @Throws(Exception::class)
-    fun writeUserAndReadInId() = coroutinesTestRule.testDispatcher.runBlockingTest {
+    fun writeUserAndReadInId() = coroutinesTestRule.runBlockingTest {
         val uid = UUID.randomUUID().toString()
         val user = TestUtil.createUser(uid)
         // fixme: suspend functions causes test to fail with exception: job running without completion

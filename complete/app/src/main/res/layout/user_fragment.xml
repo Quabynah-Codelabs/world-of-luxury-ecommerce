@@ -83,7 +83,8 @@
                     app:avatar="@{vm.currentUser.avatar}"
                     app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/left_vert_guide"
-                    app:layout_constraintTop_toBottomOf="@id/top_horiz_guide" />
+                    app:layout_constraintTop_toBottomOf="@id/top_horiz_guide"
+                    tools:src="@drawable/avatar" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView

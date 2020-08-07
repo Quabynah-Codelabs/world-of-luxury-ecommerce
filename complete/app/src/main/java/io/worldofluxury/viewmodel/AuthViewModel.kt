@@ -85,7 +85,7 @@ class AuthViewModel @ViewModelInject constructor(
 
         // Complete login process
 //        if (Random.nextBoolean()) {
-        val uid = UUID.randomUUID().toString()
+        val uid = "6dda2be7-11c5-44e5-b552-f22fa7ad8a4c"
         userPrefs.save(uid)
         userId.postValue(uid)
         val user = User(

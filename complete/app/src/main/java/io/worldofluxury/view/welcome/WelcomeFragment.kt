@@ -24,19 +24,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
-import io.worldofluxury.database.AppDatabase
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.random.Random
@@ -57,9 +53,6 @@ class WelcomeFragment : Fragment() {
     @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory
     private val viewModel by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
-
-    @Inject
-    lateinit var db: AppDatabase
 
     private val images = mutableListOf(
         R.drawable.world_of_luxury_one,
@@ -90,16 +83,6 @@ class WelcomeFragment : Fragment() {
             executePendingBindings()
         }
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        lifecycleScope.launchWhenStarted {
-            withContext(IO) {
-                db.clearAllTables()
-            }
-        }
     }
 
     /*override fun onActivityCreated(savedInstanceState: Bundle?) {
