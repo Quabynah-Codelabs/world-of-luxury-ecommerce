@@ -63,7 +63,7 @@ class UserFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-         viewModel.currentUser.observe(viewLifecycleOwner, { user -> Timber.d("User is  -> $user") })
+         viewModel.currentUser.observe(viewLifecycleOwner, { user -> Timber.d("User is -> $user") })
     }
 
 }

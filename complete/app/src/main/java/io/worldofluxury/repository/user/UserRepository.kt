@@ -81,7 +81,14 @@ class UserRepository @Inject constructor(
                 }
 
                 // save data to the local database
-                onSuccess { scope.launch { data.whatIfNotNull { dao.insert(it.results) } } }
+                onSuccess {
+                    scope.launch {
+                        data.whatIfNotNull {
+                            dao.insert(it.results)
+                            prefs.save(it.results.id)
+                        }
+                    }
+                }
 
             }
         }

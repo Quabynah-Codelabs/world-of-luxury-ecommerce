@@ -57,7 +57,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             R.id.nav_fav,
             R.id.nav_help,
             R.id.nav_history,
-            R.id.nav_product
+            R.id.nav_product,
+            R.id.nav_user,
         )
     }
 
@@ -124,6 +125,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     ) {
         Timber.d("Current destination -> ${destination.label}")
         with(binding.scanImageFab) {
+            setOnClickListener { controller.navigate(HomeFragmentDirections.actionNavHomeToNavUser()) }
             if (excludedFabDestinations.contains(destination.id)) hide()
             else show()
         }
