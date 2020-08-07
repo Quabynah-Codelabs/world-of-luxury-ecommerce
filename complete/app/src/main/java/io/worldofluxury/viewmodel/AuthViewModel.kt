@@ -88,7 +88,12 @@ class AuthViewModel @ViewModelInject constructor(
         val uid = UUID.randomUUID().toString()
         userPrefs.save(uid)
         userId.postValue(uid)
-        val user = User(uid, "Quabynah", "quabynahdennis@gmail.com")
+        val user = User(
+            uid,
+            "Quabynah",
+            "quabynahdennis@gmail.com",
+            "https://images.unsplash.com/photo-1514222709107-a180c68d72b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+        )
         userDao.insert(user)
         currentUser.postValue(user)
         snackbarLiveData.postValue("Login was successful")

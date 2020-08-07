@@ -81,8 +81,8 @@ android {
         versionName versions.versionName
         vectorDrawables.useSupportLibrary = true
         archivesBaseName = "swan-wol"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//        testInstrumentationRunner "io.worldofluxury.SwanTestRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "io.worldofluxury.SwanTestRunner"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
@@ -131,6 +131,9 @@ android {
     }
     hilt {
         enableTransformForLocalTests = true
+    }
+    configurations.all {
+        resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.0"
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -199,6 +202,8 @@ dependencies {
     // network
     implementation "com.github.skydoves:sandwich:$versions.sandwichVersion"
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
+    androidTestImplementation "com.squareup.retrofit2:retrofit-mock:$versions.retrofitVersion"
+    androidTestImplementation 'com.squareup.spoon:spoon-client:1.3.1'
     implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttpVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttpVersion"
@@ -253,6 +258,7 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockitoKotlinVersion"
     testImplementation "org.mockito:mockito-inline:$versions.mockitoInlineVersion"
     testImplementation "org.robolectric:robolectric:$versions.robolectricVersion"
+//    androidTestImplementation "org.robolectric:robolectric:$versions.robolectricVersion"
     androidTestImplementation "androidx.test:core:$versions.androidxTest"
     androidTestImplementation "com.google.truth:truth:$versions.truthVersion"
     androidTestImplementation "androidx.test.ext:junit:$versions.androidxTestJunit"

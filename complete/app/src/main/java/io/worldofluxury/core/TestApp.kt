@@ -16,20 +16,20 @@
  * limitations under the License.
  */
 
-package io.worldofluxury
+package io.worldofluxury.core
 
 import android.app.Application
-import android.content.Context
-import androidx.test.runner.AndroidJUnitRunner
-import dagger.hilt.android.testing.HiltTestApplication
+import dagger.hilt.android.testing.OnComponentReadyRunner
 
-// A custom runner to set up the instrumented application class for tests.
-class SwanTestRunner : AndroidJUnitRunner() {
+abstract class TestApp : Application() {
 
-    override fun newApplication(cl: ClassLoader?, name: String?, context: Context?): Application {
-        return super.newApplication(cl, HiltTestApplication::class.java.name, context)
+    override fun onCreate() {
+        super.onCreate()
+
+        OnComponentReadyRunner.addListener(
+            this,
+            Any::class.java
+        ) { super.onCreate() }
     }
-}
 
-//@CustomTestApplication(TestApp::class)
-//interface HiltTestApplication
+}

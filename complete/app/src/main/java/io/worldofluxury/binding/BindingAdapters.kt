@@ -71,7 +71,7 @@ fun bindRandomImage(imageView: ImageView, @DrawableRes src: Int) {
 }
 
 @BindingAdapter("url")
-fun bindLoadImageUrl(view: AppCompatImageView, url: String) {
+fun bindLoadImageUrl(view: AppCompatImageView, url: String?) {
     val context = view.context
     GlideApp.with(view.context)
         .load(url)

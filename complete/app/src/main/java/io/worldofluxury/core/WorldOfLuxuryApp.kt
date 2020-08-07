@@ -18,7 +18,6 @@
 
 package io.worldofluxury.core
 
-import android.app.Application
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.work.HiltWorkerFactory
@@ -30,7 +29,7 @@ import io.worldofluxury.preferences.UserSharedPreferences
 import javax.inject.Inject
 
 @HiltAndroidApp
-class WorldOfLuxuryApp : Application(), Configuration.Provider {
+class WorldOfLuxuryApp : TestApp(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
