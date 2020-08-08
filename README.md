@@ -4,7 +4,7 @@ An e-commerce app illustrating Android development best practices with Android J
 
 ## Introduction
 
-![Swan](artwork/banners/Wallpaper.png "Swan - World of Luxury")
+![Swan](artwork/banners/wallpaper_brown.png "Swan - World of Luxury")
 
 Swan is an e-commerce platform for an imaginary store called "World of Luxury". This app will have/use:
 
