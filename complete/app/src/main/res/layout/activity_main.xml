@@ -22,11 +22,11 @@
 
     <data>
 
-        <import type="io.worldofluxury.preferences.PreferenceStorage" />
+        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
 
         <variable
-            name="prefs"
-            type="PreferenceStorage" />
+            name="vm"
+            type="AuthViewModel" />
 
     </data>
 
@@ -86,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/cd_toggle_theme"
-                        android:enabled="@{prefs.isFeatureAvailable()}"
+                        android:enabled="@{vm.isFeatureAvailable()}"
                         android:src="@drawable/ic_twotone_image_search"
                         app:layout_anchor="@id/bottom_app_bar"
                         tools:enabled="false" />
@@ -101,6 +101,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 app:insetForeground="@color/transparent"
+                style="@style/Widget.WorldOfLuxury.NavigationView"
                 app:menu="@menu/home_menu" />
 
         </androidx.drawerlayout.widget.DrawerLayout>

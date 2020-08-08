@@ -31,10 +31,6 @@
             type="Integer" />
 
         <variable
-            name="prefs"
-            type="PreferenceStorage" />
-
-        <variable
             name="vm"
             type="AuthViewModel" />
     </data>
@@ -99,7 +95,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_x36"
             android:onClick="@{(v) -> vm.navLoginOrHome(v)}"
-            android:text="@{prefs.isLoggedIn() ? @string/continue_shopping : @string/get_started, default=`@string/get_started`}"
+            tools:text="@string/get_started"
+            android:text="@{vm.isLoggedIn() ? @string/continue_shopping : @string/get_started}"
             app:icon="@drawable/ic_twotone_right"
             app:layout_constraintStart_toEndOf="@id/left_vert_guide"
             app:layout_constraintTop_toBottomOf="@id/app_desc__two" />

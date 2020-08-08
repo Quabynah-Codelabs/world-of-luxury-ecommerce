@@ -24,9 +24,11 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WorldOfLuxury"
+        android:theme="@style/Theme.WorldOfLuxury.Splash"
         tools:targetApi="n">
-        <activity android:name=".view.OnboardingActivity" />
+        <activity
+            android:name=".view.OnboardingActivity"
+            android:theme="@style/Theme.WorldOfLuxury.Onboarding" />
         <activity
             android:name=".view.LaunchActivity"
             android:theme="@style/Theme.WorldOfLuxury.Splash">

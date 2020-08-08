@@ -21,10 +21,10 @@ package io.worldofluxury.binding
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.os.BuildCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -94,9 +94,8 @@ data class ViewPaddingState(
     val end: Int
 )
 
-@SuppressLint("NewApi") // Lint does not understand isAtLeastQ currently
 fun DrawerLayout.shouldCloseDrawerFromBackPress(): Boolean {
-    if (BuildCompat.isAtLeastQ()) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         // If we're running on Q, and this call to closeDrawers is from a key event
         // (for back handling), we should only honor it IF the device is not currently
         // in gesture mode. We approximate that by checking the system gesture insets

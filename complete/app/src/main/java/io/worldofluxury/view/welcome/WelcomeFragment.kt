@@ -29,7 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
-import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
@@ -62,9 +61,6 @@ class WelcomeFragment : Fragment() {
     )
 
     @Inject
-    lateinit var userPrefs: PreferenceStorage
-
-    @Inject
     lateinit var productDao: ProductDao
 
     override fun onCreateView(
@@ -76,7 +72,6 @@ class WelcomeFragment : Fragment() {
         binding.run {
             lifecycleOwner = this@WelcomeFragment
             vm = viewModel
-            prefs = userPrefs
 
             val nextImageLocation = Random.nextInt(images.size)
             image = images[nextImageLocation]
@@ -84,28 +79,5 @@ class WelcomeFragment : Fragment() {
         }
         return binding.root
     }
-
-    /*override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        lifecycleScope.launchWhenStarted {
-            userPrefs.save(null)
-            try {
-                requireActivity().assets.open(PRODUCT_JSON_FILENAME).use { inputStream ->
-                    JsonReader(inputStream.reader()).use { jsonReader ->
-                        val type = object : TypeToken<List<Product>>() {}.type
-                        val list: List<Product> = Gson().fromJson(jsonReader, type)
-
-                        productDao.insertAll(list.toMutableList())
-                        Timber.d("Products added to database successfully")
-                        ListenableWorker.Result.success()
-                    }
-                }
-            } catch (ex: IOException) {
-                Timber.e("Error adding products to database")
-                ListenableWorker.Result.failure()
-            }
-        }
-    }*/
 
 }

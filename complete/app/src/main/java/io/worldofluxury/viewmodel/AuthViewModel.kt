@@ -50,30 +50,29 @@ class AuthViewModel @ViewModelInject constructor(
     private val userPrefs: PreferenceStorage,
     private val userDao: UserDao
 ) :
-    LiveCoroutinesViewModel() {
+    LiveCoroutinesViewModel(), PreferenceStorage by userPrefs {
 
     enum class AuthenticationState {
         NONE, AUTHENTICATING, AUTHENTICATED, ERROR
     }
 
     val authState: MutableLiveData<AuthenticationState> = MutableLiveData(AuthenticationState.NONE)
-    val snackbarLiveData: MutableLiveData<String> = MutableLiveData()
+    val toastLiveData: MutableLiveData<String> = MutableLiveData()
     val currentUser: MutableLiveData<User> = MutableLiveData()
 
     init {
         Timber.tag(APP_TAG)
-        Timber.d("AuthViewModel initialized...")
-        val isLoggedIn = userPrefs.isLoggedIn.get()
-        if (isLoggedIn) {
+        if (userPrefs.isLoggedIn.get()) {
             authState.value = AuthenticationState.AUTHENTICATED
             launchInBackground {
                 currentUser.postValue(
                     userDao.getUserById(userPrefs.userId)
-                        .also { Timber.d("Found user -> ${it?.name}") })
+                        .apply { Timber.d("Found user -> ${this?.name}") })
             }
         }
     }
 
+    // sign out
     fun logout(v: View) {
         MaterialAlertDialogBuilder(v.context).apply {
             setTitle("Confirmation required")
@@ -112,13 +111,13 @@ class AuthViewModel @ViewModelInject constructor(
         // Validate email & password (should be longer than 6 characters)
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches() || password.isTooShort()) {
             authState.postValue(AuthenticationState.ERROR)
-            snackbarLiveData.postValue("There is a problem with your credentials. Please check and try again")
+            toastLiveData.postValue("There is a problem with your credentials. Please check and try again")
             return@launchOnViewModelScope userId
         }
 
         // Begin login process
         authState.postValue(AuthenticationState.AUTHENTICATING)
-        snackbarLiveData.postValue("Signing you in...")
+        toastLiveData.postValue("Signing you in...")
 
         // Simulate network call
         delay(3500)
@@ -135,7 +134,7 @@ class AuthViewModel @ViewModelInject constructor(
         )
         userDao.insert(user)
         currentUser.postValue(user)
-        snackbarLiveData.postValue("Login was successful")
+        toastLiveData.postValue("Login was successful")
         authState.postValue(AuthenticationState.AUTHENTICATED)
 
         // Send live data to observer
@@ -145,17 +144,9 @@ class AuthViewModel @ViewModelInject constructor(
 
     fun navLoginOrHome(view: View) {
         view.findNavController().navigate(
-            if (authState.value == AuthenticationState.AUTHENTICATED) WelcomeFragmentDirections.actionNavWelcomeToNavHome()
+            if (userPrefs.isLoggedIn.get()) WelcomeFragmentDirections.actionNavWelcomeToNavHome()
             else WelcomeFragmentDirections.actionNavWelcomeToNavAuth()
         )
-    }
-
-    // navigate to profile
-    fun navToProfile(v: View) {
-        if (v.context.applicationContext is AppCompatActivity)
-            findNavController(v.context as Activity, R.id.nav_host_fragment).navigate(
-                HomeFragmentDirections.actionNavHomeToNavUser()
-            )
     }
 
     // navigate to login or cart

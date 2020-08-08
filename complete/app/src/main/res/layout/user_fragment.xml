@@ -22,13 +22,13 @@
 
     <data>
 
-        <import type="io.worldofluxury.view.user.UserViewModel" />
+        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
 
         <import type="io.worldofluxury.data.User" />
 
         <variable
             name="vm"
-            type="UserViewModel" />
+            type="AuthViewModel" />
     </data>
 
     <FrameLayout
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/spacing_x72"
-                app:snackbar="@{vm.toastLiveData}">
+                app:toast="@{vm.toastLiveData}">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/left_vert_guide"
@@ -118,19 +118,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/arrow"
-            android:layout_width="@dimen/spacing_x72"
-            android:layout_height="@dimen/spacing_x72"
-            android:layout_gravity="top|start"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@android:color/transparent"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_twotone_back"
-            android:translationZ="@dimen/z_product_card"
-            app:onBackPressed="@{true}"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav" />
 
     </FrameLayout>
 </layout>

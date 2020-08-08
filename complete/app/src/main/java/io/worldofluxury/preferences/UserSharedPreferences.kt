@@ -99,8 +99,9 @@ class UserSharedPreferences @Inject constructor(@ApplicationContext context: Con
     override val liveOnboardingState: MutableLiveData<Boolean> = MutableLiveData()
     override val liveTheme: MutableLiveData<Int> = MutableLiveData()
 
-    override val isLoggedIn: ObservableBoolean = ObservableBoolean(false)
-    override val isDarkMode: ObservableBoolean = ObservableBoolean(false)
+    override val isLoggedIn: ObservableBoolean = ObservableBoolean(!userId.isNullOrEmpty())
+    override val isDarkMode: ObservableBoolean =
+        ObservableBoolean(currentTheme == AppCompatDelegate.MODE_NIGHT_YES)
     override val isFeatureAvailable: ObservableBoolean = ObservableBoolean(true)
 
     // update theme
@@ -119,7 +120,7 @@ class UserSharedPreferences @Inject constructor(@ApplicationContext context: Con
 
     init {
         Timber.tag(APP_TAG)
-        Timber.i("UID -> $userId & theme -> $currentTheme & onboarding -> $onboardingCompleted")
+        Timber.i("UID -> $userId & theme -> $currentTheme & onboarding -> $onboardingCompleted & login -> ${isLoggedIn.get()}")
     }
 
 }

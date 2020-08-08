@@ -73,11 +73,23 @@
         <item name="colorControlLight">@color/color_control_light</item>
         <item name="colorSurfaceSecondary">@color/color_surface_secondary</item>
         <item name="navigationBarDividerColor">?attr/colorControlLight</item>
+
+        <!-- Page transitions. -->
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
     <!-- Splash Theme. -->
     <style name="Theme.WorldOfLuxury.Splash">
         <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <!-- Onboarding Theme. -->
+    <style name="Theme.WorldOfLuxury.Onboarding">
+        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
 
     <!-- Search Theme. -->

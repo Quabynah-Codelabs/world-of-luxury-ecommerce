@@ -19,6 +19,7 @@
 package io.worldofluxury.view
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -64,7 +65,10 @@ class LauncherViewModel @ViewModelInject constructor(private val prefs: Preferen
 
     fun completeOnboarding(v: View, host: Activity) {
         prefs.onboardingCompleted = true
-        host.startActivity(Intent(v.context, MainActivity::class.java))
+        host.startActivity(
+            Intent(v.context, MainActivity::class.java)/*,
+            ActivityOptions.makeSceneTransitionAnimation(host).toBundle()*/
+        )
         host.finish()
     }
 }

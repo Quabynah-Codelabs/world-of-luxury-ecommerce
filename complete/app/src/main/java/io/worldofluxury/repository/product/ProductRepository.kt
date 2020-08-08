@@ -103,6 +103,6 @@ class DefaultProductRepository @Inject constructor(
         }
 
     override suspend fun addToCart(product: Product): Unit =
-        dao.update(product.copy(isFavorite = true))
+        dao.update(product.copy(isFavorite = !product.isFavorite))
 
 }

@@ -85,6 +85,7 @@
     </style>
 
     <style name="Widget.WorldOfLuxury.NavigationView" parent="@style/Widget.MaterialComponents.NavigationView">
+        <item name="android:background">?android:colorBackground</item>
         <item name="itemBackground">@drawable/navigation_item_background</item>
         <item name="itemHorizontalPadding">@dimen/nav_item_horizontal_padding</item>
     </style>

@@ -32,6 +32,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.skydoves.whatif.whatIf
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,13 +41,12 @@ import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.binding.doOnApplyWindowInsets
 import io.worldofluxury.binding.gone
 import io.worldofluxury.binding.navigationItemBackground
+import io.worldofluxury.binding.showSnackBar
 import io.worldofluxury.databinding.ActivityMainBinding
 import io.worldofluxury.databinding.DrawerHeaderBinding
-import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.HeightTopWindowInsetsListener
 import io.worldofluxury.util.NoopWindowInsetsListener
-import io.worldofluxury.view.home.HomeFragmentDirections
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
 import io.worldofluxury.widget.SpaceDecoration
@@ -60,20 +60,15 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     private lateinit var controller: NavController
 
     @Inject
-    lateinit var userPrefs: PreferenceStorage
-
-    @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory
     private val authVM by viewModels<AuthViewModel> { authViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.tag(APP_TAG)
-        // override theme to remove splash image from background
-        setTheme(R.style.Theme_WorldOfLuxury)
         super.onCreate(savedInstanceState)
         binding.run {
             lifecycleOwner = this@MainActivity
-            prefs = userPrefs
+            vm = authVM
             setSupportActionBar(bottomAppBar)
             with(supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment) {
                 controller = findNavController()
@@ -94,8 +89,6 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                 addDrawerListener(toggler)
             }
 
-            // add item background for sidebar
-            sidebar.itemBackground = navigationItemBackground(this@MainActivity)
 
             // apply window insets
             drawerContainer.setOnApplyWindowInsetsListener { v, insets ->
@@ -131,7 +124,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             statusBarScrim.setOnApplyWindowInsetsListener(HeightTopWindowInsetsListener)
 
             // observe theme
-            userPrefs.liveTheme.observe(
+            authVM.liveTheme.observe(
                 this@MainActivity,
                 { state -> Timber.d("Theme state -> $state") })
 
@@ -142,11 +135,18 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
 
                     // update menu based on user login state
                     sidebar.run {
+                        // add item background for sidebar
+                        itemBackground = navigationItemBackground(this@MainActivity)
+                        this.setupWithNavController(controller)
+
                         menu.findItem(R.id.nav_cart).isVisible = user != null
-                        menu.findItem(R.id.nav_fav).isVisible = user != null
                         menu.findItem(R.id.nav_history).isVisible = user != null
                         menu.findItem(R.id.nav_user).isVisible = user != null
                     }
+
+                    // re-layout the options menu for our bottom nav
+                    invalidateOptionsMenu()
+
                     // setup header in drawer navigation view
                     val headerBinding: DrawerHeaderBinding =
                         DrawerHeaderBinding.inflate(layoutInflater)
@@ -154,6 +154,10 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                         Timber.d("Binding for header started")
                         vm = authVM
 
+                        root.setOnClickListener {
+                            controller.navigate(R.id.nav_user)
+                            drawer.closeDrawers()
+                        }
                         val menuView =
                             findViewById<RecyclerView>(R.id.design_navigation_view)?.apply {
                                 addItemDecoration(SpaceDecoration())
@@ -188,9 +192,9 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         val themeMenuItem = menu?.findItem(R.id.toggle_theme)
         if (themeMenuItem != null) {
             with(themeMenuItem) {
-                isVisible = userPrefs.isLoggedIn.get()
+                isVisible = authVM.isLoggedIn.get()
                 val themeIcon =
-                    if (userPrefs.isDarkMode.get()) R.drawable.ic_twotone_sun else R.drawable.ic_twotone_moon
+                    if (authVM.isDarkMode.get()) R.drawable.ic_twotone_sun else R.drawable.ic_twotone_moon
                 icon = ResourcesCompat.getDrawable(resources, themeIcon, theme)
             }
         }
@@ -199,10 +203,10 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_search -> controller.navigate(HomeFragmentDirections.actionNavHomeToNavSearch())
+            R.id.nav_search -> controller.navigate(item.itemId)
 
             R.id.toggle_theme -> {
-                userPrefs.updateTheme()
+                authVM.updateTheme()
 
                 // this prompts the menu to be laid out again
                 invalidateOptionsMenu()
@@ -227,8 +231,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             setDrawerLockMode(lockMode)
         }
         with(binding.scanImageFab) {
-            setOnClickListener { controller.navigate(HomeFragmentDirections.actionNavHomeToNavUser()) }
-            if (shouldBeGone) hide()
+            setOnClickListener { showSnackBar("Feature unavailable") }
+            if (EXCLUDED_FAB_DESTINATIONS.contains(destination.id)) hide()
             else show()
         }
         with(binding.bottomAppBar) {
@@ -243,9 +247,14 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         private val EXCLUDED_DESTINATIONS = setOf(
             R.id.nav_auth,
             R.id.nav_welcome,
-            R.id.nav_search,
             R.id.nav_checkout,
-            R.id.nav_fav,
+            R.id.nav_help
+        )
+
+        private val EXCLUDED_FAB_DESTINATIONS = setOf(
+            R.id.nav_auth,
+            R.id.nav_welcome,
+            R.id.nav_checkout,
             R.id.nav_help,
             R.id.nav_history,
             R.id.nav_product,

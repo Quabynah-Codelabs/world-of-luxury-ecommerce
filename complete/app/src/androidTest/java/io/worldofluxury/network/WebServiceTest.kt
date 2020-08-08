@@ -16,41 +16,43 @@
  * limitations under the License.
  */
 
-package io.worldofluxury
+package io.worldofluxury.network
 
+import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.worldofluxury.core.CoroutineTestRule
-import io.worldofluxury.preferences.PreferenceStorage
+import io.worldofluxury.repository.product.ProductRepository
+import io.worldofluxury.repository.user.UserRepository
+import io.worldofluxury.util.CATEGORIES
+import io.worldofluxury.util.observeOnce
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.withContext
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 
-/**
- *  @project World of Luxury
- *  @author Bilson Jr.
- *  @by Quabynah Codelabs LLC
- *  @since 08/08/2020 @ 04:28
- *
- *  Test for [PreferenceStorage]
- */
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-class PreferenceStorageTest {
+class WebServiceTest {
     @get:Rule
     var coroutinesTestRule = CoroutineTestRule()
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var productRepository: ProductRepository
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     @Before
     fun setup() {
@@ -63,19 +65,13 @@ class PreferenceStorageTest {
 
     }
 
-    @Inject
-    lateinit var prefs: PreferenceStorage
-
     @Test
-    fun saveUserIdAndRetrieveValue() = coroutinesTestRule.runBlockingTest {
-        // create user id
-        val uid = UUID.randomUUID().toString()
-        // save to prefs
-        prefs.userId = uid
-        // simulate delay
-        delay(5000)
-        // verify data has been saved
-        assertThat(uid, equalTo(prefs.userId))
+    fun fetchAllProducts() = coroutinesTestRule.runBlockingTest {
+        val toastLiveData = MutableLiveData<String>()
+        withContext(Dispatchers.Main) {
+            productRepository.watchAllProducts(CATEGORIES[0], toastLiveData).observeOnce {
+                assertThat(it.size, equalTo(0))
+            }
+        }
     }
-
 }

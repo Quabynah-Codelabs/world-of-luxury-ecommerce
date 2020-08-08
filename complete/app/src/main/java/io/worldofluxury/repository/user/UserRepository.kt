@@ -37,6 +37,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface UserRepository : Repository {
     fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User>
@@ -47,6 +48,7 @@ interface UserRepository : Repository {
 /**
  * [Repository] for [User] data source
  */
+@Singleton
 class DefaultUserRepository @Inject constructor(
     private val dao: UserDao,
     private val prefs: PreferenceStorage,

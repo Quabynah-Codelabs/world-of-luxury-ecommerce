@@ -171,7 +171,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycleVersion"
     implementation "androidx.paging:paging-runtime-ktx:$versions.pagingVersion"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation "androidx.paging:paging-common-ktx:$versions.pagingVersion"
     implementation "androidx.room:room-runtime:$versions.roomVersion"
     implementation "androidx.room:room-ktx:$versions.roomVersion"
     kapt "androidx.room:room-compiler:$versions.roomVersion"
@@ -181,7 +180,8 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$versions.navVersion"
     implementation "androidx.work:work-runtime-ktx:$versions.workVersion"
     androidTestImplementation "androidx.work:work-testing:$versions.workVersion"
-    testImplementation "androidx.arch.core:core-testing:$versions.archCompomentVersion"
+    androidTestImplementation "androidx.paging:paging-common-ktx:$versions.pagingVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$versions.archCompomentVersion"
 
     // startup
     implementation "androidx.startup:startup-runtime:$versions.startupVersion"

@@ -30,6 +30,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.databinding.UserFragmentBinding
 import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.viewmodel.AuthViewModel
+import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
 import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
@@ -43,9 +45,8 @@ class UserFragment : Fragment() {
     }
 
     @Inject
-    lateinit var userViewModelFactory: UserViewModelFactory
-
-    private val viewModel by navGraphViewModels<UserViewModel>(R.id.wol_nav_graph) { userViewModelFactory }
+    lateinit var authViewModelFactory: AuthViewModelFactory
+    private val viewModel by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

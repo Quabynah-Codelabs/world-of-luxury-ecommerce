@@ -16,24 +16,58 @@
  * limitations under the License.
  */
 
-package io.worldofluxury
+package io.worldofluxury.view
 
+import android.app.LauncherActivity
+import android.content.Context
+import android.content.Intent
+import androidx.test.core.app.ActivityScenario
+import androidx.test.platform.app.InstrumentationRegistry
+import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.worldofluxury.core.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
+import java.io.IOException
 
 /**
  *  @project World of Luxury
  *  @author Bilson Jr.
- *  @since 07/08/2020 @ 17:39
+ *  @by Quabynah Codelabs LLC
+ *  @since 08/08/2020 @ 04:52
  */
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
-class FragmentTest {
+class ActivityTest {
 
     @get:Rule
     var coroutinesTestRule = CoroutineTestRule()
 
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    private lateinit var context: Context
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+        context = InstrumentationRegistry.getInstrumentation().context
+    }
+
+    @After
+    @Throws(IOException::class)
+    fun tearDown() {
+
+    }
+
+    @Test
+    fun navFromLauncherToOnboardingOrMainActivity() = coroutinesTestRule.runBlockingTest {
+        //val launcherActivity = launchActivity<LauncherActivity>()
+
+    }
 
 }

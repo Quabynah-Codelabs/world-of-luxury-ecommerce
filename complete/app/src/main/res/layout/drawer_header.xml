@@ -37,7 +37,6 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
-        android:onClick="@{(v) -> vm.navToProfile(v)}"
         android:paddingHorizontal="@dimen/spacing_xlarge"
         android:paddingVertical="@dimen/spacing_large">
 

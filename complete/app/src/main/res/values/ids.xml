@@ -24,7 +24,6 @@
     <item name="nav_checkout" type="id" />
     <item name="nav_search" type="id" />
     <item name="nav_cart" type="id" />
-    <item name="nav_fav" type="id" />
     <item name="nav_user" type="id" />
     <item name="nav_help" type="id" />
     <item name="nav_history" type="id" />
