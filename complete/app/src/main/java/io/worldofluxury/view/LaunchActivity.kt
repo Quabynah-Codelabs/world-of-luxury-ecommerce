@@ -28,11 +28,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.AndroidEntryPoint
+import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.binding.checkAllMatched
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
+import kotlinx.coroutines.delay
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -52,6 +54,13 @@ class LauncherViewModel @ViewModelInject constructor(private val prefs: UserShar
         } else {
             emit(LaunchDestination.ONBOARDING)
         }
+    }
+
+    // simulate loading resources from server
+    val loadingResourcesLiveData = liveData {
+        emit(true)
+        delay(3500)
+        emit(false)
     }
 
     fun completeOnboarding(v: View, host: Activity) {
@@ -77,7 +86,7 @@ class LaunchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        launcherViewModel.onboardingCompleted = false
+        if (DEBUG) launcherViewModel.onboardingCompleted = false
         launcherViewModel.launchDestination.observe(this, { destination ->
             Timber.d("Current user id from prefs -> $destination")
             when (destination) {

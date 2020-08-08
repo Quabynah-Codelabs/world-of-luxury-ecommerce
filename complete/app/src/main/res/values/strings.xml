@@ -67,4 +67,5 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="explore">explore</string>
+    <string name="loading">Loading…</string>
 </resources>
