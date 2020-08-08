@@ -1,21 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020.
-  ~ Designed and developed by @quabynah_codelabs (Dennis Bilson)
-  ~
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="io.worldofluxury"
@@ -26,14 +9,14 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="io.worldofluxury.core.WorldOfLuxuryApp"
+        android:name=".core.WorldOfLuxuryApp"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -41,15 +24,22 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WorldOfLuxury.Splash"
+        android:theme="@style/Theme.WorldOfLuxury"
         tools:targetApi="n">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.OnboardingActivity" />
+        <activity
+            android:name=".view.LaunchActivity"
+            android:theme="@style/Theme.WorldOfLuxury.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.MainActivity"
+            android:theme="@style/Theme.WorldOfLuxury" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -59,19 +49,15 @@
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="merge">
-
             <meta-data
                 android:name="io.worldofluxury.initializer.TimberInitializer"
                 android:value="androidx.startup" />
-
         </provider>
-
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
             android:exported="false"
             tools:node="remove" />
-
     </application>
 
 </manifest>

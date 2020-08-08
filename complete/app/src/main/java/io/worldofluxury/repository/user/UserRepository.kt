@@ -63,7 +63,7 @@ class UserRepository @Inject constructor(
         emitSource(user)
 
         // perform network call for user data
-        webService.getUserById(prefs.userId.get()).whatIfNotNull { response ->
+        webService.getUserById(prefs.userId).whatIfNotNull { response ->
             with(response) {
                 onError {
                     toastLiveData.postValue("Cannot get user data at this time")

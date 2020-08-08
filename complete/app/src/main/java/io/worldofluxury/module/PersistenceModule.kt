@@ -19,10 +19,12 @@
 package io.worldofluxury.module
 
 import android.app.Application
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.worldofluxury.database.AppDatabase
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
@@ -35,8 +37,8 @@ object PersistenceModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(application: Application): AppDatabase =
-        AppDatabase.get(application.baseContext)
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
+        AppDatabase.get(context)
 
     @Provides
     @Singleton
@@ -48,6 +50,6 @@ object PersistenceModule {
 
     @Provides
     @Singleton
-    fun provideUserSharedPreferences(application: Application): UserSharedPreferences =
-        UserSharedPreferences.get(application.baseContext)
+    fun provideUserSharedPreferences(@ApplicationContext context: Context): UserSharedPreferences =
+        UserSharedPreferences(context)
 }

@@ -68,7 +68,7 @@ class AuthViewModel @ViewModelInject constructor(
             authState.value = AuthenticationState.AUTHENTICATED
             launchInBackground {
                 currentUser.postValue(
-                    userDao.getUserById(userPrefs.userId.get())
+                    userDao.getUserById(userPrefs.userId)
                         .also { Timber.d("Found user -> ${it?.name}") })
             }
         }
@@ -150,6 +150,15 @@ class AuthViewModel @ViewModelInject constructor(
         )
     }
 
+    // navigate to profile
+    fun navToProfile(v: View) {
+        if (v.context.applicationContext is AppCompatActivity)
+            findNavController(v.context as Activity, R.id.nav_host_fragment).navigate(
+                HomeFragmentDirections.actionNavHomeToNavUser()
+            )
+    }
+
+    // navigate to login or cart
     fun navLoginOrCart(view: View) {
         val context = view.context
         if (authState.value == AuthenticationState.AUTHENTICATED) {

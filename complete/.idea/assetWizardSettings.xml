@@ -91,7 +91,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="F:\GitHub\personal-projects\android\world-of-luxury-ecommerce\artwork\logo.png" />
+                                                <entry key="imagePath" value="F:\GitHub\personal-projects\android\world-of-luxury-ecommerce\artwork\images\swan.png" />
                                                 <entry key="scalingPercent" value="62" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
@@ -121,11 +121,6 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
-                                    </map>
-                                  </option>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="legacyIconShape" value="NONE" />
                                     </map>
                                   </option>
                                 </PersistentState>

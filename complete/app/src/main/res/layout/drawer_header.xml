@@ -34,6 +34,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:onClick="@{(v) -> vm.navToProfile(v)}"
         android:paddingHorizontal="@dimen/spacing_xlarge"
         android:paddingVertical="@dimen/spacing_large">
 
@@ -55,6 +59,7 @@
             android:maxLines="1"
             android:text="@{vm.currentUser.name}"
             android:textAppearance="?textAppearanceHeadline6"
+            app:layout_constraintBottom_toTopOf="@id/user_email"
             app:layout_constraintStart_toEndOf="@id/user_avatar"
             app:layout_constraintTop_toTopOf="@id/user_avatar"
             tools:text="@tools:sample/full_names" />
@@ -68,6 +73,7 @@
             android:maxLines="1"
             android:text="@{vm.currentUser.email}"
             android:textAppearance="?textAppearanceCaption"
+            app:layout_constraintBottom_toBottomOf="@id/user_avatar"
             app:layout_constraintStart_toEndOf="@id/user_avatar"
             app:layout_constraintTop_toBottomOf="@id/user_name"
             tools:text="@tools:sample/us_phones" />

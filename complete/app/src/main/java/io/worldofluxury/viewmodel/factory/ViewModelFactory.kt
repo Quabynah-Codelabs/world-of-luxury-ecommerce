@@ -24,6 +24,7 @@ import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
+import io.worldofluxury.view.LauncherViewModel
 import io.worldofluxury.view.user.UserViewModel
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.ProductViewModel
@@ -51,4 +52,12 @@ class UserViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         UserViewModel(repository) as T
+}
+
+@Suppress("UNCHECKED_CAST")
+class LaunchViewModelFactory(
+    private val prefs: UserSharedPreferences
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+        LauncherViewModel(prefs) as T
 }

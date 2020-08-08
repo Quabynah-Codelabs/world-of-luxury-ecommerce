@@ -28,6 +28,7 @@ import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import javax.inject.Singleton
@@ -58,5 +59,12 @@ object ViewModelModule {
     fun provideUserViewModelProvider(
         repository: UserRepository
     ): UserViewModelFactory = UserViewModelFactory(repository)
+
+    @Singleton
+    @Provides
+    fun provideLaunchViewModelProvider(
+        prefs: UserSharedPreferences
+    ): LaunchViewModelFactory = LaunchViewModelFactory(prefs)
+
 
 }
