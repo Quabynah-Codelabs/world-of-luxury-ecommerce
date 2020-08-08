@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package io.worldofluxury
+package io.worldofluxury.util
 
 import androidx.lifecycle.*
 

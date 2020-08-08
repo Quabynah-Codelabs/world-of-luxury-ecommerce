@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package io.worldofluxury
+package io.worldofluxury.core
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

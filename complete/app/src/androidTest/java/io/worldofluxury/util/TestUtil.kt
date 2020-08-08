@@ -16,20 +16,13 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.core
+package io.worldofluxury.util
 
-import android.app.Application
-import dagger.hilt.android.testing.OnComponentReadyRunner
+import io.worldofluxury.data.User
 
-abstract class TestApp : Application() {
+object TestUtil {
 
-    override fun onCreate() {
-        super.onCreate()
-
-        OnComponentReadyRunner.addListener(
-            this,
-            Any::class.java
-        ) { super.onCreate() }
-    }
+    @JvmStatic
+    fun createUser(uid: String): User = User(uid, "Quabynah", "quabynahdennis@gmail.com", "")
 
 }
