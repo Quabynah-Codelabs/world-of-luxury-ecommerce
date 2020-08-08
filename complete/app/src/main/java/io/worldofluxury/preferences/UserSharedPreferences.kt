@@ -24,7 +24,6 @@ import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.databinding.ObservableBoolean
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.skydoves.whatif.whatIfNotNull
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -35,17 +34,41 @@ import javax.inject.Singleton
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+/**
+ * Interface for [UserSharedPreferences]
+ */
 interface PreferenceStorage {
+
     var onboardingCompleted: Boolean
     var userId: String?
     var currentTheme: Int
 
+    // observable variables
+    val isLoggedIn: ObservableBoolean
+    val isDarkMode: ObservableBoolean
+    val isFeatureAvailable: ObservableBoolean
+
+    // live variables
+    val liveUserId: MutableLiveData<String>
+    val liveOnboardingState: MutableLiveData<Boolean>
+    val liveTheme: MutableLiveData<Int>
+
+    fun updateTheme()
+    fun showCurrentTheme()
 }
 
+/**
+ * Implementation of [PreferenceStorage] for [SharedPreferences]
+ */
 @Singleton
 class UserSharedPreferences @Inject constructor(@ApplicationContext context: Context) :
     PreferenceStorage {
 
+    init {
+        Timber.tag(APP_TAG)
+    }
+
+    // init prefs
     private val prefs: Lazy<SharedPreferences> = lazy {
         context.applicationContext.getSharedPreferences(
             PREFS_NAME,
@@ -53,25 +76,21 @@ class UserSharedPreferences @Inject constructor(@ApplicationContext context: Con
         ).apply { registerOnSharedPreferenceChangeListener(changeListener) }
     }
 
+    // init listener
     private val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         when (key) {
-            USER_ID_KEY -> _liveUserId.value = userId
+            USER_ID_KEY -> {
+                liveUserId.value = userId
+                isLoggedIn.set(!userId.isNullOrEmpty())
+            }
             APP_THEME_KEY -> {
-                _liveTheme.value = currentTheme
+                liveTheme.value = currentTheme
+                isDarkMode.set(currentTheme == AppCompatDelegate.MODE_NIGHT_YES)
                 AppCompatDelegate.setDefaultNightMode(currentTheme)
             }
-            ONBOARDING_KEY -> _onboardingState.value = onboardingCompleted
+            ONBOARDING_KEY -> liveOnboardingState.value = onboardingCompleted
         }
     }
-
-    private val _liveUserId: MutableLiveData<String> = MutableLiveData()
-    private val _onboardingState: MutableLiveData<Boolean> = MutableLiveData()
-    private val _liveTheme: MutableLiveData<Int> = MutableLiveData()
-
-
-    val liveUserId: LiveData<String> get() = _liveUserId
-    val liveTheme: LiveData<Int> get() = _liveTheme
-    val liveOnboardingState: LiveData<Boolean> get() = _onboardingState
 
     override var onboardingCompleted: Boolean by BooleanPreference(prefs, ONBOARDING_KEY, false)
     override var userId: String? by StringPreference(prefs, USER_ID_KEY, "")
@@ -80,57 +99,26 @@ class UserSharedPreferences @Inject constructor(@ApplicationContext context: Con
         APP_THEME_KEY,
         AppCompatDelegate.MODE_NIGHT_NO
     )
+    override val liveUserId: MutableLiveData<String> = MutableLiveData()
+    override val liveOnboardingState: MutableLiveData<Boolean> = MutableLiveData()
+    override val liveTheme: MutableLiveData<Int> = MutableLiveData()
 
-    val isLoggedIn: ObservableBoolean = ObservableBoolean(false)
-
-    //    val userId: ObservableField<String> = ObservableField()
-    val isDarkMode: ObservableBoolean = ObservableBoolean(false)
-    val isFeatureAvailable: ObservableBoolean = ObservableBoolean(true)
-
-    init {
-        Timber.tag(APP_TAG)
-        with(prefs.value.getString(USER_ID_KEY, null)) {
-            Timber.d("User id -> $this")
-            isLoggedIn.set(!this.isNullOrEmpty())
-//            userId.set(this)
-            _liveUserId.postValue(this)
-        }
-
-        with(prefs.value.getBoolean(APP_THEME_KEY, false)) {
-            isDarkMode.set(this)
-            val mode =
-                if (this) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
-            _liveTheme.postValue(mode)
-            AppCompatDelegate.setDefaultNightMode(mode)
-        }
-
-        // todo: enable feature support for image scanning
-    }
-
-    // save user id
-    fun save(id: String?) {
-        prefs.value.edit {
-            putString(USER_ID_KEY, id)
-            apply()
-        }
-        isLoggedIn.set(!id.isNullOrEmpty())
-//        userId.set(id)
-        _liveUserId.postValue(id)
-    }
+    override val isLoggedIn: ObservableBoolean = ObservableBoolean(false)
+    override val isDarkMode: ObservableBoolean = ObservableBoolean(false)
+    override val isFeatureAvailable: ObservableBoolean = ObservableBoolean(true)
 
     // update theme
-    fun updateTheme() {
-        with(isDarkMode) {
-            val mode =
-                if (get()) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
-            _liveTheme.postValue(mode)
-            AppCompatDelegate.setDefaultNightMode(mode)
-            set(mode == AppCompatDelegate.MODE_NIGHT_YES)
-            prefs.value.edit {
-                putBoolean(APP_THEME_KEY, get())
-                apply()
-            }
-        }
+    override fun updateTheme() {
+        val mode =
+            if (isDarkMode.get()) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
+        currentTheme = mode
+    }
+
+    // show the current theme
+    override fun showCurrentTheme() {
+        val mode =
+            if (isDarkMode.get()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
 }

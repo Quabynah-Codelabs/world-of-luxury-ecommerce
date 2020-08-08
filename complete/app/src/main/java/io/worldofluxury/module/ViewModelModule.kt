@@ -24,7 +24,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
@@ -44,7 +44,7 @@ object ViewModelModule {
     @Provides
     fun provideAuthViewModelProvider(
         userDao: UserDao,
-        prefs: UserSharedPreferences
+        prefs: PreferenceStorage
     ): AuthViewModelFactory =
         AuthViewModelFactory(userDao, prefs)
 
@@ -63,7 +63,7 @@ object ViewModelModule {
     @Singleton
     @Provides
     fun provideLaunchViewModelProvider(
-        prefs: UserSharedPreferences
+        prefs: PreferenceStorage
     ): LaunchViewModelFactory = LaunchViewModelFactory(prefs)
 
 

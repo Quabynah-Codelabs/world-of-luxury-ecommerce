@@ -31,7 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.binding.checkAllMatched
 import io.worldofluxury.preferences.PreferenceStorage
-import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
 import kotlinx.coroutines.delay
@@ -43,7 +42,7 @@ enum class LaunchDestination {
     MAIN_ACTIVITY
 }
 
-class LauncherViewModel @ViewModelInject constructor(private val prefs: UserSharedPreferences) :
+class LauncherViewModel @ViewModelInject constructor(private val prefs: PreferenceStorage) :
     ViewModel(),
     PreferenceStorage by prefs {
 

@@ -22,11 +22,11 @@
 
     <data>
 
-        <import type="io.worldofluxury.preferences.UserSharedPreferences" />
+        <import type="io.worldofluxury.preferences.PreferenceStorage" />
 
         <variable
             name="prefs"
-            type="UserSharedPreferences" />
+            type="PreferenceStorage" />
 
     </data>
 

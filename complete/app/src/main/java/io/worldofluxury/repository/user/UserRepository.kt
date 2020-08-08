@@ -29,7 +29,7 @@ import com.skydoves.sandwich.onSuccess
 import com.skydoves.whatif.whatIfNotNull
 import io.worldofluxury.data.User
 import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.webservice.SwanWebService
@@ -43,7 +43,7 @@ import javax.inject.Inject
  */
 class UserRepository @Inject constructor(
     private val dao: UserDao,
-    private val prefs: UserSharedPreferences,
+    private val prefs: PreferenceStorage,
     private val webService: SwanWebService,
     private val scope: CoroutineScope
 ) : Repository {

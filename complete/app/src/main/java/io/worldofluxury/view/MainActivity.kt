@@ -22,7 +22,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.res.ResourcesCompat
@@ -43,7 +42,7 @@ import io.worldofluxury.binding.gone
 import io.worldofluxury.binding.navigationItemBackground
 import io.worldofluxury.databinding.ActivityMainBinding
 import io.worldofluxury.databinding.DrawerHeaderBinding
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.HeightTopWindowInsetsListener
 import io.worldofluxury.util.NoopWindowInsetsListener
@@ -61,11 +60,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     private lateinit var controller: NavController
 
     @Inject
-    lateinit var userPrefs: UserSharedPreferences
-
-
-    @Inject
-    lateinit var userSharedPrefs: UserSharedPreferences
+    lateinit var userPrefs: PreferenceStorage
 
     @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory
@@ -78,7 +73,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         super.onCreate(savedInstanceState)
         binding.run {
             lifecycleOwner = this@MainActivity
-            prefs = userSharedPrefs
+            prefs = userPrefs
             setSupportActionBar(bottomAppBar)
             with(supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment) {
                 controller = findNavController()
@@ -136,7 +131,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             statusBarScrim.setOnApplyWindowInsetsListener(HeightTopWindowInsetsListener)
 
             // observe theme
-            userSharedPrefs.liveTheme.observe(
+            userPrefs.liveTheme.observe(
                 this@MainActivity,
                 { state -> Timber.d("Theme state -> $state") })
 

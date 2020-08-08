@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
@@ -62,7 +62,7 @@ class WelcomeFragment : Fragment() {
     )
 
     @Inject
-    lateinit var userPrefs: UserSharedPreferences
+    lateinit var userPrefs: PreferenceStorage
 
     @Inject
     lateinit var productDao: ProductDao

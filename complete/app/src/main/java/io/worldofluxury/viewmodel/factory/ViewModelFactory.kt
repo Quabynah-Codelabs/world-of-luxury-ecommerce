@@ -21,7 +21,7 @@ package io.worldofluxury.viewmodel.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.view.LauncherViewModel
@@ -32,7 +32,7 @@ import io.worldofluxury.viewmodel.ProductViewModel
 @Suppress("UNCHECKED_CAST")
 class AuthViewModelFactory(
     private val userDao: UserDao,
-    private val userPrefs: UserSharedPreferences
+    private val userPrefs: PreferenceStorage
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         AuthViewModel(userPrefs, userDao) as T
@@ -56,7 +56,7 @@ class UserViewModelFactory(
 
 @Suppress("UNCHECKED_CAST")
 class LaunchViewModelFactory(
-    private val prefs: UserSharedPreferences
+    private val prefs: PreferenceStorage
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         LauncherViewModel(prefs) as T

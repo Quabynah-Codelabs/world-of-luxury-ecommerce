@@ -34,7 +34,7 @@ import io.worldofluxury.base.launchInBackground
 import io.worldofluxury.binding.isTooShort
 import io.worldofluxury.data.User
 import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.view.auth.AuthFragment
 import io.worldofluxury.view.home.HomeFragmentDirections
@@ -47,7 +47,7 @@ import timber.log.Timber
  * Main [ViewModel] for the [AuthFragment]
  */
 class AuthViewModel @ViewModelInject constructor(
-    private val userPrefs: UserSharedPreferences,
+    private val userPrefs: PreferenceStorage,
     private val userDao: UserDao
 ) :
     LiveCoroutinesViewModel() {
@@ -82,7 +82,7 @@ class AuthViewModel @ViewModelInject constructor(
                 d.dismiss()
 
                 // clear user id from prefs
-                userPrefs.save(null)
+                userPrefs.userId = null
                 // update live data
                 currentUser.postValue(null)
                 // update auth state
@@ -125,7 +125,7 @@ class AuthViewModel @ViewModelInject constructor(
 
         // Complete login process
         val uid = "6dda2be7-11c5-44e5-b552-f22fa7ad8a4c"
-        userPrefs.save(uid)
+        userPrefs.userId = uid
         userId.postValue(uid)
         val user = User(
             uid,

@@ -20,14 +20,13 @@ package io.worldofluxury.core
 
 import android.os.StrictMode
 import android.util.Log
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.stripe.android.PaymentConfiguration
 import dagger.hilt.android.HiltAndroidApp
 import io.worldofluxury.BuildConfig
 import io.worldofluxury.BuildConfig.DEBUG
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.preferences.PreferenceStorage
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -36,7 +35,7 @@ class WorldOfLuxuryApp : TestApp(), Configuration.Provider {
     lateinit var workerFactory: HiltWorkerFactory
 
     @Inject
-    lateinit var prefs: UserSharedPreferences
+    lateinit var prefs: PreferenceStorage
 
     override fun getWorkManagerConfiguration() =
         Configuration.Builder()
@@ -55,9 +54,7 @@ class WorldOfLuxuryApp : TestApp(), Configuration.Provider {
         )
 
         // Setup app theme
-        val mode =
-            if (prefs.isDarkMode.get()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-        AppCompatDelegate.setDefaultNightMode(mode)
+        prefs.showCurrentTheme()
     }
 
     private fun enableStrictMode() {

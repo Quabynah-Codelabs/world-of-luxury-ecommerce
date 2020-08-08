@@ -24,7 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.UserSharedPreferences
+import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
@@ -58,7 +58,7 @@ object RepositoryModule {
     fun provideUserRepository(
         userDao: UserDao,
         webService: SwanWebService,
-        prefs: UserSharedPreferences,
+        prefs: PreferenceStorage,
         thread: CoroutineScope
     ): UserRepository = UserRepository(userDao, prefs, webService, thread)
 

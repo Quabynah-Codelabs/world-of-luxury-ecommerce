@@ -50,5 +50,7 @@ class OnboardingActivity : DataBindingActivity() {
             host = this@OnboardingActivity
             executePendingBindings()
         }
+
+        launcherViewModel
     }
 }
