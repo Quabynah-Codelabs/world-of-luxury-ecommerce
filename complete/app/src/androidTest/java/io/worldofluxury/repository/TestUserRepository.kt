@@ -21,6 +21,7 @@ package io.worldofluxury.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import androidx.paging.PagedList
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import com.skydoves.whatif.whatIfNotNull
 import dagger.Module
@@ -140,8 +141,8 @@ class FakeProductRepository @Inject constructor() :
     override fun watchAllProducts(
         category: String,
         toastLiveData: MutableLiveData<String>,
-        page: Long
-    ): LiveData<List<Product>> = liveData { }
+        page: Int
+    ): LiveData<PagedList<Product>> = liveData { }
 
     override suspend fun addToCart(product: Product) {
         TODO("Not yet implemented")

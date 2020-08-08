@@ -25,6 +25,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.worldofluxury.database.AppDatabase
+import io.worldofluxury.database.dao.CartDao
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.PreferenceStorage
@@ -47,6 +48,10 @@ object PersistenceModule {
     @Provides
     @Singleton
     fun provideUserDao(appDatabase: AppDatabase): UserDao = appDatabase.userDao()
+
+    @Provides
+    @Singleton
+    fun provideCartDao(appDatabase: AppDatabase): CartDao = appDatabase.cartDao()
 
     @Provides
     @Singleton

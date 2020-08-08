@@ -19,6 +19,7 @@
 package io.worldofluxury.database.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 import io.worldofluxury.data.Product
 
@@ -29,10 +30,10 @@ interface ProductDao {
     fun getAllProducts(): List<Product>
 
     @Query("select * from products where category = :category order by id desc")
-    fun watchAllProducts(category: String): LiveData<List<Product>>
+    fun watchAllProducts(category: String): DataSource.Factory<Int, Product>
 
     @Query("select * from products where id = :id")
-    fun getProductById(id: String): LiveData<Product?>
+    fun getProductById(id: String): Product
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<Product>)

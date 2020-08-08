@@ -70,3 +70,8 @@ data class Product(
             }
     }
 }
+
+/**
+ * Converts a [Product] into a [CartItem]
+ */
+fun Product.toCartItem(): CartItem = CartItem(productId = id)

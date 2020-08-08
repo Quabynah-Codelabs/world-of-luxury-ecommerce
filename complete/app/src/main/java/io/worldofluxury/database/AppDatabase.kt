@@ -22,12 +22,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import io.worldofluxury.data.CartItem
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.User
+import io.worldofluxury.database.dao.CartDao
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.util.APP_TAG
@@ -39,7 +40,11 @@ import timber.log.Timber
 /**
  * [Database] implementation
  */
-@Database(entities = [Product::class, User::class], version = DATABASE_VERSION, exportSchema = true)
+@Database(
+    entities = [Product::class, User::class, CartItem::class],
+    version = DATABASE_VERSION,
+    exportSchema = true
+)
 abstract class AppDatabase : RoomDatabase() {
 
     init {
@@ -49,6 +54,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
     abstract fun productDao(): ProductDao
+
+    abstract fun cartDao(): CartDao
 
     companion object {
 
@@ -63,14 +70,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private val migrations: Migration =
-            object : Migration(6, 7) {
-                override fun migrate(database: SupportSQLiteDatabase) {
-                    Timber.d("Version -> ${database.version}")
-                    database.execSQL("alter table users add column email text")
-                }
-            }
-
         @Volatile
         private var instance: AppDatabase? = null
 
@@ -79,8 +78,7 @@ abstract class AppDatabase : RoomDatabase() {
             instance ?: Room
                 .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .run {
-                    fallbackToDestructiveMigration()
-                    addMigrations(migrations)
+                    fallbackToDestructiveMigrationFrom(6, 7)
                     addCallback(appDatabaseCallback(context))
                 }
                 .build()

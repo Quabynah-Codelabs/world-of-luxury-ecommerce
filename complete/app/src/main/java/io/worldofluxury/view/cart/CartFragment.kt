@@ -24,6 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
@@ -49,17 +50,12 @@ class CartFragment : Fragment() {
         binding.run {
             lifecycleOwner = this@CartFragment
             productViewModel = viewModel
+
+            viewModel.favorites.observe(viewLifecycleOwner, { products ->  })
+
             executePendingBindings()
         }
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        binding.run {
-            // Add additional binding here
-        }
     }
 
 }

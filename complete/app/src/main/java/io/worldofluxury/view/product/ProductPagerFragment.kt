@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.skydoves.whatif.whatIfNotNull
@@ -87,10 +87,8 @@ class ProductPagerFragment : Fragment() {
             category = bundle.getString(ARG_CATEGORY)
             Timber.d("Category -> $category")
             category.whatIfNotNull { s ->
-                viewModel.watchProductsLiveData(s).observe(viewLifecycleOwner, { products ->
-                    Timber.d("Products -> ${products.map { it.name }}")
-                    productsAdapter.submitList(products)
-                })
+                viewModel.watchProductsLiveData(s)
+                    .observe(viewLifecycleOwner, productsAdapter::submitList)
             }
         }
 
@@ -115,7 +113,7 @@ class ProductPagerFragment : Fragment() {
 
 
 class ProductsGridAdapter(private val viewModel: ProductViewModel) :
-    ListAdapter<Product, ProductViewHolder>(Product.PRODUCT_DIFF) {
+    PagedListAdapter<Product, ProductViewHolder>(Product.PRODUCT_DIFF) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = DataBindingUtil.inflate<ItemProductBinding>(
             LayoutInflater.from(parent.context),
@@ -128,7 +126,7 @@ class ProductsGridAdapter(private val viewModel: ProductViewModel) :
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = getItem(position)
-        holder.bind(product)
+        product.whatIfNotNull { holder.bind(it) }
     }
 
 }

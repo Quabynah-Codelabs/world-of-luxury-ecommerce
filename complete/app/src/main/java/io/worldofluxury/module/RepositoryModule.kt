@@ -22,6 +22,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import io.worldofluxury.database.dao.CartDao
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.PreferenceStorage
@@ -50,9 +51,10 @@ object RepositoryModule {
     @Provides
     fun provideProductRepository(
         productDao: ProductDao,
+        cartDao: CartDao,
         webService: SwanWebService,
         thread: CoroutineScope
-    ): ProductRepository = DefaultProductRepository(webService, productDao, thread)
+    ): ProductRepository = DefaultProductRepository(webService, productDao,cartDao, thread)
 
     @Singleton
     @Provides

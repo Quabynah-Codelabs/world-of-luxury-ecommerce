@@ -35,7 +35,7 @@ interface SwanWebService {
     @FormUrlEncoded
     suspend fun getProducts(
         @Field("category") category: String,
-        @Field("page") page: Long
+        @Field("page") page: Int
     ): ApiResponse<WebServiceResponse<List<Product>>>
 
     @GET("/products/{id}")

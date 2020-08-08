@@ -16,26 +16,30 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.util
+package io.worldofluxury.database.dao
 
-const val DATABASE_VERSION = 8
-const val DATABASE_NAME = "swan-wol.db"
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import io.worldofluxury.data.CartItem
 
-const val USER_ID_KEY = "user-id-key"
-const val APP_THEME_KEY = "app-current-theme-key"
-const val ONBOARDING_KEY = "app-onboarding-key"
-const val PREFS_NAME = "swan-user-prefs"
+/**
+ *  @project World of Luxury
+ *  @author Bilson Jr.
+ *  @by Quabynah Codelabs LLC
+ *  @since 08/08/2020 @ 12:16
+ */
+@Dao
+interface CartDao {
 
-const val PASSWORD_LENGTH = 4
-const val PRODUCT_JSON_FILENAME = "products.json"
-const val ARG_CATEGORY = "product-category"
-const val APP_TAG = "Swan"
+    @Query("select * from carts order by id asc")
+    fun watchAllItems(): LiveData<List<CartItem>>
 
-val CATEGORIES = mutableListOf(
-    "Shirt",
-    "Trousers",
-    "Sweatshirt",
-    "Coat",
-    "Blouse",
-    "Others",
-)
+    @Insert
+    suspend fun insert(cartItem: CartItem)
+
+    @Query("delete from carts where id = :id")
+    suspend fun delete(id: Int)
+
+}

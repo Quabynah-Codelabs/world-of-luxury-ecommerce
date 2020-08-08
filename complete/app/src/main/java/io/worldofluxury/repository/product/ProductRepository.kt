@@ -21,12 +21,17 @@ package io.worldofluxury.repository.product
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import com.skydoves.whatif.whatIfNotNull
 import io.worldofluxury.data.Product
+import io.worldofluxury.data.toCartItem
+import io.worldofluxury.database.dao.CartDao
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.util.APP_TAG
@@ -43,10 +48,10 @@ interface ProductRepository : Repository {
     fun watchAllProducts(
         category: String,
         toastLiveData: MutableLiveData<String>,
-        page: Long = 1
-    ): LiveData<List<Product>>
+        page: Int = 1
+    ): LiveData<PagedList<Product>>
 
-    suspend fun addToCart(product: Product): Unit
+    suspend fun addToCart(product: Product)
 }
 
 /**
@@ -55,6 +60,7 @@ interface ProductRepository : Repository {
 class DefaultProductRepository @Inject constructor(
     private val webService: SwanWebService,
     private val dao: ProductDao,
+    private val cartDao: CartDao,
     private val scope: CoroutineScope
 ) : ProductRepository {
 
@@ -65,7 +71,15 @@ class DefaultProductRepository @Inject constructor(
     /**
      * fetch all favorited products
      */
-    override fun watchFavorites(): LiveData<List<Product>> = dao.getFavorites()
+    override fun watchFavorites(): LiveData<List<Product>> = liveData {
+        val data = cartDao.watchAllItems().switchMap { items ->
+            val result = MutableLiveData<List<Product>>()
+            val products = items.map { cartItem -> dao.getProductById(cartItem.productId) }
+            result.postValue(products)
+            result
+        }
+        emitSource(data)
+    }
 
     /**
      * fetch all products from [category]
@@ -73,11 +87,13 @@ class DefaultProductRepository @Inject constructor(
     override fun watchAllProducts(
         category: String,
         toastLiveData: MutableLiveData<String>,
-        page: Long
-    ): LiveData<List<Product>> =
+        page: Int
+    ): LiveData<PagedList<Product>> =
         liveData {
             // return content from the local database
-            emitSource(dao.watchAllProducts(category))
+            emitSource(
+                dao.watchAllProducts(category).toLiveData(pageSize = 5, initialLoadKey = page)
+            )
 
             Timber.d("Fetching data from server...")
             // fetch products from server and update local database
@@ -102,7 +118,11 @@ class DefaultProductRepository @Inject constructor(
                 }
         }
 
-    override suspend fun addToCart(product: Product): Unit =
-        dao.update(product.copy(isFavorite = !product.isFavorite))
+    override suspend fun addToCart(product: Product) {
+        val updatedProduct = product.copy(isFavorite = !product.isFavorite)
+        dao.update(updatedProduct)
+        val item = product.toCartItem()
+        if (updatedProduct.isFavorite) cartDao.insert(item) else cartDao.delete(item.id)
+    }
 
 }

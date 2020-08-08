@@ -22,6 +22,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.base.launchInBackground
 import io.worldofluxury.data.Product
@@ -44,7 +45,7 @@ class ProductViewModel @ViewModelInject constructor(
         Timber.d("ProductViewModel initialized...")
     }
 
-    fun watchProductsLiveData(category: String): LiveData<List<Product>> =
+    fun watchProductsLiveData(category: String): LiveData<PagedList<Product>> =
         launchOnViewModelScope { repository.watchAllProducts(category, toastLiveData) }
 
     fun addToCart(item: Product) =
