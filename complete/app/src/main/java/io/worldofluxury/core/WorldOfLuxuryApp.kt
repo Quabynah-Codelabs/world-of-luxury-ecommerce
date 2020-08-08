@@ -18,6 +18,7 @@
 
 package io.worldofluxury.core
 
+import android.os.StrictMode
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.work.HiltWorkerFactory
@@ -25,6 +26,7 @@ import androidx.work.Configuration
 import com.stripe.android.PaymentConfiguration
 import dagger.hilt.android.HiltAndroidApp
 import io.worldofluxury.BuildConfig
+import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.preferences.UserSharedPreferences
 import javax.inject.Inject
 
@@ -43,6 +45,8 @@ class WorldOfLuxuryApp : TestApp(), Configuration.Provider {
             .build()
 
     override fun onCreate() {
+        // Enable strict mode before Dagger creates graph
+        if (DEBUG) enableStrictMode()
         super.onCreate()
         // Initialize Stripe payment SDK
         PaymentConfiguration.init(
@@ -54,5 +58,16 @@ class WorldOfLuxuryApp : TestApp(), Configuration.Provider {
         val mode =
             if (prefs.isDarkMode.get()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
         AppCompatDelegate.setDefaultNightMode(mode)
+    }
+
+    private fun enableStrictMode() {
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyLog()
+                .build()
+        )
     }
 }

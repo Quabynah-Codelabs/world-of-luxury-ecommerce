@@ -46,6 +46,10 @@ class AuthFragment : Fragment() {
     lateinit var authViewModelFactory: AuthViewModelFactory
     private val viewModel by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
+    init {
+        Timber.tag(APP_TAG)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,7 +65,6 @@ class AuthFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Timber.tag(APP_TAG)
 
         // Observe login state
         viewModel.authState.observe(viewLifecycleOwner, { state ->
@@ -70,7 +73,7 @@ class AuthFragment : Fragment() {
                     AuthViewModel.AuthenticationState.ERROR -> {
                     }
                     AuthViewModel.AuthenticationState.AUTHENTICATED -> {
-                        navController.navigate(R.id.action_nav_auth_to_nav_home)
+                        navController.navigate(AuthFragmentDirections.actionNavAuthToNavHome())
                     }
                     AuthViewModel.AuthenticationState.AUTHENTICATING -> {
                     }
@@ -85,7 +88,7 @@ class AuthFragment : Fragment() {
 
         binding.run {
             signInButton.setOnClickListener {
-                navController.navigate(R.id.action_nav_auth_to_nav_home)
+                navController.navigate(AuthFragmentDirections.actionNavAuthToNavHome())
             }
 
             signUpButton.setOnClickListener {
@@ -96,7 +99,7 @@ class AuthFragment : Fragment() {
                 /*TODO: Add Twitter login here */
                 viewModel.login("q@g.co", "1234").observe(viewLifecycleOwner, { uid ->
                     uid.whatIfNotNull {
-                        println("WorldOfLuxury: User id -> $it")
+                        Timber.d("WorldOfLuxury: User id -> $it")
                     }
                 })
             }

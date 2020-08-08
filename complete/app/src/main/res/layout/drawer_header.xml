@@ -24,6 +24,8 @@
 
         <import type="io.worldofluxury.viewmodel.AuthViewModel" />
 
+        <import type="io.worldofluxury.viewmodel.AuthViewModel.AuthenticationState" />
+
         <variable
             name="vm"
             type="AuthViewModel" />
@@ -75,8 +77,9 @@
             android:layout_width="?actionBarSize"
             android:layout_height="?actionBarSize"
             android:background="?selectableItemBackgroundBorderless"
-            android:onClick="@{() -> vm.logout()}"
+            android:onClick="@{(v) -> vm.logout(v)}"
             android:src="@drawable/ic_twotone_exit"
+            app:gone="@{vm.authState != AuthenticationState.AUTHENTICATED}"
             app:layout_constraintBottom_toBottomOf="@id/user_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/user_avatar" />

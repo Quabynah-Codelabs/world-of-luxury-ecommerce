@@ -18,15 +18,19 @@
 
 package io.worldofluxury.viewmodel
 
+import android.app.Activity
 import android.util.Patterns
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.worldofluxury.R
 import io.worldofluxury.base.LiveCoroutinesViewModel
+import io.worldofluxury.base.launchInBackground
 import io.worldofluxury.binding.isTooShort
 import io.worldofluxury.data.User
 import io.worldofluxury.database.dao.UserDao
@@ -60,12 +64,44 @@ class AuthViewModel @ViewModelInject constructor(
         Timber.tag(APP_TAG)
         Timber.d("AuthViewModel initialized...")
         val isLoggedIn = userPrefs.isLoggedIn.get()
-        if (isLoggedIn) authState.value = AuthenticationState.AUTHENTICATED
+        if (isLoggedIn) {
+            authState.value = AuthenticationState.AUTHENTICATED
+            launchInBackground {
+                currentUser.postValue(
+                    userDao.getUserById(userPrefs.userId.get())
+                        .also { Timber.d("Found user -> ${it?.name}") })
+            }
+        }
     }
 
-    // todo: implement logout
-    fun logout() {
-        userPrefs.save(null)
+    fun logout(v: View) {
+        MaterialAlertDialogBuilder(v.context).apply {
+            setTitle("Confirmation required")
+            setMessage("Do you wish to sign out?")
+            setPositiveButton("Yeah") { d, _ ->
+                d.dismiss()
+
+                // clear user id from prefs
+                userPrefs.save(null)
+                // update live data
+                currentUser.postValue(null)
+                // update auth state
+                authState.postValue(AuthenticationState.NONE)
+                // navigate to login screen
+                if (v.context is AppCompatActivity)
+                    findNavController(v.context as Activity, R.id.nav_host_fragment).navigate(
+                        HomeFragmentDirections.actionNavHomeToNavAuth()
+                    )
+            }
+            setNegativeButton("Nope") { d, _ ->
+                d.dismiss()
+            }
+        }.show()
+    }
+
+    // todo: implement twitter login
+    fun twitterLogin(v: View) {
+
     }
 
     // TODO: Implement login
@@ -88,7 +124,6 @@ class AuthViewModel @ViewModelInject constructor(
         delay(3500)
 
         // Complete login process
-//        if (Random.nextBoolean()) {
         val uid = "6dda2be7-11c5-44e5-b552-f22fa7ad8a4c"
         userPrefs.save(uid)
         userId.postValue(uid)
@@ -102,12 +137,6 @@ class AuthViewModel @ViewModelInject constructor(
         currentUser.postValue(user)
         snackbarLiveData.postValue("Login was successful")
         authState.postValue(AuthenticationState.AUTHENTICATED)
-//        } else {
-//            authState.postValue(AuthenticationState.ERROR)
-//            userPrefs.save(null)
-//            userId.postValue(null)
-//            snackbarLiveData.postValue("Sorry, we couldn't complete this process")
-//        }
 
         // Send live data to observer
         userId

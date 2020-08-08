@@ -23,7 +23,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.worldofluxury.base.LiveCoroutinesViewModel
-import io.worldofluxury.base.launchOnBackground
+import io.worldofluxury.base.launchInBackground
 import io.worldofluxury.data.Product
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.util.APP_TAG
@@ -47,5 +47,5 @@ class ProductViewModel @ViewModelInject constructor(
         launchOnViewModelScope { repository.watchAllProducts(category, toastLiveData) }
 
     fun updateProduct(item: Product) =
-        launchOnBackground { repository.update(item.copy(isFavorite = !item.isFavorite)) }
+        launchInBackground { repository.update(item.copy(isFavorite = !item.isFavorite)) }
 }

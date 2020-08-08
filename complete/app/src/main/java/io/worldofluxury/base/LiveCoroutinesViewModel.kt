@@ -34,6 +34,6 @@ abstract class LiveCoroutinesViewModel : ViewModel() {
     }
 }
 
-fun LiveCoroutinesViewModel.launchOnBackground(block: suspend () -> Unit) {
+fun LiveCoroutinesViewModel.launchInBackground(block: suspend () -> Unit) {
     viewModelScope.launch(Dispatchers.IO) { block() }
 }

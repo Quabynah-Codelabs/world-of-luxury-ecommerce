@@ -26,7 +26,7 @@ import io.worldofluxury.data.User
 interface UserDao {
 
     @Query("select * from users where id = :id")
-    fun getUserById(id: String): User?
+    fun getUserById(id: String?): User?
 
     @Query("select * from users where id = :id")
     fun watchUserById(id: String): LiveData<User>

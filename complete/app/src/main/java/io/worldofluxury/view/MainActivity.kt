@@ -21,27 +21,35 @@ package io.worldofluxury.view
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
+import androidx.core.view.updatePadding
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.skydoves.whatif.whatIfNotNull
+import androidx.recyclerview.widget.RecyclerView
+import com.skydoves.whatif.whatIf
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
+import io.worldofluxury.binding.doOnApplyWindowInsets
 import io.worldofluxury.binding.gone
+import io.worldofluxury.binding.navigationItemBackground
 import io.worldofluxury.databinding.ActivityMainBinding
 import io.worldofluxury.databinding.DrawerHeaderBinding
 import io.worldofluxury.preferences.UserSharedPreferences
 import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.util.HeightTopWindowInsetsListener
+import io.worldofluxury.util.NoopWindowInsetsListener
 import io.worldofluxury.view.home.HomeFragmentDirections
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.widget.SpaceDecoration
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -54,20 +62,6 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     @Inject
     lateinit var userPrefs: UserSharedPreferences
 
-    // destinations which do not require the theme FAB
-    private val excludedFabDestinations by lazy {
-        listOf(
-            R.id.nav_auth,
-            R.id.nav_welcome,
-            R.id.nav_search,
-            R.id.nav_checkout,
-            R.id.nav_fav,
-            R.id.nav_help,
-            R.id.nav_history,
-            R.id.nav_product,
-            R.id.nav_user,
-        )
-    }
 
     @Inject
     lateinit var userSharedPrefs: UserSharedPreferences
@@ -88,7 +82,6 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             with(supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment) {
                 controller = findNavController()
                 controller.addOnDestinationChangedListener(this@MainActivity)
-                Timber.d("Controller -> ${controller.currentDestination}")
             }
             setSupportActionBar(bottomAppBar)
 
@@ -103,28 +96,95 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                 )
                 toggler.syncState()
                 addDrawerListener(toggler)
+            }
 
-                // setup header in drawer navigation view
-                DataBindingUtil.bind<DrawerHeaderBinding>(sidebar.getHeaderView(0)).run {
-                    if (this != null) {
+            // add item background for sidebar
+            sidebar.itemBackground = navigationItemBackground(this@MainActivity)
+
+            // apply window insets
+            drawerContainer.setOnApplyWindowInsetsListener { v, insets ->
+                // Let the view draw it's navigation bar divider
+                v.onApplyWindowInsets(insets)
+
+                // Consume any horizontal insets and pad all content in. There's not much we can do
+                // with horizontal insets
+                v.updatePadding(
+                    left = insets.systemWindowInsetLeft,
+                    right = insets.systemWindowInsetRight
+                )
+                insets.replaceSystemWindowInsets(
+                    0, insets.systemWindowInsetTop,
+                    0, insets.systemWindowInsetBottom
+                )
+            }
+
+            // setup content insets
+            content.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            // Make the content ViewGroup ignore insets so that it does not use the default padding
+            content.setOnApplyWindowInsetsListener(NoopWindowInsetsListener)
+            bottomAppBar.doOnApplyWindowInsets { v, insets, padding ->
+                v.updatePadding(bottom = padding.bottom + insets.systemWindowInsetBottom)
+            }
+            navHostFragment.doOnApplyWindowInsets { v, insets, padding ->
+                v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
+            }
+
+            // setup status bar insets
+            statusBarScrim.setOnApplyWindowInsetsListener(HeightTopWindowInsetsListener)
+
+            // observe theme
+            userSharedPrefs.liveTheme.observe(
+                this@MainActivity,
+                { state -> Timber.d("Theme state -> $state") })
+
+            // observe current user
+            authVM.currentUser.observe(
+                this@MainActivity,
+                { user ->
+
+                    // update menu based on user login state
+                    sidebar.run {
+                        menu.findItem(R.id.nav_cart).isVisible = user != null
+                        menu.findItem(R.id.nav_fav).isVisible = user != null
+                        menu.findItem(R.id.nav_history).isVisible = user != null
+                        menu.findItem(R.id.nav_user).isVisible = user != null
+                    }
+                    // setup header in drawer navigation view
+                    val headerBinding: DrawerHeaderBinding =
+                        DrawerHeaderBinding.inflate(layoutInflater)
+                    headerBinding.run {
                         Timber.d("Binding for header started")
                         vm = authVM
+
+                        val menuView =
+                            findViewById<RecyclerView>(R.id.design_navigation_view)?.apply {
+                                addItemDecoration(SpaceDecoration())
+                            }
+                        root.doOnApplyWindowInsets { v, insets, padding ->
+                            v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
+                            // NavigationView doesn't dispatch insets to the menu view, so pad the bottom here.
+                            menuView?.updatePadding(bottom = insets.systemWindowInsetBottom)
+                        }
                         executePendingBindings()
                     }
-                }
-            }
+
+                    // show header if user is logged in
+                    user.whatIf(
+                        user == null,
+                        { sidebar.removeHeaderView(headerBinding.root) },
+                        {
+                            sidebar.addHeaderView(headerBinding.root)
+                        })
+                })
             executePendingBindings()
         }
-
-        userSharedPrefs.liveTheme.observe(this, { state -> Timber.d("Theme state -> $state") })
-        authVM.currentUser.observe(
-            this,
-            { user -> user.whatIfNotNull { Timber.d("MainActivity user -> ${it.name}") } })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
-        return userSharedPrefs.isLoggedIn.get()
+        return true
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -161,15 +221,39 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         arguments: Bundle?
     ) {
         Timber.d("Current destination -> ${destination.label}")
+        val shouldBeGone = EXCLUDED_DESTINATIONS.contains(destination.id)
+        with(binding.drawer) {
+            val lockMode = if (shouldBeGone) {
+                DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+            } else {
+                DrawerLayout.LOCK_MODE_UNLOCKED
+            }
+            setDrawerLockMode(lockMode)
+        }
         with(binding.scanImageFab) {
             setOnClickListener { controller.navigate(HomeFragmentDirections.actionNavHomeToNavUser()) }
-            if (excludedFabDestinations.contains(destination.id)) hide()
+            if (shouldBeGone) hide()
             else show()
         }
         with(binding.bottomAppBar) {
-            gone(excludedFabDestinations.contains(destination.id))
+            gone(shouldBeGone)
             if (isVisible) performShow()
         }
     }
 
+
+    companion object {
+        // destinations which do not require the theme FAB
+        private val EXCLUDED_DESTINATIONS = setOf(
+            R.id.nav_auth,
+            R.id.nav_welcome,
+            R.id.nav_search,
+            R.id.nav_checkout,
+            R.id.nav_fav,
+            R.id.nav_help,
+            R.id.nav_history,
+            R.id.nav_product,
+            R.id.nav_user
+        )
+    }
 }
