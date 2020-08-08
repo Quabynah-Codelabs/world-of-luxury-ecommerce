@@ -19,6 +19,7 @@
 package io.worldofluxury
 
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.worldofluxury.core.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 

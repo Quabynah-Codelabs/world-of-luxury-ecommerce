@@ -23,10 +23,12 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.worldofluxury.core.CoroutineTestRule
 import io.worldofluxury.database.AppDatabase
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.util.TestUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.IsEqual.equalTo

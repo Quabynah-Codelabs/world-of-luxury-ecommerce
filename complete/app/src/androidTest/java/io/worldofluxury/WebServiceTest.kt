@@ -22,9 +22,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.worldofluxury.core.CoroutineTestRule
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.util.CATEGORIES
+import io.worldofluxury.util.observeOnce
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
