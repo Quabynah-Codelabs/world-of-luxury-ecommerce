@@ -118,7 +118,7 @@
                 android:layout_height="?actionBarSize"
                 android:background="@color/content_placeholder"
                 android:backgroundTint="@color/content_placeholder"
-                android:onClick="@{() -> vm.updateProduct(product)}"
+                android:onClick="@{() -> vm.addToCart(product)}"
                 android:scaleType="centerInside"
                 android:src="@{product.favorite ? @drawable/ic_twotone_favorite : @drawable/ic_twotone_favorite_border}"
                 android:translationZ="@dimen/z_product_card"

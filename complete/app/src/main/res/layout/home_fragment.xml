@@ -197,7 +197,7 @@
                 android:layout_height="@dimen/spacing_none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/home_tabs"
-                app:snackbar="@{vm.toastLiveData}" />
+                app:toast="@{vm.toastLiveData}" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/left_vert_guide"

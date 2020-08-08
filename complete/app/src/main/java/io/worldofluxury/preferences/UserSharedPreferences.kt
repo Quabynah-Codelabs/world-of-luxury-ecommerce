@@ -64,10 +64,6 @@ interface PreferenceStorage {
 class UserSharedPreferences @Inject constructor(@ApplicationContext context: Context) :
     PreferenceStorage {
 
-    init {
-        Timber.tag(APP_TAG)
-    }
-
     // init prefs
     private val prefs: Lazy<SharedPreferences> = lazy {
         context.applicationContext.getSharedPreferences(
@@ -119,6 +115,11 @@ class UserSharedPreferences @Inject constructor(@ApplicationContext context: Con
         val mode =
             if (isDarkMode.get()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
         AppCompatDelegate.setDefaultNightMode(mode)
+    }
+
+    init {
+        Timber.tag(APP_TAG)
+        Timber.i("UID -> $userId & theme -> $currentTheme & onboarding -> $onboardingCompleted")
     }
 
 }

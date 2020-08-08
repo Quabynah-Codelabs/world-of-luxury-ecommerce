@@ -18,7 +18,6 @@
 
 package io.worldofluxury.repository.product
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
@@ -37,27 +36,44 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+interface ProductRepository : Repository {
+
+    fun watchFavorites(): LiveData<List<Product>>
+
+    fun watchAllProducts(
+        category: String,
+        toastLiveData: MutableLiveData<String>,
+        page: Long = 1
+    ): LiveData<List<Product>>
+
+    suspend fun addToCart(product: Product): Unit
+}
+
 /**
  * [Repository] for [Product] data source
  */
-class ProductRepository @Inject constructor(
+class DefaultProductRepository @Inject constructor(
     private val webService: SwanWebService,
     private val dao: ProductDao,
     private val scope: CoroutineScope
-) : Repository {
+) : ProductRepository {
 
     init {
         Timber.tag(APP_TAG)
     }
 
     /**
+     * fetch all favorited products
+     */
+    override fun watchFavorites(): LiveData<List<Product>> = dao.getFavorites()
+
+    /**
      * fetch all products from [category]
      */
-    @VisibleForTesting
-    fun watchAllProducts(
+    override fun watchAllProducts(
         category: String,
         toastLiveData: MutableLiveData<String>,
-        page: Long = 1
+        page: Long
     ): LiveData<List<Product>> =
         liveData {
             // return content from the local database
@@ -86,9 +102,7 @@ class ProductRepository @Inject constructor(
                 }
         }
 
-    suspend fun addToCart(product: Product): Unit =
-        TODO("create a cart data model & dao and add product ids")
-
-    suspend fun update(product: Product) = dao.update(product)
+    override suspend fun addToCart(product: Product): Unit =
+        dao.update(product.copy(isFavorite = true))
 
 }

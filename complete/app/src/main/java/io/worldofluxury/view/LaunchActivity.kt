@@ -87,7 +87,7 @@ class LaunchActivity : AppCompatActivity() {
 
         if (DEBUG) launcherViewModel.onboardingCompleted = false
         launcherViewModel.launchDestination.observe(this, { destination ->
-            Timber.d("Current user id from prefs -> $destination")
+            Timber.d("Current launcher destination -> $destination")
             when (destination) {
                 LaunchDestination.MAIN_ACTIVITY ->
                     startActivity(

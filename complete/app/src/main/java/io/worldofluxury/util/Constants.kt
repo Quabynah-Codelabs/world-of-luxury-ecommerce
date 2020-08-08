@@ -22,7 +22,7 @@ const val DATABASE_VERSION = 7
 const val DATABASE_NAME = "swan-wol.db"
 
 const val USER_ID_KEY = "user-id-key"
-const val APP_THEME_KEY = "app-theme-key"
+const val APP_THEME_KEY = "app-current-theme-key"
 const val ONBOARDING_KEY = "app-onboarding-key"
 const val PREFS_NAME = "swan-user-prefs"
 

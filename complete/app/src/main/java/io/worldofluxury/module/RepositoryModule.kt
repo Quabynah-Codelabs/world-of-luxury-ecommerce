@@ -26,7 +26,9 @@ import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.repository.Repository
+import io.worldofluxury.repository.product.DefaultProductRepository
 import io.worldofluxury.repository.product.ProductRepository
+import io.worldofluxury.repository.user.DefaultUserRepository
 import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.webservice.SwanWebService
 import kotlinx.coroutines.CoroutineScope
@@ -50,8 +52,7 @@ object RepositoryModule {
         productDao: ProductDao,
         webService: SwanWebService,
         thread: CoroutineScope
-    ): ProductRepository = ProductRepository(webService, productDao, thread)
-
+    ): ProductRepository = DefaultProductRepository(webService, productDao, thread)
 
     @Singleton
     @Provides
@@ -60,6 +61,6 @@ object RepositoryModule {
         webService: SwanWebService,
         prefs: PreferenceStorage,
         thread: CoroutineScope
-    ): UserRepository = UserRepository(userDao, prefs, webService, thread)
+    ): UserRepository = DefaultUserRepository(userDao, prefs, webService, thread)
 
 }

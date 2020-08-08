@@ -37,6 +37,7 @@ class ProductViewModel @ViewModelInject constructor(
 ) : LiveCoroutinesViewModel() {
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
+    val favorites: LiveData<List<Product>> = launchOnViewModelScope { repository.watchFavorites() }
 
     init {
         Timber.tag(APP_TAG)
@@ -46,6 +47,6 @@ class ProductViewModel @ViewModelInject constructor(
     fun watchProductsLiveData(category: String): LiveData<List<Product>> =
         launchOnViewModelScope { repository.watchAllProducts(category, toastLiveData) }
 
-    fun updateProduct(item: Product) =
-        launchInBackground { repository.update(item.copy(isFavorite = !item.isFavorite)) }
+    fun addToCart(item: Product) =
+        launchInBackground { repository.addToCart(item) }
 }

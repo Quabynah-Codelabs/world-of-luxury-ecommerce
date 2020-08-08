@@ -38,15 +38,21 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+interface UserRepository : Repository {
+    fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User>
+
+    fun updateUser(user: User, toastLiveData: MutableLiveData<String>)
+}
+
 /**
  * [Repository] for [User] data source
  */
-class UserRepository @Inject constructor(
+class DefaultUserRepository @Inject constructor(
     private val dao: UserDao,
     private val prefs: PreferenceStorage,
     private val webService: SwanWebService,
     private val scope: CoroutineScope
-) : Repository {
+) : UserRepository {
 
     init {
         Timber.tag(APP_TAG)
@@ -55,43 +61,73 @@ class UserRepository @Inject constructor(
     // checks for the login state of the current user.
     // fetches the live user instance by converting the user id live data to a live
     // user object.
-    fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User> = liveData {
-        if (!prefs.isLoggedIn.get()) return@liveData
-        // get live user instance
-        val user: LiveData<User> = prefs.liveUserId.switchMap { dao.watchUserById(it) }
-        // pass it to live data
-        emitSource(user)
+    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User> =
+        liveData {
+            if (!prefs.isLoggedIn.get()) return@liveData
+            // get live user instance
+            val user: LiveData<User> = prefs.liveUserId.switchMap { dao.watchUserById(it) }
+            // pass it to live data
+            emitSource(user)
 
-        // perform network call for user data
-        webService.getUserById(prefs.userId).whatIfNotNull { response ->
-            with(response) {
-                onError {
-                    toastLiveData.postValue("Cannot get user data at this time")
-                    Timber.e("An error occurred while retrieving user data -> $errorBody")
-                }
+            // perform network call for user data
+            webService.getUserById(prefs.userId).whatIfNotNull { response ->
+                with(response) {
+                    onError {
+                        toastLiveData.postValue("Cannot get user data at this time")
+                        Timber.e("An error occurred while retrieving user data -> $errorBody")
+                    }
 
-                onException {
-                    toastLiveData.postValue("Cannot get user data at this time")
-                    Timber.e("An exception occurred while retrieving user data -> $message")
-                }
+                    onException {
+                        toastLiveData.postValue("Cannot get user data at this time")
+                        Timber.e("An exception occurred while retrieving user data -> $message")
+                    }
 
-                onFailure {
-                    toastLiveData.postValue("Cannot get user data at this time")
-                    Timber.e("Failed occurred while retrieving user data")
-                }
+                    onFailure {
+                        toastLiveData.postValue("Cannot get user data at this time")
+                        Timber.e("Failed occurred while retrieving user data")
+                    }
 
-                // save data to the local database
-                onSuccess {
-                    scope.launch {
-                        data.whatIfNotNull {
-                            dao.insert(it.results)
+                    // save data to the local database
+                    onSuccess {
+                        Timber.i("User retrieved successfully")
+                        scope.launch {
+                            data.whatIfNotNull {
+                                dao.insert(it.results)
+                            }
                         }
                     }
-                }
 
+                }
             }
+
         }
 
+
+    // update user profile
+    override fun updateUser(user: User, toastLiveData: MutableLiveData<String>) {
+        scope.launch {
+            dao.update(user)
+            webService.updateUser(user).whatIfNotNull { response ->
+                with(response) {
+                    onError {
+                        Timber.e("An error occurred while updating user data -> $errorBody")
+                    }
+
+                    onException {
+                        Timber.e("An exception occurred while updating user data -> $message")
+                    }
+
+                    onFailure {
+                        Timber.e("Failed occurred while updating user data")
+                    }
+
+                    // save data to the local database
+                    onSuccess {
+                        Timber.i("User updated successfully")
+                    }
+                }
+            }
+        }
     }
 
 }

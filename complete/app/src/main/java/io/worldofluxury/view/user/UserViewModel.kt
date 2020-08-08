@@ -34,4 +34,6 @@ class UserViewModel @ViewModelInject constructor(
 ) : LiveCoroutinesViewModel() {
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
     val currentUser: LiveData<User> = repository.watchCurrentUser(toastLiveData)
+
+    fun updateUser(user: User) = repository.updateUser(user, toastLiveData)
 }

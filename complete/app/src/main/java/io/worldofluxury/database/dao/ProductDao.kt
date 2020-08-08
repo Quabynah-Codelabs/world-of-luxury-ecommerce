@@ -39,4 +39,7 @@ interface ProductDao {
 
     @Update
     suspend fun update(item: Product)
+
+    @Query("select * from products where isFavorite order by price desc")
+    fun getFavorites(): LiveData<List<Product>>
 }

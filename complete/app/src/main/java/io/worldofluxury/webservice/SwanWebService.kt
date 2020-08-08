@@ -44,6 +44,9 @@ interface SwanWebService {
     @GET("/users/{id}")
     suspend fun getUserById(@Path("id") userId: String?): ApiResponse<WebServiceResponse<User>>
 
+    @PUT("/users/{id}")
+    suspend fun updateUser(@Body user: User): ApiResponse<WebServiceResponse<Void>>
+
     companion object {
         const val BASE_URL = "http://10.0.2.2:5000/"
     }
