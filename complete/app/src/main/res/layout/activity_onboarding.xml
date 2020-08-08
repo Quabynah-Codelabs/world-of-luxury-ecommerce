@@ -24,6 +24,12 @@
 
         <import type="io.worldofluxury.view.LauncherViewModel" />
 
+        <import type="android.app.Activity" />
+
+        <variable
+            name="host"
+            type="Activity" />
+
         <variable
             name="vm"
             type="LauncherViewModel" />
@@ -69,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
-            android:onClick="@{(v) -> vm.completeOnboarding(v)}"
+            android:onClick="@{(v) -> vm.completeOnboarding(v, host)}"
             android:text="@string/explore"
             app:icon="@drawable/ic_twotone_right" />
 

@@ -24,8 +24,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -56,17 +54,10 @@ class LauncherViewModel @ViewModelInject constructor(private val prefs: UserShar
         }
     }
 
-    fun completeOnboarding(v: View) {
+    fun completeOnboarding(v: View, host: Activity) {
         prefs.onboardingCompleted = true
-        ActivityCompat.startActivity(
-            v.context,
-            Intent(v.context, MainActivity::class.java),
-            ActivityOptionsCompat.makeScaleUpAnimation(
-                v, 0,
-                0, v.width, v.height
-            ).toBundle()
-        )
-        ActivityCompat.finishAfterTransition(v.context as Activity)
+        host.startActivity(Intent(v.context, MainActivity::class.java))
+        host.finish()
     }
 }
 

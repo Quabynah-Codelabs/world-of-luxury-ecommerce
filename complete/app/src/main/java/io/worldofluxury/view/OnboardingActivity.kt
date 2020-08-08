@@ -20,17 +20,14 @@ package io.worldofluxury.view
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.databinding.ActivityOnboardingBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
-import kotlinx.coroutines.delay
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class OnboardingActivity : DataBindingActivity() {
@@ -48,12 +45,9 @@ class OnboardingActivity : DataBindingActivity() {
         super.onCreate(savedInstanceState)
 
         binding.run {
-            lifecycleScope.launchWhenCreated {
-                delay(2000)
-                launcherViewModel.onboardingCompleted = Random.nextBoolean()
-                Timber.d("Onboarding state -> ${launcherViewModel.onboardingCompleted}")
-            }
-
+            lifecycleOwner = this@OnboardingActivity
+            vm = launcherViewModel
+            host = this@OnboardingActivity
             executePendingBindings()
         }
     }
