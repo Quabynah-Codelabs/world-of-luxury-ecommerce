@@ -153,7 +153,7 @@ class AuthViewModel @ViewModelInject constructor(
     fun navLoginOrCart(view: View) {
         val context = view.context
         if (authState.value == AuthenticationState.AUTHENTICATED) {
-            view.findNavController().navigate(HomeFragmentDirections.actionNavHomeToNavCart())
+            view.findNavController().navigate(R.id.nav_cart)
         } else {
             MaterialAlertDialogBuilder(context).apply {
                 setTitle("Oops...")

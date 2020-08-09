@@ -147,33 +147,41 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
     buildFeatures {
         dataBinding = true
         viewBinding = true
     }
+
     androidExtensions {
         isExperimental = true
     }
+
     lintOptions {
         isAbortOnError = false
     }
+
     sourceSets {
 //        androidTest.java.srcDirs += "src/test-common/java"
 //        test.java.srcDirs += "src/test-common/java"
 //        test.assets.srcDirs += files("$projectDir/schemas".toString())
     }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
         }
     }
+
     hilt {
         enableTransformForLocalTests = true
     }
+
     configurations.all {
         resolutionStrategy.force("com.google.code.findbugs:jsr305:3.0.0")
     }

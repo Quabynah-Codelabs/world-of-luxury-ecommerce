@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.res.ResourcesCompat
@@ -34,14 +35,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.skydoves.whatif.whatIf
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.binding.doOnApplyWindowInsets
 import io.worldofluxury.binding.gone
 import io.worldofluxury.binding.navigationItemBackground
-import io.worldofluxury.binding.showSnackBar
 import io.worldofluxury.databinding.ActivityMainBinding
 import io.worldofluxury.databinding.DrawerHeaderBinding
 import io.worldofluxury.util.APP_TAG
@@ -128,56 +127,58 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                 this@MainActivity,
                 { state -> Timber.d("Theme state -> $state") })
 
+            // setup header in drawer navigation view
+            val headerBinding: DrawerHeaderBinding =
+                DrawerHeaderBinding.inflate(layoutInflater)
+
+            authVM.authState.observe(this@MainActivity, { state ->
+                Timber.d("State -> $state")
+
+                val isAuthenticated = state == AuthViewModel.AuthenticationState.AUTHENTICATED
+                // update menu based on user login state
+                sidebar.run {
+                    // add item background for sidebar
+                    itemBackground = navigationItemBackground(this@MainActivity)
+                    this.setupWithNavController(controller)
+
+                    // set menu items visibility
+                    menu.findItem(R.id.nav_cart).isVisible = isAuthenticated
+                    menu.findItem(R.id.nav_user).isVisible = isAuthenticated
+                }
+
+                // re-layout the options menu for our bottom nav
+                invalidateOptionsMenu()
+
+                // show header if user is logged in otherwise hide it
+                if (isAuthenticated) {
+                    sidebar.addHeaderView(headerBinding.root)
+                } else {
+                    sidebar.removeHeaderView(headerBinding.root)
+                }
+            })
+
             // observe current user
-            authVM.currentUser.observe(
-                this@MainActivity,
-                { user ->
+            authVM.currentUser.observe(this@MainActivity, {
+                headerBinding.run {
+                    Timber.d("Binding for header started")
+                    vm = authVM
 
-                    // update menu based on user login state
-                    sidebar.run {
-                        // add item background for sidebar
-                        itemBackground = navigationItemBackground(this@MainActivity)
-                        this.setupWithNavController(controller)
-
-                        menu.findItem(R.id.nav_cart).isVisible = user != null
-                        menu.findItem(R.id.nav_history).isVisible = user != null
-                        menu.findItem(R.id.nav_user).isVisible = user != null
+                    root.setOnClickListener {
+                        controller.navigate(R.id.nav_user)
+                        drawer.closeDrawers()
                     }
-
-                    // re-layout the options menu for our bottom nav
-                    invalidateOptionsMenu()
-
-                    // setup header in drawer navigation view
-                    val headerBinding: DrawerHeaderBinding =
-                        DrawerHeaderBinding.inflate(layoutInflater)
-                    headerBinding.run {
-                        Timber.d("Binding for header started")
-                        vm = authVM
-
-                        root.setOnClickListener {
-                            controller.navigate(R.id.nav_user)
-                            drawer.closeDrawers()
+                    val menuView =
+                        findViewById<RecyclerView>(R.id.design_navigation_view)?.apply {
+                            addItemDecoration(SpaceDecoration())
                         }
-                        val menuView =
-                            findViewById<RecyclerView>(R.id.design_navigation_view)?.apply {
-                                addItemDecoration(SpaceDecoration())
-                            }
-                        root.doOnApplyWindowInsets { v, insets, padding ->
-                            v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
-                            // NavigationView doesn't dispatch insets to the menu view, so pad the bottom here.
-                            menuView?.updatePadding(bottom = insets.systemWindowInsetBottom)
-                        }
-                        executePendingBindings()
+                    root.doOnApplyWindowInsets { v, insets, padding ->
+                        v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
+                        // NavigationView doesn't dispatch insets to the menu view, so pad the bottom here.
+                        menuView?.updatePadding(bottom = insets.systemWindowInsetBottom)
                     }
-
-                    // show header if user is logged in
-                    user.whatIf(
-                        user == null,
-                        { sidebar.removeHeaderView(headerBinding.root) },
-                        {
-                            sidebar.addHeaderView(headerBinding.root)
-                        })
-                })
+                    executePendingBindings()
+                }
+            })
             executePendingBindings()
         }
     }
@@ -231,7 +232,13 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             setDrawerLockMode(lockMode)
         }
         with(binding.scanImageFab) {
-            setOnClickListener { showSnackBar("Feature unavailable") }
+            setOnClickListener {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Feature unavailable",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             if (EXCLUDED_FAB_DESTINATIONS.contains(destination.id)) hide()
             else show()
         }
@@ -256,7 +263,6 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             R.id.nav_welcome,
             R.id.nav_checkout,
             R.id.nav_help,
-            R.id.nav_history,
             R.id.nav_product,
             R.id.nav_user
         )

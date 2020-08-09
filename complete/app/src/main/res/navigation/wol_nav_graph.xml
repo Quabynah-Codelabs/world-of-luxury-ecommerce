@@ -59,27 +59,6 @@
             app:popExitAnim="@android:anim/fade_out"
             app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_cart"
-            app:destination="@id/nav_cart"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_user"
-            app:destination="@id/nav_user"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_search"
-            app:destination="@id/nav_search"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@id/nav_auth"

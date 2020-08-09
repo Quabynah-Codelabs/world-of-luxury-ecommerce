@@ -72,13 +72,15 @@ class DefaultProductRepository @Inject constructor(
      * fetch all favorited products
      */
     override fun watchFavorites(): LiveData<List<Product>> = liveData {
-        val data = cartDao.watchAllItems().switchMap { items ->
-            val result = MutableLiveData<List<Product>>()
-            val products = items.map { cartItem -> dao.getProductById(cartItem.productId) }
-            result.postValue(products)
-            result
+        scope.launch {
+            val data = cartDao.watchAllItems().switchMap { items ->
+                val result = MutableLiveData<List<Product>>()
+                val products = items.map { cartItem -> dao.getProductById(cartItem.productId) }
+                result.postValue(products)
+                result
+            }
+            emitSource(data)
         }
-        emitSource(data)
     }
 
     /**

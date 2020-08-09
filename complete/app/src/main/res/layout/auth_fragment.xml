@@ -67,7 +67,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="7"
-            app:snackbar="@{vm.toastLiveData}">
+            app:toast="@{vm.toastLiveData}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

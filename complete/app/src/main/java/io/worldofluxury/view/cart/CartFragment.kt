@@ -24,11 +24,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.databinding.FragmentCartBinding
+import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.ProductViewModel
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import timber.log.Timber
@@ -36,6 +36,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CartFragment : Fragment() {
+    init {
+        Timber.tag(APP_TAG)
+    }
+
     private lateinit var binding: FragmentCartBinding
 
     @Inject
@@ -52,7 +56,9 @@ class CartFragment : Fragment() {
             lifecycleOwner = this@CartFragment
             productViewModel = viewModel
 
-            viewModel.favorites.observe(viewLifecycleOwner, { products ->  Timber.d("Products -> $products")})
+            viewModel.favorites.observe(
+                viewLifecycleOwner,
+                { products -> Timber.d("Products -> $products") })
 
             executePendingBindings()
         }
