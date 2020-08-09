@@ -18,14 +18,11 @@
 
 package io.worldofluxury.viewmodel
 
-import android.app.Activity
 import android.util.Patterns
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.worldofluxury.R
@@ -86,11 +83,6 @@ class AuthViewModel @ViewModelInject constructor(
                 currentUser.postValue(null)
                 // update auth state
                 authState.postValue(AuthenticationState.NONE)
-                // navigate to login screen
-                if (v.context is AppCompatActivity)
-                    findNavController(v.context as Activity, R.id.nav_host_fragment).navigate(
-                        HomeFragmentDirections.actionNavHomeToNavAuth()
-                    )
             }
             setNegativeButton("Nope") { d, _ ->
                 d.dismiss()

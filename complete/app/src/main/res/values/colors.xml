@@ -17,11 +17,17 @@
   -->
 
 <resources>
-    <color name="primary">#ff0E153A</color>
-    <color name="primary_variant">#ff3d5af1</color>
-    <color name="secondary">#ff03DAC5</color>
-    <color name="secondary_variant">#ff03DAC5</color>
-    <color name="on_secondary">@color/blacker</color>
+    <!--    <color name="primary">#ff0E153A</color>-->
+    <!--    <color name="primary_variant">#ff3d5af1</color>-->
+    <!--    <color name="secondary">#ff03DAC5</color>-->
+    <!--    <color name="secondary_variant">#ff03DAC5</color>-->
+    <!--    <color name="on_secondary">@color/blacker</color>-->
+    <!--    <color name="on_primary">@color/white</color>-->
+    <color name="primary">#ff5d1049</color>
+    <color name="primary_variant">#ff4e0d3a</color>
+    <color name="secondary">#ffe30425</color>
+    <color name="secondary_variant">#ffe30425</color>
+    <color name="on_secondary">@color/white</color>
     <color name="on_primary">@color/white</color>
     <color name="on_error">@color/white</color>
     <color name="background">#ffe2f3f5</color>

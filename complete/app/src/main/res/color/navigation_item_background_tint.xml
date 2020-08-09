@@ -17,6 +17,6 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:alpha="?emphasisLow" android:color="?attr/colorSecondary" android:state_checked="true" />
+    <item android:alpha="?emphasisLow" android:color="?attr/colorPrimary" android:state_checked="true" />
     <item android:color="@color/transparent" />
 </selector>
