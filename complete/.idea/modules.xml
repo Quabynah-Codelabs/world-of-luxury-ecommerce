@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/World_of_Luxury.iml" filepath="$PROJECT_DIR$/.idea/modules/World_of_Luxury.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/World_of_Luxury.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/World_of_Luxury.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/World_of_Luxury.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/World_of_Luxury.buildSrc.iml" />
     </modules>
   </component>
 </project>

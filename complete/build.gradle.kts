@@ -21,12 +21,13 @@ buildscript {
         google()
         jcenter()
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.0-alpha07")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0-rc")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.28.1-alpha")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0")
+        classpath("com.android.tools.build:gradle:${Dependencies.gradleBuildTool}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.kotlin}")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:${Dependencies.daggerHiltAndroidVersion}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Dependencies.navVersion}")
     }
 }
 
@@ -35,5 +36,10 @@ allprojects {
         google()
         jcenter()
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
