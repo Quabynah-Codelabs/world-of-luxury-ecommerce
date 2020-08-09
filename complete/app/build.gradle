@@ -165,12 +165,12 @@ dependencies {
 
     // architecture components
     implementation "androidx.fragment:fragment-ktx:$versions.fragmentVersion"
+    debugImplementation "androidx.fragment:fragment-testing:$versions.fragmentVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycleVersion"
     implementation "androidx.paging:paging-runtime-ktx:$versions.pagingVersion"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation "androidx.room:room-runtime:$versions.roomVersion"
     implementation "androidx.room:room-ktx:$versions.roomVersion"
     kapt "androidx.room:room-compiler:$versions.roomVersion"

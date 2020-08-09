@@ -46,6 +46,7 @@ ext.versions = [
 
         // architecture components
         fragmentVersion         : '1.2.5',
+        activityVersion         : '1.2.5',
         lifecycleVersion        : '2.2.0',
         roomVersion             : '2.2.5',
         pagingVersion           : '2.1.2',

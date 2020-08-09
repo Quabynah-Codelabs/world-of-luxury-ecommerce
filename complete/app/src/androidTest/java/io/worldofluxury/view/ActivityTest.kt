@@ -19,30 +19,74 @@
 package io.worldofluxury.view
 
 import android.app.LauncherActivity
-import android.content.Context
-import android.content.Intent
 import androidx.test.core.app.ActivityScenario
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.worldofluxury.core.CoroutineTestRule
+import io.worldofluxury.database.dao.UserDao
+import io.worldofluxury.module.RepositoryModule
+import io.worldofluxury.repository.FakeProductRepository
+import io.worldofluxury.repository.FakeUserRepository
+import io.worldofluxury.repository.product.ProductRepository
+import io.worldofluxury.repository.user.UserRepository
+import io.worldofluxury.util.DataBindingIdlingResource
+import io.worldofluxury.util.EspressoIdlingResource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.io.IOException
+import org.junit.runner.RunWith
+import javax.inject.Singleton
 
 /**
  *  @project World of Luxury
  *  @author Bilson Jr.
  *  @by Quabynah Codelabs LLC
  *  @since 08/08/2020 @ 04:52
+ *
+ * Tests for the [DrawerLayout] layout component in [MainActivity] which manages
+ * navigation within the app.
+ *
+ * UI tests usually use [ActivityTestRule] but there's no API to perform an action before
+ * each test. The workaround is to use `ActivityScenario.launch()` and `ActivityScenario.close()`.
  */
 @ExperimentalCoroutinesApi
+@LargeTest
+@RunWith(AndroidJUnit4::class)
+@UninstallModules(RepositoryModule::class)
 @HiltAndroidTest
 class ActivityTest {
+
+    @Module
+    @InstallIn(ApplicationComponent::class)
+    object TestRepositoryModule {
+
+        @Singleton
+        @Provides
+        fun provideBackgroundThread(): CoroutineScope = CoroutineScope(Dispatchers.IO)
+
+        @Singleton
+        @Provides
+        fun provideProductRepository(): ProductRepository = FakeProductRepository()
+
+        @Singleton
+        @Provides
+        fun provideUserRepository(
+            userDao: UserDao
+        ): UserRepository = FakeUserRepository(userDao)
+    }
 
     @get:Rule
     var coroutinesTestRule = CoroutineTestRule()
@@ -50,24 +94,39 @@ class ActivityTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    private lateinit var context: Context
+    // An Idling Resource that waits for Data Binding to have no pending bindings
+    private val dataBindingIdlingResource = DataBindingIdlingResource()
 
     @Before
     fun setup() {
+        // Populate @Inject fields in test class
         hiltRule.inject()
-        context = InstrumentationRegistry.getInstrumentation().context
     }
 
+    /**
+     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations
+     * are not scheduled in the main Looper (for example when executed on a different thread).
+     */
+    @Before
+    fun registerIdlingResource() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().register(dataBindingIdlingResource)
+    }
+
+    /**
+     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.
+     */
     @After
-    @Throws(IOException::class)
-    fun tearDown() {
-
+    fun unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().unregister(dataBindingIdlingResource)
     }
+
 
     @Test
     fun navFromLauncherToOnboardingOrMainActivity() = coroutinesTestRule.runBlockingTest {
-        //val launcherActivity = launchActivity<LauncherActivity>()
-
+        val launcherActivity = ActivityScenario.launch(LauncherActivity::class.java)
+        launcherActivity.recreate()
     }
 
 }

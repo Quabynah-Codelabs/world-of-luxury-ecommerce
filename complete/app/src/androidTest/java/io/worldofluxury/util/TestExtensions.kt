@@ -18,7 +18,20 @@
 
 package io.worldofluxury.util
 
+import android.app.Activity
+import android.content.ComponentName
+import android.content.Intent
+import android.os.Bundle
+import androidx.annotation.StyleRes
+import androidx.appcompat.widget.Toolbar
+import androidx.core.util.Preconditions
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity
 import androidx.lifecycle.*
+import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
+import io.worldofluxury.HiltTestActivity
+import io.worldofluxury.R
 
 /**
  * Observer implementation that owns its lifecycle and achieves a one-time only observation
@@ -44,4 +57,49 @@ class OneTimeObserver<T>(private val handler: (T) -> Unit) : Observer<T>, Lifecy
 fun <T> LiveData<T>.observeOnce(onChangeHandler: (T) -> Unit) {
     val observer = OneTimeObserver(handler = onChangeHandler)
     observe(observer, observer)
+}
+
+/**
+ * launchFragmentInContainer from the androidx.fragment:fragment-testing library
+ * is NOT possible to use right now as it uses a hardcoded Activity under the hood
+ * (i.e. [EmptyFragmentActivity]) which is not annotated with @AndroidEntryPoint.
+ *
+ * As a workaround, use this function that is equivalent. It requires you to add
+ * [HiltTestActivity] in the debug folder and include it in the debug AndroidManifest.xml file
+ * as can be found in this project.
+ */
+inline fun <reified T : Fragment> launchFragmentInHiltContainer(
+    fragmentArgs: Bundle? = null,
+    @StyleRes themeResId: Int = R.style.Theme_WorldOfLuxury,
+    crossinline action: Fragment.() -> Unit = {}
+) {
+    val startActivityIntent = Intent.makeMainActivity(
+        ComponentName(
+            ApplicationProvider.getApplicationContext(),
+            HiltTestActivity::class.java
+        )
+    ).putExtra(EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY, themeResId)
+
+    ActivityScenario.launch<HiltTestActivity>(startActivityIntent).onActivity { activity ->
+        val fragment: Fragment = activity.supportFragmentManager.fragmentFactory.instantiate(
+            Preconditions.checkNotNull(T::class.java.classLoader),
+            T::class.java.name
+        )
+        fragment.arguments = fragmentArgs
+        activity.supportFragmentManager
+            .beginTransaction()
+            .add(android.R.id.content, fragment, "")
+            .commitNow()
+
+        fragment.action()
+    }
+}
+
+fun <T : Activity> ActivityScenario<T>.getToolbarNavigationContentDescription(): String {
+    var description = ""
+    onActivity {
+        description =
+            it.findViewById<Toolbar>(R.id.toolbar).navigationContentDescription as String
+    }
+    return description
 }
