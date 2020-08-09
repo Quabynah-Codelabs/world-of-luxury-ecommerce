@@ -99,7 +99,7 @@ class AuthViewModel @ViewModelInject constructor(
     }
 
     // todo: implement twitter login
-    fun twitterLogin(v: View) {
+    fun twitterLogin() {
 
     }
 

@@ -31,6 +31,7 @@ import io.worldofluxury.R
 import io.worldofluxury.databinding.FragmentCartBinding
 import io.worldofluxury.viewmodel.ProductViewModel
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,7 +52,7 @@ class CartFragment : Fragment() {
             lifecycleOwner = this@CartFragment
             productViewModel = viewModel
 
-            viewModel.favorites.observe(viewLifecycleOwner, { products ->  })
+            viewModel.favorites.observe(viewLifecycleOwner, { products ->  Timber.d("Products -> $products")})
 
             executePendingBindings()
         }

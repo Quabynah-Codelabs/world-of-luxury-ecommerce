@@ -32,15 +32,18 @@ abstract class GitVersionTask : DefaultTask() {
     @get:OutputFile
     abstract val gitVersionOutputFile: RegularFileProperty
 
+    @ExperimentalStdlibApi
     @TaskAction
     fun taskAction() {
         val process = ProcessBuilder("git", "rev-parse --short HEAD")
             .start()
-        val error = process.errorStream.readBytes().contentToString()
+        val error = process.errorStream.readBytes().decodeToString()
         if (error.isNotBlank()) {
-            throw RuntimeException("Git error : ${'$'}error")
+            System.err.println("Git error : ${'$'}error")
         }
-        val gitVersion = process.inputStream.readBytes().contentToString()
+
+        var gitVersion: String? = process.inputStream.readBytes().decodeToString()
+        if (gitVersion.isNullOrEmpty()) gitVersion = "${Dependencies.versionCode}"
         gitVersionOutputFile.get().asFile.writeText(gitVersion)
     }
 }

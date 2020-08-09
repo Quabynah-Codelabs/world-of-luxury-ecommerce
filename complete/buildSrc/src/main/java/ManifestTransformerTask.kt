@@ -43,6 +43,7 @@ abstract class ManifestTransformerTask : DefaultTask() {
     fun taskAction() {
         val gitVersion = gitInfoFile.get().asFile.readText()
         var manifest = mergedManifest.get().asFile.readText()
+        println("Git version -> $gitVersion")
         manifest = manifest.replace(
             "android:versionCode=\"${Dependencies.versionCode}\"",
             "android:versionCode=\"${gitVersion}\""

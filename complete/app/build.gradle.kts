@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 /*
 * Copyright (c) 2020.
 * Designed and developed by @quabynah_codelabs (Dennis Bilson)
@@ -17,6 +15,12 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+@file:Suppress("UnstableApiUsage")
+
+import com.android.build.api.artifact.ArtifactType
+import com.android.build.api.variant.BuildConfigField
+import java.io.FileInputStream
+import java.util.*
 
 plugins {
     id("com.android.application")
@@ -28,56 +32,44 @@ plugins {
 }
 
 // Preparing Keystore information for bundle signing
-//val keystoreProperties = Properties()
-//def keystorePropertiesFile = rootProject . file ('key.properties')
-//if (keystorePropertiesFile.exists()) {
-//    keystoreProperties.load(new FileInputStream (keystorePropertiesFile))
-//}
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
 
 android {
 
     onVariantProperties {
-        /*    // create the task to provide the git version.
-            val gitVersion = tasks.register<GitVersionTask>("gitVersion") {
-                gitVersionOutputFile.set(
-                    File(project.buildDir, "intermediates/git/output")
-                )
-            }
 
-            // create the task that transforms the manifest with that version
-            val manifestUpdater = tasks
-                .register<ManifestTransformerTask>("${name}ManifestUpdater") {
-                    // set the input from another task writing the git head
-                    // into a file.
-                    gitInfoFile.set(
-                        gitVersion.flatMap(GitVersionTask::gitVersionOutputFile)
-                    )
-                }
-
-            // and wire things up with the Android Gradle Plugin
-            artifacts.use(manifestUpdater)
-                .wiredWithFiles(
-                    ManifestTransformerTask::mergedManifest,
-                    ManifestTransformerTask::updatedManifest
-                )
-                .toTransform(com.android.build.api.artifact.ArtifactType.MERGED_MANIFEST)*/
-
+        // create the task to provide the git version.
         val gitVersionProvider = tasks.register<GitVersionTask>("${name}GitVersionProvider") {
             gitVersionOutputFile.set(
-                File(project.buildDir, "intermediates/gitVersionProvider/output")
+                File(project.buildDir, "intermediates/gitVersionProvider/output.txt")
             )
             outputs.upToDateWhen { false }
         }
 
+        // create the task that transforms the manifest with that version
         val manifestUpdater = tasks.register<ManifestTransformerTask>("${name}ManifestUpdater") {
             gitInfoFile.set(gitVersionProvider.flatMap(GitVersionTask::gitVersionOutputFile))
         }
+
+        // and wire things up with the Android Gradle Plugin
         artifacts.use(manifestUpdater)
             .wiredWithFiles(
                 ManifestTransformerTask::mergedManifest,
                 ManifestTransformerTask::updatedManifest
             )
-            .toTransform(com.android.build.api.artifact.ArtifactType.MERGED_MANIFEST)
+            .toTransform(ArtifactType.MERGED_MANIFEST)
+
+        buildConfigFields.put("GitVersion", gitVersionProvider.map { task ->
+            BuildConfigField(
+                "String",
+                "\"${task.gitVersionOutputFile.get().asFile.readText(Charsets.UTF_8)}\"",
+                "Git Version"
+            )
+        })
     }
 
     compileSdkVersion(Dependencies.compileSdkVersion)
@@ -85,10 +77,10 @@ android {
 
     signingConfigs {
         register("release") {
-//            keyAlias(keystoreProperties["keyAlias"])
-//            keyPassword keystoreProperties["keyPassword"]
-//            storeFile keystoreProperties["storeFile"] /*file(keystoreProperties['storeFile'])*/ ?: null
-//            storePassword keystoreProperties["storePassword"]
+            keyAlias(keystoreProperties["keyAlias"].toString())
+            keyPassword(keystoreProperties["keyPassword"].toString())
+            storeFile(file(keystoreProperties["storeFile"].toString()))
+            storePassword(keystoreProperties["storePassword"].toString())
         }
     }
 
@@ -103,8 +95,7 @@ android {
             isShrinkResources = true
 
             // Includes the default ProGuard rules files that are packaged with
-            // the Android Gradle plugin. To learn more, go to the section about
-            // R8 configuration files.
+            // the Android Gradle plugin.
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -136,8 +127,16 @@ android {
             }
         }
 
-        buildConfigField("String", "STRIPE_PUB_KEY", "\"\"")
-        buildConfigField("String", "STRIPE_PUB_SECRET", "\"\"")
+        buildConfigField(
+            "String",
+            "STRIPE_PUB_KEY",
+            "\"${keystoreProperties["stripe_pub_key"]}\""
+        )
+        buildConfigField(
+            "String",
+            "STRIPE_PUB_SECRET",
+            "\"${keystoreProperties["stripe_pub_secret"]}\""
+        )
     }
 
     aaptOptions {
@@ -151,45 +150,47 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-//    buildFeatures {
-//        dataBinding = true
-//    }
-//    androidExtensions {
-//        experimental = true
-//    }
-//    lintOptions {
-//        abortOnError false
-//    }
-//    sourceSets {
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+    androidExtensions {
+        isExperimental = true
+    }
+    lintOptions {
+        isAbortOnError = false
+    }
+    sourceSets {
 //        androidTest.java.srcDirs += "src/test-common/java"
 //        test.java.srcDirs += "src/test-common/java"
 //        test.assets.srcDirs += files("$projectDir/schemas".toString())
-//    }
-//    testOptions {
-//        unitTests {
-//            includeAndroidResources = true
-//            returnDefaultValues = true
-//        }
-//    }
-//    hilt {
-//        enableTransformForLocalTests = true
-//    }
-//    configurations.all {
-//        resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.0"
-//    }
-//    packagingOptions {
-//        exclude 'META-INF/DEPENDENCIES'
-//        exclude 'META-INF/LICENSE'
-//        exclude 'META-INF/LICENSE.txt'
-//        exclude 'META-INF/license.txt'
-//        exclude 'META-INF/NOTICE'
-//        exclude 'META-INF/NOTICE.txt'
-//        exclude 'META-INF/notice.txt'
-//        exclude 'META-INF/ASL2.0'
-//        exclude 'META-INF/AL2.0'
-//        exclude 'META-INF/LGPL2.1'
-//        exclude("META-INF/*.kotlin_module")
-//    }
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }
+    hilt {
+        enableTransformForLocalTests = true
+    }
+    configurations.all {
+        resolutionStrategy.force("com.google.code.findbugs:jsr305:3.0.0")
+    }
+
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/LICENSE")
+        exclude("META-INF/LICENSE.txt")
+        exclude("META-INF/license.txt")
+        exclude("META-INF/NOTICE")
+        exclude("META-INF/NOTICE.txt")
+        exclude("META-INF/notice.txt")
+        exclude("META-INF/ASL2.0")
+        exclude("META-INF/AL2.0")
+        exclude("META-INF/LGPL2.1")
+        exclude("META-INF/*.kotlin_module")
+    }
 }
 
 dependencies {
