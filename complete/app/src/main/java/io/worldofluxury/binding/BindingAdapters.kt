@@ -19,6 +19,7 @@
 package io.worldofluxury.binding
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
@@ -103,21 +104,28 @@ fun bindLoadImageUrl(view: AppCompatImageView, url: String?) {
         .into(view)
 }
 
-@BindingAdapter("avatar")
-fun bindLoadAvatar(view: ImageView, url: String?) {
-    GlideApp.with(view.context)
-        .load(url)
-        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-        .circleCrop()
-        .placeholder(R.drawable.avatar_one)
-        .error(R.drawable.avatar_two)
-        .fallback(R.drawable.avatar_three)
-        .listener(
-            GlidePalette.with(url)
-                .use(BitmapPalette.Profile.MUTED_LIGHT)
-                .crossfade(true)
-        )
-        .into(view)
+@BindingAdapter("avatar", "fallback", requireAll = false)
+fun bindLoadAvatar(view: ImageView, url: String?, fallback: Drawable?) {
+    if (url.isNullOrEmpty() && fallback != null) {
+        GlideApp.with(view.context)
+            .asDrawable()
+            .load(fallback)
+            .circleCrop()
+            .into(view)
+    } else
+        GlideApp.with(view.context)
+            .load(url)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .circleCrop()
+            .placeholder(R.drawable.avatar_one)
+            .error(R.drawable.avatar_two)
+            .fallback(R.drawable.avatar_three)
+            .listener(
+                GlidePalette.with(url)
+                    .use(BitmapPalette.Profile.MUTED_LIGHT)
+                    .crossfade(true)
+            )
+            .into(view)
 }
 
 @BindingAdapter("paletteImage", "paletteCard")

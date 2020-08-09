@@ -45,6 +45,7 @@
             android:layout_width="@dimen/user_headshot_size"
             android:layout_height="@dimen/user_headshot_size"
             app:avatar="@{vm.currentUser.avatar}"
+            app:fallback="@{@drawable/swan}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/avatar_three" />
@@ -56,7 +57,7 @@
             android:layout_marginStart="@dimen/spacing_large"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{vm.currentUser.name}"
+            android:text="@{vm.authState == AuthenticationState.AUTHENTICATED ? vm.currentUser.name : @string/app_name__full}"
             android:textAppearance="?textAppearanceHeadline6"
             app:layout_constraintBottom_toTopOf="@id/user_email"
             app:layout_constraintStart_toEndOf="@id/user_avatar"
@@ -70,12 +71,12 @@
             android:layout_marginStart="@dimen/spacing_large"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{vm.currentUser.email}"
+            android:text="@{vm.authState == AuthenticationState.AUTHENTICATED ? vm.currentUser.email : @string/login_prompt}"
             android:textAppearance="?textAppearanceCaption"
             app:layout_constraintBottom_toBottomOf="@id/user_avatar"
             app:layout_constraintStart_toEndOf="@id/user_avatar"
             app:layout_constraintTop_toBottomOf="@id/user_name"
-            tools:text="@tools:sample/us_phones" />
+            tools:text="@string/login_prompt" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/logout"
@@ -83,11 +84,11 @@
             android:layout_height="?actionBarSize"
             android:background="?selectableItemBackgroundBorderless"
             android:onClick="@{(v) -> vm.logout(v)}"
-            android:src="@drawable/ic_twotone_exit"
-            app:gone="@{vm.authState != AuthenticationState.AUTHENTICATED}"
+            android:src="@{vm.authState != AuthenticationState.AUTHENTICATED ?  @drawable/ic_twotone_exit : @drawable/ic_twotone_login}"
             app:layout_constraintBottom_toBottomOf="@id/user_avatar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/user_avatar" />
+            app:layout_constraintTop_toTopOf="@id/user_avatar"
+            tools:src="@drawable/ic_twotone_login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

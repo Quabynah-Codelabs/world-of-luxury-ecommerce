@@ -24,15 +24,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.navigation.navGraphViewModels
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.databinding.UserFragmentBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
-import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,7 +44,7 @@ class UserFragment : Fragment() {
 
     @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory
-    private val viewModel by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
+    private val viewModel by activityViewModels<AuthViewModel> { authViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +62,7 @@ class UserFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-         viewModel.currentUser.observe(viewLifecycleOwner, { user -> Timber.d("User is -> $user") })
+        viewModel.currentUser.observe(viewLifecycleOwner, { user -> Timber.d("User is -> $user") })
     }
 
 }

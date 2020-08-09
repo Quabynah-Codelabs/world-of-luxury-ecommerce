@@ -24,7 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.navGraphViewModels
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.database.dao.ProductDao
@@ -51,7 +51,7 @@ class WelcomeFragment : Fragment() {
 
     @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory
-    private val viewModel by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
+    private val viewModel by activityViewModels<AuthViewModel> { authViewModelFactory }
 
     private val images = mutableListOf(
         R.drawable.world_of_luxury_one,

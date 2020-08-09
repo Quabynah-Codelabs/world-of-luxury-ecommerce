@@ -24,8 +24,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.data.Product
@@ -51,8 +51,8 @@ class ProductFragment : Fragment() {
     @Inject
     lateinit var productViewModelFactory: ProductViewModelFactory
 
-    private val viewModel by navGraphViewModels<ProductViewModel>(R.id.wol_nav_graph) { productViewModelFactory }
-    private val authVM by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
+    private val viewModel by activityViewModels<ProductViewModel> { productViewModelFactory }
+    private val authVM by activityViewModels<AuthViewModel> { authViewModelFactory }
 
     private val args by navArgs<ProductFragmentArgs>()
 

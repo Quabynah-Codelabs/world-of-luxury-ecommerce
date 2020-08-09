@@ -24,8 +24,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.skydoves.whatif.whatIfNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
@@ -44,7 +44,7 @@ class AuthFragment : Fragment() {
 
     @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory
-    private val viewModel by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
+    private val viewModel by activityViewModels<AuthViewModel> { authViewModelFactory }
 
     init {
         Timber.tag(APP_TAG)
