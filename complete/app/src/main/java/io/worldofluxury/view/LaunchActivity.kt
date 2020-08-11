@@ -19,7 +19,6 @@
 package io.worldofluxury.view
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -29,7 +28,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.AndroidEntryPoint
-import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.binding.checkAllMatched
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
@@ -89,7 +87,6 @@ class LaunchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (DEBUG) launcherViewModel.onboardingCompleted = false
         launcherViewModel.launchDestination.observe(this, { destination ->
             Timber.d("Current launcher destination -> $destination")
             when (destination) {

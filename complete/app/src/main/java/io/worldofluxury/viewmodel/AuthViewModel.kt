@@ -18,14 +18,19 @@
 
 package io.worldofluxury.viewmodel
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Patterns
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.worldofluxury.R
+import com.skydoves.whatif.whatIf
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.base.launchInBackground
 import io.worldofluxury.binding.isTooShort
@@ -34,7 +39,6 @@ import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.view.auth.AuthFragment
-import io.worldofluxury.view.home.HomeFragmentDirections
 import io.worldofluxury.view.welcome.WelcomeFragmentDirections
 import kotlinx.coroutines.delay
 import timber.log.Timber
@@ -51,6 +55,13 @@ class AuthViewModel @ViewModelInject constructor(
 
     enum class AuthenticationState {
         NONE, AUTHENTICATING, AUTHENTICATED, ERROR
+    }
+
+    private val gso: GoogleSignInOptions by lazy {
+        GoogleSignInOptions.Builder()
+            .requestEmail()
+            .requestId()
+            .build()
     }
 
     val authState: MutableLiveData<AuthenticationState> = MutableLiveData(AuthenticationState.NONE)
@@ -141,25 +152,40 @@ class AuthViewModel @ViewModelInject constructor(
         )
     }
 
-    // navigate to login or cart
-    fun navLoginOrCart(view: View) {
-        val context = view.context
-        if (authState.value == AuthenticationState.AUTHENTICATED) {
-            view.findNavController().navigate(R.id.nav_cart)
-        } else {
-            MaterialAlertDialogBuilder(context).apply {
-                setTitle("Oops...")
-                setMessage("Sign in to start shopping with ${context.getString(R.string.app_name)}")
-                setPositiveButton("Sign in") { d, _ ->
-                    d.dismiss()
-                    view.findNavController()
-                        .navigate(HomeFragmentDirections.actionNavHomeToNavAuth())
-                }
-                setNegativeButton("Cancel") { d, _ ->
-                    d.dismiss()
-                }
-            }.show()
-        }
+    // sign in with google
+    fun googleLogin(host: Activity, code: Int) {
+        val client = GoogleSignIn.getClient(host, gso)
+        authState.value = AuthenticationState.AUTHENTICATING
+        host.startActivityForResult(client.signInIntent, code)
     }
+
+    // get user data from login
+    fun getUserFromGoogleSignInResult(resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            try {
+                val signedInAccountFromIntent = GoogleSignIn.getSignedInAccountFromIntent(data)
+                val account = signedInAccountFromIntent.getResult(ApiException::class.java)
+                whatIf(account == null, {
+                    Timber.e("User account was null")
+                    authState.value = AuthenticationState.ERROR
+                }, {
+                    // assert that account is not null
+                    val acct = account!!
+                    // create user from google account
+                    val user =
+                        User(acct.id!!, acct.displayName!!, acct.email, acct.photoUrl.toString())
+                    userDao.insert(user)
+                    currentUser.postValue(user)
+                    toastLiveData.postValue("Login was successful")
+                    authState.value = AuthenticationState.AUTHENTICATED
+                })
+            } catch (e: Exception) {
+                Timber.e(e)
+                authState.value = AuthenticationState.ERROR
+            }
+        } else
+            authState.value = AuthenticationState.ERROR
+    }
+
 
 }

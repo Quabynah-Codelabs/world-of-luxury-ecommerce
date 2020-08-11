@@ -53,9 +53,9 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/onboarding_image"
                 android:layout_width="@dimen/match_parent"
-                android:layout_height="@dimen/logo_size"
+                android:layout_height="@dimen/logo_height"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/world_of_luxury_three" />
+                android:src="@drawable/swan" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/onboarding_title"
@@ -80,15 +80,15 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/spacing_xlarge"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="@dimen/spacing_large"
             android:enabled="@{!vm.loadingResourcesLiveData}"
             android:onClick="@{(v) -> vm.completeOnboarding(v, host)}"
             android:text="@{vm.loadingResourcesLiveData ? @string/loading : @string/explore}"
             app:icon="@{vm.loadingResourcesLiveData ? null : @drawable/ic_twotone_right}"
             tools:enabled="false"
-            tools:icon="@null" />
+            tools:icon="@drawable/ic_twotone_right"
+            tools:text="@string/explore" />
 
     </FrameLayout>
 </layout>

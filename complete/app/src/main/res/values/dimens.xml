@@ -34,6 +34,7 @@
     <!-- Avatar & Logo. -->
     <dimen name="large_avatar_size">112dp</dimen>
     <dimen name="logo_size">256dp</dimen>
+    <dimen name="logo_height">132dp</dimen>
     <dimen name="color_icon_size">36dp</dimen>
     <dimen name="product_size">350dp</dimen>
     <dimen name="small_logo_size">200dp</dimen>

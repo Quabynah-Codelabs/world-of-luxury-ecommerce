@@ -86,6 +86,19 @@ android {
 
     buildTypes {
         named("release") {
+            // stripe pub key
+            buildConfigField(
+                "String",
+                "STRIPE_PUB_KEY",
+                "\"${keystoreProperties["prod_stripe_pub_key"]}\""
+            )
+            // stripe pub secret
+            buildConfigField(
+                "String",
+                "STRIPE_PUB_SECRET",
+                "\"${keystoreProperties["prod_stripe_pub_secret"]}\""
+            )
+
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
             isMinifyEnabled = true
@@ -106,6 +119,19 @@ android {
         }
 
         named("debug") {
+            // stripe pub key
+            buildConfigField(
+                "String",
+                "STRIPE_PUB_KEY",
+                "\"${keystoreProperties["stripe_pub_key"]}\""
+            )
+            // stripe pub secret
+            buildConfigField(
+                "String",
+                "STRIPE_PUB_SECRET",
+                "\"${keystoreProperties["stripe_pub_secret"]}\""
+            )
+
             isDebuggable = true
             setSigningConfig(signingConfigs["release"])
         }
@@ -127,15 +153,17 @@ android {
             }
         }
 
+        // twitter key
         buildConfigField(
             "String",
-            "STRIPE_PUB_KEY",
-            "\"${keystoreProperties["stripe_pub_key"]}\""
+            "TWITTER_CONSUMER_KEY",
+            "\"${keystoreProperties["twitter_api_key"]}\""
         )
+        // twitter secret
         buildConfigField(
             "String",
-            "STRIPE_PUB_SECRET",
-            "\"${keystoreProperties["stripe_pub_secret"]}\""
+            "TWITTER_CONSUMER_SECRET",
+            "\"${keystoreProperties["twitter_api_secret"]}\""
         )
     }
 
@@ -265,9 +293,9 @@ dependencies {
     implementation("com.google.code.gson:gson:${Dependencies.gsonVersion}")
 
     // tensorflow
-    // implementation('org.tensorflow:tensorflow-lite:0.0.0-nightly') { changing = true }
-    // implementation('org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly') { changing = true }
-    // implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly') { changing = true }
+    // implementation("org.tensorflow:tensorflow-lite:0.0.0-nightly") { changing = true }
+    // implementation("org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly") { changing = true }
+    // implementation("org.tensorflow:tensorflow-lite-support:0.0.0-nightly") { changing = true }
 
     // twitter
     implementation("com.twitter.sdk.android:twitter:${Dependencies.twitterVersion}")

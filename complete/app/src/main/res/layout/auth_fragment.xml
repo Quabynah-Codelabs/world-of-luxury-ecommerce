@@ -199,22 +199,10 @@
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_normal"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:text="@string/sign_in"
-                    app:layout_constraintEnd_toStartOf="@id/sign_up__button"
-                    app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
-                    app:layout_constraintTop_toBottomOf="@id/lower_header" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/sign_up__button"
-                    style="?materialButtonOutlinedStyle"
-                    android:layout_width="@dimen/spacing_none"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_small"
-                    android:layout_marginTop="@dimen/spacing_normal"
-                    android:text="@string/sign_up"
+                    android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                    android:text="@string/sign_in_as_guest"
                     app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
-                    app:layout_constraintStart_toEndOf="@id/sign_in__button"
+                    app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
                     app:layout_constraintTop_toBottomOf="@id/lower_header" />
 
                 <androidx.constraintlayout.widget.Guideline

@@ -18,6 +18,7 @@
 
 package io.worldofluxury.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -189,11 +190,11 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.nav_search)?.isVisible = authVM.isLoggedIn.get()
         // customize the theme icon
         val themeMenuItem = menu?.findItem(R.id.toggle_theme)
         if (themeMenuItem != null) {
             with(themeMenuItem) {
-                isVisible = authVM.isLoggedIn.get()
                 val themeIcon =
                     if (authVM.isDarkMode.get()) R.drawable.ic_twotone_sun else R.drawable.ic_twotone_moon
                 icon = ResourcesCompat.getDrawable(resources, themeIcon, theme)
@@ -214,6 +215,18 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // pass down any activity result to the fragments
+        supportFragmentManager.fragments.forEach {
+            it.onActivityResult(
+                requestCode,
+                resultCode,
+                data
+            )
+        }
     }
 
     override fun onDestinationChanged(
@@ -247,7 +260,6 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             if (isVisible) performShow()
         }
     }
-
 
     companion object {
         // destinations which do not require the theme FAB

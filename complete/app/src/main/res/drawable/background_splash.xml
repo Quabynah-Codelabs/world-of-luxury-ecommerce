@@ -23,8 +23,8 @@
 
     <!-- Image to be drawn. -->
     <item
-        android:width="@dimen/large_avatar_size"
-        android:height="@dimen/large_avatar_size"
+        android:width="@dimen/logo_size"
+        android:height="@dimen/logo_height"
         android:drawable="@drawable/swan"
         android:gravity="center" />
 

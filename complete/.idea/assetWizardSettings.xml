@@ -67,7 +67,8 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="1" />
+                                                <entry key="imagePath" value="F:\GitHub\personal-projects\android\world-of-luxury-ecommerce\complete\app\src\main\res\drawable\ic_launcher_background.xml" />
+                                                <entry key="scalingPercent" value="0" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -91,7 +92,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="F:\GitHub\personal-projects\android\world-of-luxury-ecommerce\artwork\images\swan.png" />
+                                                <entry key="imagePath" value="F:\GitHub\personal-projects\android\world-of-luxury-ecommerce\artwork\images\logo\swan.png" />
                                                 <entry key="scalingPercent" value="62" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
@@ -121,6 +122,12 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="legacyIconShape" value="NONE" />
+                                      <entry key="showGrid" value="true" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -284,6 +291,11 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="showGrid" value="true" />
                                     </map>
                                   </option>
                                 </PersistentState>

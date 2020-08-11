@@ -23,9 +23,7 @@ import android.os.StrictMode
 import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.stripe.android.PaymentConfiguration
 import dagger.hilt.android.HiltAndroidApp
-import io.worldofluxury.BuildConfig
 import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.preferences.PreferenceStorage
 import javax.inject.Inject
@@ -48,11 +46,6 @@ class WorldOfLuxuryApp : Application(), Configuration.Provider {
         // Enable strict mode before Dagger creates graph
         if (DEBUG) enableStrictMode()
         super.onCreate()
-        // Initialize Stripe payment SDK
-        PaymentConfiguration.init(
-            applicationContext,
-            BuildConfig.STRIPE_PUB_KEY
-        )
 
         // Setup app theme
         prefs.showCurrentTheme()
