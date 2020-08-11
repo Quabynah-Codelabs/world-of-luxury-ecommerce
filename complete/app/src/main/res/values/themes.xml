@@ -77,6 +77,17 @@
         <!-- Page transitions. -->
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+
+        <!-- Shapes. -->
+        <item name="shapeAppearanceSmallComponent">
+            @style/ShapeAppearanceOverlay.WorldOfLuxury.SmallComponent
+        </item>
+        <item name="shapeAppearanceMediumComponent">
+            @style/ShapeAppearanceOverlay.WorldOfLuxury.MediumComponent
+        </item>
+        <item name="shapeAppearanceLargeComponent">
+            @style/ShapeAppearanceOverlay.WorldOfLuxury.LargeComponent
+        </item>
     </style>
 
     <!-- Splash Theme. -->

@@ -25,6 +25,8 @@
         <item name="android:paddingBottom">@dimen/spacing_large</item>
         <item name="android:paddingLeft">@dimen/spacing_x24</item>
         <item name="android:paddingRight">@dimen/spacing_x24</item>
+        <item name="iconPadding">@dimen/spacing_x32</item>
+        <item name="iconGravity">textEnd</item>
     </style>
 
     <style name="Widget.Swan.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -32,6 +34,8 @@
         <item name="android:paddingBottom">@dimen/spacing_large</item>
         <item name="android:paddingLeft">@dimen/spacing_x24</item>
         <item name="android:paddingRight">@dimen/spacing_x24</item>
+        <item name="iconPadding">@dimen/spacing_x32</item>
+        <item name="iconGravity">textEnd</item>
     </style>
 
 </resources>
