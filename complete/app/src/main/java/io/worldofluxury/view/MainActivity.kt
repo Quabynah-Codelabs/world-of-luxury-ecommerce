@@ -276,8 +276,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         private val EXCLUDED_DESTINATIONS = setOf(
             R.id.nav_auth,
             R.id.nav_welcome,
-            R.id.nav_checkout,
-            R.id.nav_help
+            R.id.nav_checkout
         )
 
         private val EXCLUDED_FAB_DESTINATIONS = setOf(
