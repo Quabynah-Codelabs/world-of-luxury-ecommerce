@@ -28,6 +28,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.AndroidEntryPoint
+import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.binding.checkAllMatched
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
@@ -44,6 +45,10 @@ enum class LaunchDestination {
 class LauncherViewModel @ViewModelInject constructor(private val prefs: PreferenceStorage) :
     ViewModel(),
     PreferenceStorage by prefs {
+
+    init {
+        if (DEBUG) prefs.onboardingCompleted = false
+    }
 
     val launchDestination = liveData {
         val result = prefs.onboardingCompleted

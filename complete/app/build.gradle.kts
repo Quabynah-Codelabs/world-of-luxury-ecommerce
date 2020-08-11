@@ -326,6 +326,9 @@ dependencies {
     // debugging
     implementation("com.jakewharton.timber:timber:${Dependencies.timberVersion}")
 
+    // page indicator
+    implementation("com.pacioianu.david:ink-page-indicator:${Dependencies.pageIndicatorVersion}")
+
     // unit test
     testImplementation("junit:junit:${Dependencies.junitVersion}")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${Dependencies.mockitoKotlinVersion}")
@@ -340,4 +343,6 @@ dependencies {
 
 kapt {
     useBuildCache = true
+    generateStubs = true
+    strictMode = true
 }

@@ -19,11 +19,15 @@
 package io.worldofluxury.view
 
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.viewpager.widget.PagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.databinding.ActivityOnboardingBinding
+import io.worldofluxury.databinding.ItemOnboardingBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
 import timber.log.Timber
@@ -35,7 +39,7 @@ class OnboardingActivity : DataBindingActivity() {
 
     @Inject
     lateinit var factory: LaunchViewModelFactory
-    private val launcherViewModel by viewModels<LauncherViewModel> { factory }
+    val launcherViewModel by viewModels<LauncherViewModel> { factory }
 
     init {
         Timber.tag(APP_TAG)
@@ -48,9 +52,46 @@ class OnboardingActivity : DataBindingActivity() {
             lifecycleOwner = this@OnboardingActivity
             vm = launcherViewModel
             host = this@OnboardingActivity
+
+            // setup pager with indicator
+            onboardingPager.adapter = OnboardingPagerAdapter(this@OnboardingActivity, 1)
+            // this indicator does not have support for ViewPager2 so we use the old one
+            indicator.setViewPager(onboardingPager)
             executePendingBindings()
         }
 
         launcherViewModel
     }
+}
+
+// adapter for onboarding view pager
+class OnboardingPagerAdapter constructor(
+    private val parent: OnboardingActivity,
+    private val pages: Int
+) :
+    PagerAdapter() {
+    override fun getCount(): Int = pages
+
+    override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
+
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        val v: View = getPage(container, position)
+        container.addView(v)
+        return v
+    }
+
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as View)
+    }
+
+    private fun getPage(container: ViewGroup, position: Int): View {
+        val itemBinding = ItemOnboardingBinding.inflate(parent.layoutInflater)
+        itemBinding.run {
+            host = parent
+            vm = parent.launcherViewModel
+            executePendingBindings()
+        }
+        return itemBinding.root
+    }
+
 }

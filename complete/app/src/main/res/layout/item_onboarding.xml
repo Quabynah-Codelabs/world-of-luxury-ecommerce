@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020.
+  ~ Designed and developed by @quabynah_codelabs (Dennis Bilson)
+  ~
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="io.worldofluxury.view.LauncherViewModel" />
+
+        <import type="android.app.Activity" />
+
+        <variable
+            name="host"
+            type="Activity" />
+
+        <variable
+            name="vm"
+            type="LauncherViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_xlarge"
+            android:paddingVertical="@dimen/spacing_x36">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/onboarding_image"
+                android:layout_width="@dimen/match_parent"
+                android:layout_height="@dimen/logo_height"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/swan" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/onboarding_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_x64"
+                android:gravity="center"
+                android:text="@string/app_name__full"
+                android:textAppearance="?textAppearanceHeadline4" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/onboarding_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:gravity="center"
+                android:text="@string/app_desc__long"
+                android:textAppearance="?textAppearanceBody2" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_x48"
+            android:enabled="@{!vm.loadingResourcesLiveData}"
+            android:onClick="@{(v) -> vm.completeOnboarding(v, host)}"
+            android:text="@{vm.loadingResourcesLiveData ? @string/loading : @string/explore}"
+            app:icon="@{vm.loadingResourcesLiveData ? null : @drawable/ic_twotone_right}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:enabled="false"
+            tools:icon="@drawable/ic_twotone_right"
+            tools:text="@string/explore" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

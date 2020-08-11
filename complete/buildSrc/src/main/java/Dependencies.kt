@@ -90,6 +90,9 @@ object Dependencies {
     // debugging
     const val timberVersion = "4.7.1"
 
+    // page indicator
+    const val pageIndicatorVersion = "1.3.0"
+
     // unit test
     const val truthVersion = "1.0.1"
     const val junitVersion = "4.13"
