@@ -16,5 +16,12 @@
  * limitations under the License.
  */
 
-rootProject.name = "Swan - World of Luxury"
-include ':app'
+plugins {
+    `kotlin-dsl`
+}
+
+repositories {
+    google()
+    jcenter()
+    maven("https://dl.bintray.com/kotlin/kotlin-eap")
+}

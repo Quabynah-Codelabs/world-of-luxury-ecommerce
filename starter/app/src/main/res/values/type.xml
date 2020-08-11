@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020.
+  ~ Designed and developed by @quabynah_codelabs (Dennis Bilson)
+  ~
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <!-- Headline 4 -->
+    <style name="TextAppearance.Swan.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/maven_pro_medium</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+    <!-- Headline 5 -->
+    <style name="TextAppearance.Swan.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/maven_pro_medium</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+    <!-- Headline 6 -->
+    <style name="TextAppearance.Swan.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/maven_pro_medium</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+    <!-- Body Text 1 -->
+    <style name="TextAppearance.Swan.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/rubik</item>
+    </style>
+    <!-- Body Text 2 -->
+    <style name="TextAppearance.Swan.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/rubik</item>
+    </style>
+    <!-- Subtitle 1 -->
+    <style name="TextAppearance.Swan.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/rubik</item>
+    </style>
+    <!-- Subtitle 2 -->
+    <style name="TextAppearance.Swan.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="fontFamily">@font/rubik</item>
+    </style>
+    <!-- Button -->
+    <style name="TextAppearance.Swan.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+    <!-- Caption -->
+    <style name="TextAppearance.Swan.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+    <!-- Overline -->
+    <style name="TextAppearance.Swan.Overline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="fontFamily">@font/rubik_medium</item>
+    </style>
+</resources>

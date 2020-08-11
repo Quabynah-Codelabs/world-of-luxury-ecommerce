@@ -18,15 +18,9 @@
   -->
 
 <resources>
-    <!-- Spacing. -->
-    <dimen name="spacing_none">0dp</dimen>
-    <dimen name="spacing_small">4dp</dimen>
-    <dimen name="spacing_normal">8dp</dimen>
-    <dimen name="spacing_large">16dp</dimen>
-    <dimen name="spacing_x24">24dp</dimen>
-    <dimen name="spacing_x32">32dp</dimen>
-    <dimen name="spacing_x48">48dp</dimen>
-    <dimen name="spacing_x64">64dp</dimen>
-    <dimen name="spacing_x128">128dp</dimen>
-    <dimen name="spacing_x256">256dp</dimen>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/maven_pro_medium</item>
+        <item>@font/rubik</item>
+        <item>@font/rubik_medium</item>
+    </array>
 </resources>

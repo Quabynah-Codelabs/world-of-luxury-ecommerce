@@ -18,15 +18,13 @@
   -->
 
 <resources>
-    <!-- Spacing. -->
-    <dimen name="spacing_none">0dp</dimen>
-    <dimen name="spacing_small">4dp</dimen>
-    <dimen name="spacing_normal">8dp</dimen>
-    <dimen name="spacing_large">16dp</dimen>
-    <dimen name="spacing_x24">24dp</dimen>
-    <dimen name="spacing_x32">32dp</dimen>
-    <dimen name="spacing_x48">48dp</dimen>
-    <dimen name="spacing_x64">64dp</dimen>
-    <dimen name="spacing_x128">128dp</dimen>
-    <dimen name="spacing_x256">256dp</dimen>
+    <color name="primary">#FFFEDBD0</color>
+    <color name="primary_variant">#FFFEDBD0</color>
+    <color name="secondary">#FFFEEAE6</color>
+    <color name="secondary_variant">#FFFEEAE6</color>
+    <color name="on_primary">@color/black</color>
+    <color name="on_secondary">@color/black</color>
+    <color name="error">#ffEC407A</color>
+    <color name="background">#ff151515</color>
+    <color name="on_background">@color/white</color>
 </resources>

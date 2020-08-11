@@ -33,6 +33,7 @@
         android:textAlignment="viewStart"
         android:textAppearance="?textAppearanceHeadline4"
         app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/left_vert_guide"
         app:layout_constraintTop_toBottomOf="@id/top_horiz_guide" />
 

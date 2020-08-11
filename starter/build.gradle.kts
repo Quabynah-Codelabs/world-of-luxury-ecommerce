@@ -18,17 +18,15 @@
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.0-rc"
     repositories {
         google()
         jcenter()
-        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap" }
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.0-alpha07'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        def nav_version = "2.3.0"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath("com.android.tools.build:gradle:${Dependencies.gradleBuildTool}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.kotlin}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Dependencies.navVersion}")
     }
 }
 
@@ -36,10 +34,10 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap" }
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }

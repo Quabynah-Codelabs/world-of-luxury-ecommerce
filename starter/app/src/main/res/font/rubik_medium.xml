@@ -17,16 +17,9 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <!-- Spacing. -->
-    <dimen name="spacing_none">0dp</dimen>
-    <dimen name="spacing_small">4dp</dimen>
-    <dimen name="spacing_normal">8dp</dimen>
-    <dimen name="spacing_large">16dp</dimen>
-    <dimen name="spacing_x24">24dp</dimen>
-    <dimen name="spacing_x32">32dp</dimen>
-    <dimen name="spacing_x48">48dp</dimen>
-    <dimen name="spacing_x64">64dp</dimen>
-    <dimen name="spacing_x128">128dp</dimen>
-    <dimen name="spacing_x256">256dp</dimen>
-</resources>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:fontProviderAuthority="com.google.android.gms.fonts"
+        app:fontProviderPackage="com.google.android.gms"
+        app:fontProviderQuery="name=Rubik&amp;weight=500"
+        app:fontProviderCerts="@array/com_google_android_gms_fonts_certs">
+</font-family>
