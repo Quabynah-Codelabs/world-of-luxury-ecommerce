@@ -48,7 +48,7 @@
             app:fallback="@{@drawable/swan}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/avatar_three" />
+            tools:src="@drawable/swan" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/user_name"
@@ -84,7 +84,7 @@
             android:layout_height="?actionBarSize"
             android:background="?selectableItemBackgroundBorderless"
             android:onClick="@{(v) -> vm.logout(v)}"
-            android:src="@{vm.authState != AuthenticationState.AUTHENTICATED ?  @drawable/ic_twotone_exit : @drawable/ic_twotone_login}"
+            android:src="@{vm.authState == AuthenticationState.AUTHENTICATED ?  @drawable/ic_twotone_exit : @drawable/ic_twotone_login}"
             app:layout_constraintBottom_toBottomOf="@id/user_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/user_avatar"

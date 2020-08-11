@@ -95,4 +95,9 @@
         android:name="io.worldofluxury.view.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@id/nav_help"
+        android:name="io.worldofluxury.view.help.HelpFragment"
+        android:label="@string/title_help"
+        tools:layout="@layout/help_fragment" />
 </navigation>

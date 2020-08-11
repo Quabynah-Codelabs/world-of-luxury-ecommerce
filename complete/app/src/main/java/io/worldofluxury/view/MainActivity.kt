@@ -27,6 +27,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
@@ -131,11 +132,33 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             // setup header in drawer navigation view
             val headerBinding: DrawerHeaderBinding =
                 DrawerHeaderBinding.inflate(layoutInflater)
+            headerBinding.run {
+                Timber.d("Binding for header started")
+                vm = authVM
+
+                val menuView =
+                    findViewById<RecyclerView>(R.id.design_navigation_view)?.apply {
+                        addItemDecoration(SpaceDecoration())
+                    }
+                root.doOnApplyWindowInsets { v, insets, padding ->
+                    v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
+                    // NavigationView doesn't dispatch insets to the menu view, so pad the bottom here.
+                    menuView?.updatePadding(bottom = insets.systemWindowInsetBottom)
+                }
+                executePendingBindings()
+            }
 
             authVM.authState.observe(this@MainActivity, { state ->
                 Timber.d("State -> $state")
 
                 val isAuthenticated = state == AuthViewModel.AuthenticationState.AUTHENTICATED
+
+                // header
+                headerBinding.root.setOnClickListener {
+                    drawer.closeDrawers()
+                    controller.navigate(if (isAuthenticated) R.id.nav_user else R.id.nav_auth)
+                }
+
                 // update menu based on user login state
                 sidebar.run {
                     // add item background for sidebar
@@ -150,35 +173,13 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                 // re-layout the options menu for our bottom nav
                 invalidateOptionsMenu()
 
-                // show header if user is logged in otherwise hide it
-                if (isAuthenticated) {
-                    sidebar.addHeaderView(headerBinding.root)
-                } else {
-                    sidebar.removeHeaderView(headerBinding.root)
-                }
+                // attach header to sidebar
+                sidebar.addHeaderView(headerBinding.root)
             })
 
             // observe current user
             authVM.currentUser.observe(this@MainActivity, {
-                headerBinding.run {
-                    Timber.d("Binding for header started")
-                    vm = authVM
 
-                    root.setOnClickListener {
-                        controller.navigate(R.id.nav_user)
-                        drawer.closeDrawers()
-                    }
-                    val menuView =
-                        findViewById<RecyclerView>(R.id.design_navigation_view)?.apply {
-                            addItemDecoration(SpaceDecoration())
-                        }
-                    root.doOnApplyWindowInsets { v, insets, padding ->
-                        v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
-                        // NavigationView doesn't dispatch insets to the menu view, so pad the bottom here.
-                        menuView?.updatePadding(bottom = insets.systemWindowInsetBottom)
-                    }
-                    executePendingBindings()
-                }
             })
             executePendingBindings()
         }
@@ -258,6 +259,15 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         with(binding.bottomAppBar) {
             gone(shouldBeGone)
             if (isVisible) performShow()
+        }
+    }
+
+    override fun onBackPressed() {
+        with(binding.drawer) {
+            when {
+                isDrawerOpen(GravityCompat.START) -> closeDrawers()
+                else -> super.onBackPressed()
+            }
         }
     }
 
