@@ -78,7 +78,7 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_x48"
+            android:layout_marginBottom="@dimen/spacing_x64"
             android:enabled="@{!vm.loadingResourcesLiveData}"
             android:onClick="@{(v) -> vm.completeOnboarding(v, host)}"
             android:text="@{vm.loadingResourcesLiveData ? @string/loading : @string/explore}"
