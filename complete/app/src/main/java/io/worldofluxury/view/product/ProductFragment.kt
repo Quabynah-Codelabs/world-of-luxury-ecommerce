@@ -22,12 +22,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
+import io.worldofluxury.binding.doOnApplyWindowInsets
 import io.worldofluxury.data.Product
 import io.worldofluxury.databinding.FragmentProductBinding
 import io.worldofluxury.util.APP_TAG
@@ -65,9 +67,19 @@ class ProductFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
         binding.run {
             lifecycleOwner = this@ProductFragment
-            product = args.product
             authViewModel = authVM
             productViewModel = viewModel
+
+            root.doOnApplyWindowInsets { v, insets, padding ->
+                v.updatePadding(bottom = padding.bottom + insets.systemWindowInsetBottom)
+            }
+
+            // observe product
+            viewModel.watchProductById(args.product.id).observe(viewLifecycleOwner, {
+                // update product in real-time
+                product = it
+            })
+
             executePendingBindings()
         }
         return binding.root

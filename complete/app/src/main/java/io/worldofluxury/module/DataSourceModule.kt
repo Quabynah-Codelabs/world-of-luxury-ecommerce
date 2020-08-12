@@ -26,40 +26,43 @@ import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.sources.local.DefaultProductLocalDataSource
 import io.worldofluxury.data.sources.remote.DefaultProductRemoteDataSource
-import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.PreferenceStorage
-import io.worldofluxury.repository.Repository
-import io.worldofluxury.repository.product.DefaultProductRepository
-import io.worldofluxury.repository.product.ProductRepository
-import io.worldofluxury.repository.user.DefaultUserRepository
-import io.worldofluxury.repository.user.UserRepository
+import io.worldofluxury.database.dao.CartDao
+import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.webservice.SwanWebService
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 /**
- * [Module] for all [Repository] subclasses
+ *  @project World of Luxury
+ *  @author Bilson Jr.
+ *  @by Quabynah Codelabs LLC
+ *  @since 12/08/2020 @ 21:56
  */
 @Module
 @InstallIn(ApplicationComponent::class)
-object RepositoryModule {
+object DataSourceModule {
+    @Singleton
+    @Provides
+    fun provideBackgroundThread(): CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     @Singleton
     @Provides
-    fun provideProductRepository(
-        @RemoteDataSource
-        remoteDataSource: DefaultProductRemoteDataSource,
-        @LocalDataSource
-        localDataSource: DefaultProductLocalDataSource
-    ): ProductRepository = DefaultProductRepository(localDataSource, remoteDataSource)
+    @LocalDataSource
+    fun provideProductLocalDataSource(
+        dao: ProductDao,
+        cartDao: CartDao,
+        scope: CoroutineScope
+    ): DefaultProductLocalDataSource =
+        DefaultProductLocalDataSource(dao, cartDao, scope)
 
     @Singleton
     @Provides
-    fun provideUserRepository(
-        userDao: UserDao,
-        webService: SwanWebService,
-        prefs: PreferenceStorage,
-        thread: CoroutineScope
-    ): UserRepository = DefaultUserRepository(userDao, prefs, webService, thread)
+    @RemoteDataSource
+    fun provideProductRemoteDataSource(
+        service: SwanWebService,
+        scope: CoroutineScope
+    ): DefaultProductRemoteDataSource =
+        DefaultProductRemoteDataSource(service, scope)
 
 }

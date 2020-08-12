@@ -138,8 +138,6 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                 DrawerHeaderBinding.inflate(layoutInflater)
             headerBinding.run {
                 Timber.d("Binding for header started")
-                vm = authVM
-
                 val menuView =
                     findViewById<RecyclerView>(R.id.design_navigation_view)?.apply {
                         addItemDecoration(SpaceDecoration())
@@ -183,7 +181,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
 
             // observe current user
             authVM.currentUser.observe(this@MainActivity, {
-
+                headerBinding.vm = authVM
             })
             executePendingBindings()
         }

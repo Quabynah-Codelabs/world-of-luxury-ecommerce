@@ -144,9 +144,8 @@ android {
         versionCode = Dependencies.versionCode
         versionName = Dependencies.versionName
         vectorDrawables.useSupportLibrary = true
-
-        // archivesBaseName = "swan-wol"
-        testInstrumentationRunner = "io.worldofluxury.SwanTestRunner"
+        
+        testInstrumentationRunner = "${Dependencies.packageName}.SwanTestRunner"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments(mapOf("room.schemaLocation" to "$projectDir/schemas"))

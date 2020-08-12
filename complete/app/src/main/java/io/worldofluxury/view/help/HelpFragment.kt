@@ -18,17 +18,18 @@
 
 package io.worldofluxury.view.help
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.databinding.HelpFragmentBinding
 
+@AndroidEntryPoint
 class HelpFragment : Fragment() {
     private lateinit var binding: HelpFragmentBinding
 
@@ -38,10 +39,9 @@ class HelpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.help_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.help_fragment, container, false)
         binding.run {
             vm = viewModel
-            // TODO: setup binding here
             executePendingBindings()
         }
         return binding.root

@@ -25,8 +25,8 @@ object Dependencies {
     const val compileSdkVersion = 29
     const val minSdkVersion = 23
     const val targetSdkVersion = 29
-    const val versionCode = 6
-    const val versionName = "1.0.6-production"
+    const val versionCode = 7
+    const val versionName = "1.0.7-production"
 
     // gradle & kotlin
     const val gradleBuildTool = "4.2.0-alpha07"

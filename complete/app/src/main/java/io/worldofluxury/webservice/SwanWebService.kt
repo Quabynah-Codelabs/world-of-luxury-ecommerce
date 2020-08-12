@@ -38,6 +38,9 @@ interface SwanWebService {
         @Field("page") page: Int
     ): ApiResponse<WebServiceResponse<List<Product>>>
 
+    @GET("/users/cart")
+    suspend fun getFavorites(): ApiResponse<WebServiceResponse<List<Product>>>
+
     @GET("/products/{id}")
     suspend fun getProductById(@Path("id") id: String): ApiResponse<WebServiceResponse<Product>>
 
@@ -45,7 +48,11 @@ interface SwanWebService {
     suspend fun getUserById(@Path("id") userId: String?): ApiResponse<WebServiceResponse<User>>
 
     @PUT("/users/{id}")
-    suspend fun updateUser(@Body user: User): ApiResponse<WebServiceResponse<Void>>
+    suspend fun updateUser(@Body user: User): ApiResponse<WebServiceResponse<User>>
+
+    @POST("/users/cart/new")
+    @FormUrlEncoded
+    suspend fun addToCart(@Body product: Product): ApiResponse<WebServiceResponse<List<Product>>>
 
     companion object {
         const val BASE_URL = "http://10.0.2.2:5000/"

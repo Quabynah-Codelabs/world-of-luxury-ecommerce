@@ -20,30 +20,27 @@ package io.worldofluxury.repository.product
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
 import androidx.paging.PagedList
-import androidx.paging.toLiveData
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onFailure
-import com.skydoves.sandwich.onSuccess
-import com.skydoves.whatif.whatIfNotNull
+import io.worldofluxury.core.LocalDataSource
+import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.Product
-import io.worldofluxury.data.toCartItem
-import io.worldofluxury.database.dao.CartDao
-import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.data.sources.ProductDataSource
+import io.worldofluxury.data.sources.local.DefaultProductLocalDataSource
+import io.worldofluxury.data.sources.remote.DefaultProductRemoteDataSource
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.webservice.SwanWebService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import timber.log.Timber
 import javax.inject.Inject
 
 interface ProductRepository : Repository {
 
     fun watchFavorites(): LiveData<List<Product>>
+
+    fun watchProductById(id: String): LiveData<Product>
 
     fun watchAllProducts(
         category: String,
@@ -55,76 +52,55 @@ interface ProductRepository : Repository {
 }
 
 /**
- * [Repository] for [Product] data source
+ * [Repository] for [ProductDataSource]
  */
 class DefaultProductRepository @Inject constructor(
-    private val webService: SwanWebService,
-    private val dao: ProductDao,
-    private val cartDao: CartDao,
-    private val scope: CoroutineScope
+    @LocalDataSource
+    private val localDataSource: DefaultProductLocalDataSource,
+    @RemoteDataSource
+    private val remoteDataSource: DefaultProductRemoteDataSource,
 ) : ProductRepository {
 
     init {
         Timber.tag(APP_TAG)
     }
 
+    @ExperimentalCoroutinesApi
+    override fun watchProductById(id: String): LiveData<Product> = liveData {
+        emitSource(localDataSource.watchProductById(id).asLiveData())
+        remoteDataSource.watchProductById(id)
+            .collectLatest { product -> localDataSource.storeProduct(product) }
+    }
+
     /**
      * fetch all favorited products
      */
+    @ExperimentalCoroutinesApi
     override fun watchFavorites(): LiveData<List<Product>> = liveData {
-        scope.launch {
-            val data = cartDao.watchAllItems().switchMap { items ->
-                val result = MutableLiveData<List<Product>>()
-                val products = items.map { cartItem -> dao.getProductById(cartItem.productId) }
-                result.postValue(products)
-                result
-            }
-            emitSource(data)
+        emitSource(localDataSource.watchFavorites().asLiveData())
+        remoteDataSource.watchFavorites().collectLatest { products ->
+            products.forEach { localDataSource.addToCart(it) }
         }
     }
 
     /**
      * fetch all products from [category]
      */
+    @ExperimentalCoroutinesApi
     override fun watchAllProducts(
         category: String,
         toastLiveData: MutableLiveData<String>,
         page: Int
     ): LiveData<PagedList<Product>> =
         liveData {
-            // return content from the local database
-            emitSource(
-                dao.watchAllProducts(category).toLiveData(pageSize = 5, initialLoadKey = page)
-            )
-
-            Timber.d("Fetching data from server...")
-            // fetch products from server and update local database
-            webService.getProducts(category, page)
-                .whatIfNotNull { apiResponse ->
-                    apiResponse.onSuccess {
-                        // save data to local database
-                        scope.launch { data.whatIfNotNull { dao.insertAll(it.results) } }
-                    }
-                    apiResponse.onException {
-                        toastLiveData.postValue("Cannot retrieve products at this time")
-                        Timber.e("An exception occurred while retrieving data from the products web service endpoint -> $message")
-                    }
-                    apiResponse.onFailure {
-                        toastLiveData.postValue("Cannot retrieve products at this time")
-                        Timber.e("Failed to retrieve data from the products web service endpoint")
-                    }
-                    apiResponse.onError {
-                        toastLiveData.postValue("Cannot retrieve products at this time")
-                        Timber.e("An error occurred while retrieving data from the products web service endpoint -> $errorBody")
-                    }
-                }
+            emitSource(localDataSource.watchAllProducts(category, toastLiveData, page).asLiveData())
+            remoteDataSource.watchAllProducts(category, toastLiveData, page)
+                .collectLatest { products -> products.forEach { localDataSource.storeProduct(it) } }
         }
 
     override suspend fun addToCart(product: Product) {
-        val updatedProduct = product.copy(isFavorite = !product.isFavorite)
-        dao.update(updatedProduct)
-        val item = product.toCartItem()
-        if (updatedProduct.isFavorite) cartDao.insert(item) else cartDao.delete(item.id)
+        localDataSource.addToCart(product)
+        remoteDataSource.addToCart(product)
     }
 
 }

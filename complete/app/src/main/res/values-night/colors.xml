@@ -19,14 +19,19 @@
 <resources>
     <!-- monotone color for night mode -->
 <!--    <color name="primary">#FFBB86FC</color>-->
-    <color name="primary">#FFFEDBD0</color>
-    <color name="primary_variant">#FFFEDBD0</color>
-    <color name="secondary">#FFFEEAE6</color>
-    <color name="secondary_variant">#FFFEEAE6</color>
+<!--    <color name="primary">#FFFEDBD0</color>-->
+<!--    <color name="primary_variant">#FFFEDBD0</color>-->
+<!--    <color name="secondary">#FFFEEAE6</color>-->
+<!--    <color name="secondary_variant">#FFFEEAE6</color>-->
+<!--    <color name="background">#ff151515</color>-->
+    <color name="primary">#FFFF7597</color>
+    <color name="primary_variant">#FFFF7597</color>
+    <color name="secondary">#FFFF0266</color>
+    <color name="secondary_variant">#FFFF0266</color>
     <color name="on_secondary">@color/blacker</color>
     <color name="on_primary">@color/blacker</color>
     <color name="on_error">@color/blacker</color>
-    <color name="background">#ff151515</color>
+    <color name="background">#ff24191C</color>
     <color name="error">#ffEC407A</color>
     <color name="scrim">#40000000</color><!-- 25% black -->
 </resources>

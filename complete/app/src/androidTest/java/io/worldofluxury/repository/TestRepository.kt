@@ -136,8 +136,13 @@ class FakeUserRepository @Inject constructor(
 @Singleton
 class FakeProductRepository @Inject constructor() :
     ProductRepository {
+    // todo: add to cart
+    override fun watchProductById(id: String): LiveData<Product> = liveData {  }
+
+    // todo: watch all favorites
     override fun watchFavorites(): LiveData<List<Product>> = liveData { }
 
+    // todo: watch all products
     override fun watchAllProducts(
         category: String,
         toastLiveData: MutableLiveData<String>,
@@ -145,7 +150,7 @@ class FakeProductRepository @Inject constructor() :
     ): LiveData<PagedList<Product>> = liveData { }
 
     override suspend fun addToCart(product: Product) {
-        TODO("Not yet implemented")
+        // todo: add to cart
     }
 
 }

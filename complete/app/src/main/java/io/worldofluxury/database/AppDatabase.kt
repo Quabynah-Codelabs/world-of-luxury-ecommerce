@@ -68,6 +68,15 @@ abstract class AppDatabase : RoomDatabase() {
                     enqueue(worker)
                 }
             }
+
+            override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+                super.onDestructiveMigration(db)
+                Timber.d("Rebuilding database from destructive migration")
+                with(WorkManager.getInstance(context)) {
+                    val worker = OneTimeWorkRequestBuilder<LoadProductsWorker>().build()
+                    enqueue(worker)
+                }
+            }
         }
 
         @Volatile
@@ -78,7 +87,7 @@ abstract class AppDatabase : RoomDatabase() {
             instance ?: Room
                 .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .run {
-                    fallbackToDestructiveMigrationFrom(6, 7)
+                    fallbackToDestructiveMigrationFrom(6, 7, 8)
                     addCallback(appDatabaseCallback(context))
                 }
                 .build()

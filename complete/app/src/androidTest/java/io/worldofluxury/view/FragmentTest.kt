@@ -18,10 +18,13 @@
 
 package io.worldofluxury.view
 
+import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -31,6 +34,7 @@ import io.worldofluxury.util.launchFragmentInHiltContainer
 import io.worldofluxury.view.welcome.WelcomeFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.hamcrest.core.IsEqual.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -45,7 +49,7 @@ import java.io.IOException
  */
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
-@RunWith(AndroidJUnit4::class)
+//@RunWith(AndroidJUnit4::class)
 class FragmentTest {
 
     @get:Rule
@@ -60,15 +64,29 @@ class FragmentTest {
     }
 
     @After
-    @Throws(IOException::class)
     fun tearDown() {
 
     }
 
     @Test
     fun navFromWelcomeToLoginOrHome() = coroutinesTestRule.runBlockingTest {
-        val scenario = launchFragmentInHiltContainer<WelcomeFragment>()
-        onView(withId(R.id.get_started)).check(matches(withText("Get started")))
+        // Create a TestNavHostController
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+        navController.setGraph(R.navigation.wol_nav_graph)
+
+        // Create a graphical FragmentScenario for the WelcomeScreen
+        launchFragmentInHiltContainer<WelcomeFragment> {
+            Navigation.setViewNavController(requireView(), navController)
+        }
+
+        onView(withId(R.id.get_started)).perform(ViewActions.click())
+        assertThat(
+            "Current destination is nav auth",
+            navController.currentDestination?.id,
+            equalTo(R.id.nav_auth)
+        )
     }
 
 }

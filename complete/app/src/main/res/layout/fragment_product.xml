@@ -135,113 +135,123 @@
                     app:layout_constraintTop_toBottomOf="@id/product_price"
                     tools:text="@sample/products.json/data/description" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/color_header"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_large"
-                    android:paddingVertical="@dimen/spacing_large"
-                    android:text="@string/select_color"
-                    android:textAppearance="?textAppearanceCaption"
+                    app:gone="@{true}"
                     app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/left_vert_guide"
-                    app:layout_constraintTop_toBottomOf="@id/product_desc"
-                    app:textAllCaps="true" />
+                    app:layout_constraintTop_toBottomOf="@id/product_desc">
 
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/colors_list"
-                    android:layout_width="@dimen/spacing_none"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:checkedButton="@id/color_amber"
-                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
-                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
-                    app:layout_constraintTop_toBottomOf="@id/color_header"
-                    app:selectionRequired="true"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/color_amber"
-                        android:layout_width="wrap_content"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/color_header"
+                        android:layout_width="@dimen/spacing_none"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_large"
-                        android:text=""
-                        app:backgroundTint="@color/amber" />
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:paddingVertical="@dimen/spacing_large"
+                        android:text="@string/select_color"
+                        android:textAppearance="?textAppearanceCaption"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:textAllCaps="true" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/color_green"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/colors_list"
+                        android:layout_width="@dimen/spacing_none"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_large"
-                        android:text=""
-                        app:backgroundTint="@color/green" />
+                        android:orientation="horizontal"
+                        app:checkedButton="@id/color_amber"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/color_header"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/color_black"
-                        android:layout_width="wrap_content"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/color_amber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/spacing_large"
+                            android:text=""
+                            app:backgroundTint="@color/amber" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/color_green"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/spacing_large"
+                            android:text=""
+                            app:backgroundTint="@color/green" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/color_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            app:backgroundTint="@color/blacker" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/size_header"
+                        android:layout_width="@dimen/spacing_none"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        app:backgroundTint="@color/blacker" />
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:paddingVertical="@dimen/spacing_large"
+                        android:text="@string/select_size"
+                        android:textAppearance="?textAppearanceCaption"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/colors_list"
+                        app:textAllCaps="true" />
 
-                </com.google.android.material.button.MaterialButtonToggleGroup>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/size_header"
-                    android:layout_width="@dimen/spacing_none"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:paddingVertical="@dimen/spacing_large"
-                    android:text="@string/select_size"
-                    android:textAppearance="?textAppearanceCaption"
-                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
-                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
-                    app:layout_constraintTop_toBottomOf="@id/colors_list"
-                    app:textAllCaps="true" />
-
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/size_list"
-                    android:layout_width="@dimen/spacing_none"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:checkedButton="@id/size_l"
-                    app:layout_constraintEnd_toStartOf="@id/right_vert_guide"
-                    app:layout_constraintStart_toEndOf="@id/left_vert_guide"
-                    app:layout_constraintTop_toBottomOf="@id/size_header"
-                    app:selectionRequired="true"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/size_x"
-                        style="?materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/size_list"
+                        android:layout_width="@dimen/spacing_none"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_large"
-                        android:text="@string/x" />
+                        android:orientation="horizontal"
+                        app:checkedButton="@id/size_l"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/size_header"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/size_m"
-                        style="?materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_large"
-                        android:text="@string/m" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/size_x"
+                            style="?materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/spacing_large"
+                            android:text="@string/x" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/size_l"
-                        style="?materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_large"
-                        android:text="@string/l" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/size_m"
+                            style="?materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/spacing_large"
+                            android:text="@string/m" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/size_xl"
-                        style="?materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/xl" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/size_l"
+                            style="?materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/spacing_large"
+                            android:text="@string/l" />
 
-                </com.google.android.material.button.MaterialButtonToggleGroup>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/size_xl"
+                            style="?materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/xl" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -261,17 +271,20 @@
             app:onBackPressed="@{true}"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_to_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_large"
-            android:layout_marginBottom="@dimen/spacing_x36"
-            android:text="@string/buy_now"
-            app:gone="@{true}"
-            app:icon="@drawable/ic_twotone_shopping_basket"
+            android:contentDescription="@string/buy_now"
+            android:onClick="@{() -> productViewModel.addToCart(product)}"
+            android:src="@{product.favorite ? @drawable/ic_twotone_remove_shopping_cart : @drawable/ic_twotone_add_shopping_cart}"
+            app:fabCustomSize="@dimen/spacing_x72"
+            android:translationZ="@dimen/z_product_card"
+            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.WorldOfLuxury.SmallComponent.FAB"
+            tools:src="@drawable/ic_twotone_add_shopping_cart" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -58,7 +58,7 @@ class CartFragment : Fragment() {
 
             viewModel.favorites.observe(
                 viewLifecycleOwner,
-                { products -> Timber.d("Products -> $products") })
+                { products -> Timber.i("Products -> $products") })
 
             executePendingBindings()
         }

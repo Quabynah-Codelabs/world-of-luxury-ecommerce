@@ -16,30 +16,14 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.database.dao
-
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import io.worldofluxury.data.CartItem
-import kotlinx.coroutines.flow.Flow
+package io.worldofluxury.data.sources
 
 /**
  *  @project World of Luxury
  *  @author Bilson Jr.
  *  @by Quabynah Codelabs LLC
- *  @since 08/08/2020 @ 12:16
+ *  @since 12/08/2020 @ 21:49
+ *
+ *  Base DataSource
  */
-@Dao
-interface CartDao {
-
-    @Query("select * from carts order by id asc")
-    fun watchAllItems(): Flow<List<CartItem>>
-
-    @Insert
-    suspend fun insert(cartItem: CartItem)
-
-    @Query("delete from carts where id = :id")
-    suspend fun delete(id: Int)
-
-}
+interface DataSource

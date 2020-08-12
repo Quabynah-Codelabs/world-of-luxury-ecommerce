@@ -326,7 +326,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Android/studio/canary/plugins/android/lib/android.jar!/images/material/icons/materialiconstwotone/exit_to_app/twotone_exit_to_app_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Android/studio/canary/plugins/android/lib/android.jar!/images/material/icons/materialiconstwotone/remove_shopping_cart/twotone_remove_shopping_cart_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -336,7 +336,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_twotone_exit" />
+                            <entry key="outputName" value="ic_twotone_remove_shopping_cart" />
                             <entry key="sourceFile" value="F:\GitHub\personal-projects\android\world-of-luxury-ecommerce" />
                           </map>
                         </option>

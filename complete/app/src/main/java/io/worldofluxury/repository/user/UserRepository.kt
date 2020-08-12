@@ -126,6 +126,7 @@ class DefaultUserRepository @Inject constructor(
                     // save data to the local database
                     onSuccess {
                         Timber.i("User updated successfully")
+                        data?.results.whatIfNotNull { scope.launch { dao.update(it) } }
                     }
                 }
             }

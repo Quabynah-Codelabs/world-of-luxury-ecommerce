@@ -50,4 +50,6 @@ class ProductViewModel @ViewModelInject constructor(
 
     fun addToCart(item: Product) =
         launchInBackground { repository.addToCart(item) }
+
+    fun watchProductById(id: String) = launchOnViewModelScope { repository.watchProductById(id) }
 }

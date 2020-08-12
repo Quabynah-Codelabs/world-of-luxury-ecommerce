@@ -18,8 +18,7 @@
 
 package io.worldofluxury.view.help
 
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import io.worldofluxury.base.LiveCoroutinesViewModel
 
-class HelpViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
-}
+class HelpViewModel @ViewModelInject constructor() : LiveCoroutinesViewModel()

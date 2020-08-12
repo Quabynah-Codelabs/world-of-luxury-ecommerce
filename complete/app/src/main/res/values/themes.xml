@@ -55,8 +55,8 @@
         <item name="textAppearanceOverline">@style/TextAppearance.WorldOfLuxury.Overline</item>
         <item name="textAppearancePrice">@style/TextAppearance.WorldOfLuxury.Price</item>
         <!-- Customize your theme here. -->
-        <item name="emphasisLow">0.35</item>
-        <item name="emphasisMedium">0.65</item>
+        <item name="emphasisLow">0.38</item>
+        <item name="emphasisMedium">0.6</item>
         <item name="emphasisHigh">0.87</item>
         <item name="tabStyle">@style/Widget.WorldOfLuxury.Tab</item>
         <item name="materialButtonStyle">@style/Widget.WorldOfLuxury.Button</item>

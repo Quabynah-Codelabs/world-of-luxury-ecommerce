@@ -18,10 +18,10 @@
 
 package io.worldofluxury.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import io.worldofluxury.data.Product
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
@@ -33,14 +33,20 @@ interface ProductDao {
     fun watchAllProducts(category: String): DataSource.Factory<Int, Product>
 
     @Query("select * from products where id = :id")
+    fun watchProductById(id: String): Flow<Product>
+
+    @Query("select * from products where id = :id")
     fun getProductById(id: String): Product
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<Product>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(items: Product)
+
     @Update
     suspend fun update(item: Product)
 
     @Query("select * from products where isFavorite order by price desc")
-    fun getFavorites(): LiveData<List<Product>>
+    fun getFavorites(): Flow<List<Product>>
 }

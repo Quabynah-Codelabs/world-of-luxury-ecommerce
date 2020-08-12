@@ -30,4 +30,10 @@
     <style name="ShapeAppearanceOverlay.WorldOfLuxury.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerFamily">rounded</item>
     </style>
+
+    <style name="ShapeAppearanceOverlay.WorldOfLuxury.SmallComponent.FAB">
+        <item name="cornerSize">0%</item>
+        <item name="cornerSizeTopLeft">80%</item>
+    </style>
+
 </resources>

@@ -22,6 +22,7 @@ import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
@@ -41,10 +42,15 @@ import kotlinx.android.parcel.Parcelize
             childColumns = ["productId"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ], indices = [Index(value = ["productId"], name = "productId", unique = false)]
 )
 @Parcelize
-data class CartItem(@PrimaryKey(autoGenerate = true) val id: Int = 0, val productId: String) :
+data class CartItem(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val productId: String,
+    val price: Double = 10.0,
+    var units: Int = 1
+) :
     Parcelable {
 
     companion object {
