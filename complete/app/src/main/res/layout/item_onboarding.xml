@@ -22,9 +22,15 @@
 
     <data>
 
+        <import type="io.worldofluxury.view.OnBoardingItem" />
+
         <import type="io.worldofluxury.view.LauncherViewModel" />
 
         <import type="android.app.Activity" />
+
+        <variable
+            name="item"
+            type="OnBoardingItem" />
 
         <variable
             name="host"
@@ -39,56 +45,69 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/spacing_xlarge"
-            android:paddingVertical="@dimen/spacing_x36">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/onboarding_image"
-                android:layout_width="@dimen/match_parent"
-                android:layout_height="@dimen/logo_height"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/swan" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/onboarding_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_x64"
-                android:gravity="center"
-                android:text="@string/app_name__full"
-                android:textAppearance="?textAppearanceHeadline4" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/onboarding_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:gravity="center"
-                android:text="@string/app_desc__long"
-                android:textAppearance="?textAppearanceBody2" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_x64"
-            android:enabled="@{!vm.loadingResourcesLiveData}"
-            android:onClick="@{(v) -> vm.completeOnboarding(v, host)}"
-            android:text="@{vm.loadingResourcesLiveData ? @string/loading : @string/explore}"
-            app:icon="@{vm.loadingResourcesLiveData ? null : @drawable/ic_twotone_right}"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/onboarding_image"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="@dimen/spacing_none"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:enabled="false"
-            tools:icon="@drawable/ic_twotone_right"
-            tools:text="@string/explore" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:url="@{item.imageUrl}"
+            tools:src="@drawable/world_of_luxury_three" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_none"
+            android:background="@drawable/curved_background"
+            android:paddingHorizontal="@dimen/spacing_x24"
+            android:paddingVertical="@dimen/spacing_x24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_horiz_guideline">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/onboarding_title"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:text="@{item.title}"
+                android:textAppearance="?textAppearanceHeadline4"
+                app:layout_constraintEnd_toStartOf="@id/right_vert_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/app_name__full" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/onboarding_desc"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:gravity="start|center_vertical"
+                android:text="@{item.description}"
+                android:textAppearance="?textAppearanceBody2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/onboarding_title"
+                tools:text="@string/app_desc__long" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/right_vert_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.65" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_horiz_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

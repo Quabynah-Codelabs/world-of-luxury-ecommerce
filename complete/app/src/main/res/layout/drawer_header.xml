@@ -37,7 +37,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
-        android:paddingHorizontal="@dimen/spacing_xlarge"
+        android:paddingHorizontal="@dimen/spacing_x24"
         android:paddingVertical="@dimen/spacing_large">
 
         <com.google.android.material.imageview.ShapeableImageView

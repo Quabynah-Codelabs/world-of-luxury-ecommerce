@@ -67,7 +67,7 @@
                     android:backgroundTint="?attr/colorSecondaryVariant"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingVertical="@dimen/spacing_xlarge"
+                    android:paddingVertical="@dimen/spacing_x24"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.95">
 

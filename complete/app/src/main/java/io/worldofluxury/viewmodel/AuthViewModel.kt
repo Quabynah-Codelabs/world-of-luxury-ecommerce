@@ -20,7 +20,6 @@ package io.worldofluxury.viewmodel
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Patterns
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -35,14 +34,12 @@ import com.skydoves.whatif.whatIf
 import io.worldofluxury.BuildConfig
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.base.launchInBackground
-import io.worldofluxury.binding.isTooShort
 import io.worldofluxury.data.User
 import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.view.auth.AuthFragment
 import io.worldofluxury.view.welcome.WelcomeFragmentDirections
-import kotlinx.coroutines.delay
 import timber.log.Timber
 
 
@@ -108,45 +105,6 @@ class AuthViewModel @ViewModelInject constructor(
 
     }
 
-    // TODO: Implement login
-    fun login(email: String, password: String) = launchOnViewModelScope<String> {
-        // Create live object
-        val userId = MutableLiveData<String>()
-
-        // Validate email & password (should be longer than 6 characters)
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches() || password.isTooShort()) {
-            authState.postValue(AuthenticationState.ERROR)
-            toastLiveData.postValue("There is a problem with your credentials. Please check and try again")
-            return@launchOnViewModelScope userId
-        }
-
-        // Begin login process
-        authState.postValue(AuthenticationState.AUTHENTICATING)
-        toastLiveData.postValue("Signing you in...")
-
-        // Simulate network call
-        delay(3500)
-
-        // Complete login process
-        val uid = "6dda2be7-11c5-44e5-b552-f22fa7ad8a4c"
-        userPrefs.userId = uid
-        userId.postValue(uid)
-        val user = User(
-            uid,
-            "Quabynah",
-            "quabynahdennis@gmail.com",
-            "https://images.unsplash.com/photo-1514222709107-a180c68d72b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-        )
-        userDao.insert(user)
-        currentUser.postValue(user)
-        toastLiveData.postValue("Login was successful")
-        authState.postValue(AuthenticationState.AUTHENTICATED)
-
-        // Send live data to observer
-        userId
-    }
-
-
     fun navLoginOrHome(view: View) {
         view.findNavController().navigate(
             if (userPrefs.isLoggedIn.get()) WelcomeFragmentDirections.actionNavWelcomeToNavHome()
@@ -166,13 +124,22 @@ class AuthViewModel @ViewModelInject constructor(
             host.startActivityForResult(client.signInIntent, code)
         }, {
             // create user from google account
-            val acct = lastSignedInAccount ?: return@whatIf
-            val user =
-                User(acct.id!!, acct.displayName!!, acct.email, acct.photoUrl.toString())
-            userDao.insert(user)
-            currentUser.postValue(user)
-            toastLiveData.postValue("Login was successful")
-            authState.value = AuthenticationState.AUTHENTICATED
+            val acct = lastSignedInAccount ?: return
+            Timber.i("Auth token -> ${acct.toString()}")
+            val idTokenForServer = acct.idToken
+            Timber.i("Token to be sent to server -> $idTokenForServer")
+            try {
+                val user =
+                    User(acct.id!!, acct.displayName!!, acct.email, acct.photoUrl.toString())
+                userDao.insert(user)
+                currentUser.postValue(user)
+                userPrefs.userId = user.id
+                toastLiveData.postValue("Login was successful")
+                authState.value = AuthenticationState.AUTHENTICATED
+            } catch (e: Exception) {
+                Timber.e(e)
+                authState.value = AuthenticationState.ERROR
+            }
         })
     }
 
@@ -188,13 +155,26 @@ class AuthViewModel @ViewModelInject constructor(
                     authState.value = AuthenticationState.ERROR
                 }, {
                     // create user from google account
-                    val acct = signInAccount ?: return@whatIf
-                    val user =
-                        User(acct.id!!, acct.displayName!!, acct.email, acct.photoUrl.toString())
-                    userDao.insert(user)
-                    currentUser.postValue(user)
-                    toastLiveData.postValue("Login was successful")
-                    authState.value = AuthenticationState.AUTHENTICATED
+                    val acct = signInAccount ?: return
+                    val idTokenForServer = acct.idToken
+                    Timber.i("Token to be sent to server -> $idTokenForServer")
+                    try {
+                        val user =
+                            User(
+                                acct.id!!,
+                                acct.displayName!!,
+                                acct.email,
+                                acct.photoUrl.toString()
+                            )
+                        userDao.insert(user)
+                        currentUser.postValue(user)
+                        userPrefs.userId = user.id
+                        toastLiveData.postValue("Login was successful")
+                        authState.value = AuthenticationState.AUTHENTICATED
+                    } catch (e: Exception) {
+                        Timber.e(e)
+                        authState.value = AuthenticationState.ERROR
+                    }
                 })
             } catch (e: Exception) {
                 Timber.e(e)

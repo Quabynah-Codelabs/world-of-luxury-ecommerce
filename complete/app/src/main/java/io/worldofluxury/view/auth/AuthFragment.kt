@@ -41,7 +41,6 @@ import retrofit2.Call
 import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
@@ -115,10 +114,7 @@ class AuthFragment : Fragment() {
                 }
 
                 googleButton.setOnClickListener {
-                    if (Random.nextBoolean())
-                        viewModel.googleLogin(requireActivity(), RC_GOOGLE)
-                    else
-                        viewModel.login("a@t.com", "785456").observe(viewLifecycleOwner, {})
+                    viewModel.googleLogin(requireActivity(), RC_GOOGLE)
                 }
             }
 

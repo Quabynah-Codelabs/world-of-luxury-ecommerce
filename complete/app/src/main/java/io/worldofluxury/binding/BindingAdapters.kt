@@ -28,10 +28,12 @@ import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.withCrossFade
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
@@ -68,39 +70,20 @@ fun bindSnackBar(view: View, text: LiveData<String>) {
 
 @BindingAdapter("randomImage")
 fun bindRandomImage(imageView: ImageView, @DrawableRes src: Int) {
-    imageView.setImageDrawable(imageView.resources.getDrawable(src, imageView.context.theme))
+    val drawable = ResourcesCompat.getDrawable(imageView.resources, src, imageView.context.theme)
+    imageView.setImageDrawable(drawable)
 }
 
 @BindingAdapter("url")
 fun bindLoadImageUrl(view: AppCompatImageView, url: String?) {
     val context = view.context
     GlideApp.with(view.context)
+        .asBitmap()
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-        .listener(
-            GlidePalette.with(url)
-                .use(BitmapPalette.Profile.MUTED_LIGHT)
-                .intoCallBack { palette ->
-                    val light = palette?.lightVibrantSwatch?.rgb
-                    val domain = palette?.dominantSwatch?.rgb
-                    if (domain != null) {
-                        if (light != null) {
-                            Rainbow(view).palette {
-                                +color(domain)
-                                +color(light)
-                            }.background(orientation = RainbowOrientation.TOP_BOTTOM)
-                        } else {
-                            view.setBackgroundColor(domain)
-                        }
-                        if (context is AppCompatActivity) {
-                            context.window.apply {
-                                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                                statusBarColor = domain
-                            }
-                        }
-                    }
-                }
-                .crossfade(true))
+        .transition(withCrossFade())
+        .placeholder(R.color.background)
+        .error(R.color.background)
         .into(view)
 }
 

@@ -17,6 +17,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -36,6 +37,7 @@
     </data>
 
     <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.OnboardingActivity">
@@ -50,7 +52,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="@dimen/spacing_xlarge" />
+            android:layout_marginBottom="@dimen/spacing_x24"
+            app:ipi_currentPageIndicatorColor="?attr/colorPrimaryVariant"
+            app:ipi_pageIndicatorColor="?attr/colorSecondary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/spacing_x64"
+            android:enabled="@{!vm.loadingResourcesLiveData}"
+            android:onClick="@{(v) -> vm.completeOnboarding(v, host)}"
+            android:text="@{vm.loadingResourcesLiveData ? @string/loading : @string/explore}"
+            app:icon="@{vm.loadingResourcesLiveData ? null : @drawable/ic_twotone_right}"
+            tools:enabled="false"
+            tools:icon="@drawable/ic_twotone_right"
+            tools:text="@string/explore" />
 
     </FrameLayout>
 </layout>

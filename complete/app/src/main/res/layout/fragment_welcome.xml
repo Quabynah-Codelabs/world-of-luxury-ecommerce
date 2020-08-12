@@ -127,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="@dimen/spacing_xlarge" />
+            app:layout_constraintGuide_end="@dimen/spacing_x24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

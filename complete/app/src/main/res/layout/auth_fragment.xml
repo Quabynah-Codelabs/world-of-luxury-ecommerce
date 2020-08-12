@@ -40,7 +40,7 @@
             android:layout_width="@dimen/spacing_none"
             android:layout_height="@dimen/spacing_none"
             android:layout_marginTop="@dimen/spacing_x128"
-            android:layout_marginEnd="@dimen/spacing_xlarge"
+            android:layout_marginEnd="@dimen/spacing_x24"
             android:contentDescription="@string/header_image"
             android:src="@drawable/world_of_luxury_three"
             app:layout_constraintBottom_toTopOf="@id/main_bottom_horiz_guide"
@@ -155,7 +155,7 @@
                     android:id="@+id/twitter_button"
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                    android:layout_marginHorizontal="@dimen/spacing_x24"
                     android:contentDescription="@string/sign_in_with_twitter"
                     android:text="@string/sign_in_with_twitter"
                     app:backgroundTint="@color/twitter"
@@ -168,7 +168,7 @@
                     android:id="@+id/google_button"
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                    android:layout_marginHorizontal="@dimen/spacing_x24"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:contentDescription="@string/sign_in_with_google"
                     android:enabled="true"
@@ -199,7 +199,7 @@
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_normal"
-                    android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                    android:layout_marginHorizontal="@dimen/spacing_x24"
                     android:text="@string/sign_in_as_guest"
                     app:layout_constraintEnd_toStartOf="@id/lower_right_vert_guide"
                     app:layout_constraintStart_toEndOf="@id/lower_left_vert_guide"
@@ -224,7 +224,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_begin="@dimen/spacing_xlarge" />
+                    app:layout_constraintGuide_begin="@dimen/spacing_x24" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lower_bottom_horiz_guide"

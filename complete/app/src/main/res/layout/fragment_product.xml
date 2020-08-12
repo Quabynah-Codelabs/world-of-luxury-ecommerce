@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_end="@dimen/spacing_xlarge" />
+                    app:layout_constraintGuide_end="@dimen/spacing_x24" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/product_image"
@@ -126,7 +126,7 @@
                     android:layout_width="@dimen/spacing_none"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/spacing_large"
-                    android:paddingBottom="@dimen/spacing_xlarge"
+                    android:paddingBottom="@dimen/spacing_x24"
                     android:text="@{product.description}"
                     android:textAlignment="viewStart"
                     android:textAppearance="?textAppearanceBody1"
