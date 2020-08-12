@@ -22,7 +22,6 @@ import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.worldofluxury.core.CoroutineTestRule
-import io.worldofluxury.preferences.PreferenceStorage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest

@@ -153,6 +153,12 @@ android {
             }
         }
 
+        // google client id
+        buildConfigField(
+            "String",
+            "GOOGLE_CLIENT_ID",
+            "\"${keystoreProperties["google_client_id"]}\""
+        )
         // twitter key
         buildConfigField(
             "String",

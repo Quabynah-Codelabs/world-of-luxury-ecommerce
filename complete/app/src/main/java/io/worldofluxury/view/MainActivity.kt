@@ -174,7 +174,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                 invalidateOptionsMenu()
 
                 // attach header to sidebar
-                sidebar.addHeaderView(headerBinding.root)
+                if (sidebar.headerCount == 0) sidebar.addHeaderView(headerBinding.root)
             })
 
             // observe current user

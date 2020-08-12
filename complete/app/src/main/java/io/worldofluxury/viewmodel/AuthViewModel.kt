@@ -27,10 +27,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.skydoves.whatif.whatIf
+import io.worldofluxury.BuildConfig
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.base.launchInBackground
 import io.worldofluxury.binding.isTooShort
@@ -58,9 +60,9 @@ class AuthViewModel @ViewModelInject constructor(
     }
 
     private val gso: GoogleSignInOptions by lazy {
-        GoogleSignInOptions.Builder()
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestId()
+            .requestIdToken(BuildConfig.GOOGLE_CLIENT_ID)
             .build()
     }
 
@@ -154,9 +156,24 @@ class AuthViewModel @ViewModelInject constructor(
 
     // sign in with google
     fun googleLogin(host: Activity, code: Int) {
-        val client = GoogleSignIn.getClient(host, gso)
-        authState.value = AuthenticationState.AUTHENTICATING
-        host.startActivityForResult(client.signInIntent, code)
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        val lastSignedInAccount: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(host)
+        lastSignedInAccount.whatIf({ account -> account == null }, {
+            Timber.e("Last user account was null")
+            val client = GoogleSignIn.getClient(host, gso)
+            authState.value = AuthenticationState.AUTHENTICATING
+            host.startActivityForResult(client.signInIntent, code)
+        }, {
+            // create user from google account
+            val acct = lastSignedInAccount ?: return@whatIf
+            val user =
+                User(acct.id!!, acct.displayName!!, acct.email, acct.photoUrl.toString())
+            userDao.insert(user)
+            currentUser.postValue(user)
+            toastLiveData.postValue("Login was successful")
+            authState.value = AuthenticationState.AUTHENTICATED
+        })
     }
 
     // get user data from login
@@ -164,14 +181,14 @@ class AuthViewModel @ViewModelInject constructor(
         if (resultCode == Activity.RESULT_OK) {
             try {
                 val signedInAccountFromIntent = GoogleSignIn.getSignedInAccountFromIntent(data)
-                val account = signedInAccountFromIntent.getResult(ApiException::class.java)
-                whatIf(account == null, {
+                val signInAccount =
+                    signedInAccountFromIntent.getResult(ApiException::class.java)
+                signInAccount.whatIf({ account -> account == null }, {
                     Timber.e("User account was null")
                     authState.value = AuthenticationState.ERROR
                 }, {
-                    // assert that account is not null
-                    val acct = account!!
                     // create user from google account
+                    val acct = signInAccount ?: return@whatIf
                     val user =
                         User(acct.id!!, acct.displayName!!, acct.email, acct.photoUrl.toString())
                     userDao.insert(user)
