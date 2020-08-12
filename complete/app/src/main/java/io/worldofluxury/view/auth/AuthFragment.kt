@@ -132,7 +132,8 @@ class AuthFragment : Fragment() {
 
         // get user credentials from session
         with(TwitterApiClient(session)) {
-            val verifyCredentials = accountService.verifyCredentials(true, false, true)
+            val verifyCredentials = accountService
+                .verifyCredentials(true, false, true)
             verifyCredentials.enqueue(object : retrofit2.Callback<User?> {
                 override fun onResponse(call: Call<User?>, response: Response<User?>) {
                     val user = response.body()
@@ -155,7 +156,8 @@ class AuthFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        Timber.tag(APP_TAG)
+        Timber.i("Result code -> $resultCode")
         when (requestCode) {
             RC_GOOGLE -> viewModel.getUserFromGoogleSignInResult(resultCode, data)
 
@@ -164,6 +166,7 @@ class AuthFragment : Fragment() {
             }
         }.checkAllMatched
         twitterAuthClient?.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {

@@ -26,6 +26,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.ResourcesCompat
@@ -77,7 +78,7 @@ fun bindRandomImage(imageView: ImageView, @DrawableRes src: Int) {
 @BindingAdapter("url")
 fun bindLoadImageUrl(view: AppCompatImageView, url: String?) {
     val context = view.context
-    GlideApp.with(view.context)
+    GlideApp.with(context)
         .asBitmap()
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)

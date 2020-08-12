@@ -90,10 +90,12 @@ class UserSharedPreferences @Inject constructor(@ApplicationContext context: Con
 
     override var onboardingCompleted: Boolean by BooleanPreference(prefs, ONBOARDING_KEY, false)
     override var userId: String? by StringPreference(prefs, USER_ID_KEY, "")
+
+    // fixme: add support for follow system option in the future
     override var currentTheme: Int by IntPreference(
         prefs,
         APP_THEME_KEY,
-        AppCompatDelegate.MODE_NIGHT_NO
+        AppCompatDelegate.MODE_NIGHT_YES
     )
     override val liveUserId: MutableLiveData<String> = MutableLiveData()
     override val liveOnboardingState: MutableLiveData<Boolean> = MutableLiveData()

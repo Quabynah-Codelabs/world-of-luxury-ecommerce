@@ -40,7 +40,9 @@
         </activity>
         <activity
             android:name=".view.MainActivity"
-            android:theme="@style/Theme.WorldOfLuxury" />
+            android:theme="@style/Theme.WorldOfLuxury">
+            <nav-graph android:value="@navigation/wol_nav_graph" />
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

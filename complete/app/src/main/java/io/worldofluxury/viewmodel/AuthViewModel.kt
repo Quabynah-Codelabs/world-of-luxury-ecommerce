@@ -26,7 +26,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -116,7 +115,7 @@ class AuthViewModel @ViewModelInject constructor(
     fun googleLogin(host: Activity, code: Int) {
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        val lastSignedInAccount: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(host)
+        /*val lastSignedInAccount: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(host)
         lastSignedInAccount.whatIf({ account -> account == null }, {
             Timber.e("Last user account was null")
             val client = GoogleSignIn.getClient(host, gso)
@@ -125,37 +124,39 @@ class AuthViewModel @ViewModelInject constructor(
         }, {
             // create user from google account
             val acct = lastSignedInAccount ?: return
-            Timber.i("Auth token -> ${acct.toString()}")
+            Timber.i("name -> ${acct.displayName}, email -> ${acct.email} & avatar -> ${acct.photoUrl}")
             val idTokenForServer = acct.idToken
             Timber.i("Token to be sent to server -> $idTokenForServer")
             try {
                 val user =
                     User(acct.id!!, acct.displayName!!, acct.email, acct.photoUrl.toString())
-                userDao.insert(user)
-                currentUser.postValue(user)
-                userPrefs.userId = user.id
-                toastLiveData.postValue("Login was successful")
-                authState.value = AuthenticationState.AUTHENTICATED
+                saveUser(user)
             } catch (e: Exception) {
                 Timber.e(e)
                 authState.value = AuthenticationState.ERROR
             }
-        })
+        })*/
+        val client = GoogleSignIn.getClient(host, gso)
+        authState.value = AuthenticationState.AUTHENTICATING
+        host.startActivityForResult(client.signInIntent, code)
     }
 
     // get user data from login
     fun getUserFromGoogleSignInResult(resultCode: Int, data: Intent?) {
+        Timber.tag(APP_TAG)
         if (resultCode == Activity.RESULT_OK) {
             try {
                 val signedInAccountFromIntent = GoogleSignIn.getSignedInAccountFromIntent(data)
                 val signInAccount =
                     signedInAccountFromIntent.getResult(ApiException::class.java)
+                Timber.i("Account signed in as -> ${signInAccount?.idToken}")
                 signInAccount.whatIf({ account -> account == null }, {
                     Timber.e("User account was null")
                     authState.value = AuthenticationState.ERROR
                 }, {
                     // create user from google account
                     val acct = signInAccount ?: return
+                    Timber.i("name -> ${acct.displayName}, email -> ${acct.email} & avatar -> ${acct.photoUrl}")
                     val idTokenForServer = acct.idToken
                     Timber.i("Token to be sent to server -> $idTokenForServer")
                     try {
@@ -166,11 +167,7 @@ class AuthViewModel @ViewModelInject constructor(
                                 acct.email,
                                 acct.photoUrl.toString()
                             )
-                        userDao.insert(user)
-                        currentUser.postValue(user)
-                        userPrefs.userId = user.id
-                        toastLiveData.postValue("Login was successful")
-                        authState.value = AuthenticationState.AUTHENTICATED
+                        saveUser(user)
                     } catch (e: Exception) {
                         Timber.e(e)
                         authState.value = AuthenticationState.ERROR
@@ -180,9 +177,18 @@ class AuthViewModel @ViewModelInject constructor(
                 Timber.e(e)
                 authState.value = AuthenticationState.ERROR
             }
-        } else
+        } else {
+            Timber.e("Google auth failed")
             authState.value = AuthenticationState.ERROR
+        }
     }
 
 
+    fun saveUser(user: User) = launchInBackground{
+        userDao.insert(user)
+        currentUser.postValue(user)
+        userPrefs.userId = user.id
+        toastLiveData.postValue("Login was successful")
+        authState.postValue(AuthenticationState.AUTHENTICATED)
+    }
 }

@@ -37,12 +37,16 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import com.skydoves.whatif.whatIf
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.binding.doOnApplyWindowInsets
 import io.worldofluxury.binding.gone
 import io.worldofluxury.binding.navigationItemBackground
+import io.worldofluxury.data.User
 import io.worldofluxury.databinding.ActivityMainBinding
 import io.worldofluxury.databinding.DrawerHeaderBinding
 import io.worldofluxury.util.APP_TAG
@@ -219,15 +223,56 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        // pass down any activity result to the fragments
-        supportFragmentManager.fragments.forEach {
-            it.onActivityResult(
-                requestCode,
-                resultCode,
-                data
-            )
+        if (resultCode == RESULT_OK) {
+            // pass down any activity result to the fragments
+            supportFragmentManager.fragments.forEach {
+                it.onActivityResult(
+                    requestCode,
+                    resultCode,
+                    data
+                )
+            }
+            
+            with(authVM) {
+                try {
+                    val signedInAccountFromIntent = GoogleSignIn.getSignedInAccountFromIntent(data)
+                    val signInAccount =
+                        signedInAccountFromIntent.getResult(ApiException::class.java)
+                    Timber.i("Account signed in as -> ${signInAccount?.idToken}")
+                    signInAccount.whatIf({ account -> account == null }, {
+                        Timber.e("User account was null")
+                        authState.value = AuthViewModel.AuthenticationState.ERROR
+                    }, {
+                        // create user from google account
+                        val acct = signInAccount ?: return
+                        Timber.i("name -> ${acct.displayName}, email -> ${acct.email} & avatar -> ${acct.photoUrl}")
+                        val idTokenForServer = acct.idToken
+                        Timber.i("Token to be sent to server -> $idTokenForServer")
+                        try {
+                            val user =
+                                User(
+                                    acct.id!!,
+                                    acct.displayName!!,
+                                    acct.email,
+                                    acct.photoUrl.toString()
+                                )
+                            saveUser(user)
+                        } catch (e: Exception) {
+                            Timber.e(e)
+                            authState.value = AuthViewModel.AuthenticationState.ERROR
+                        }
+                    })
+                } catch (e: Exception) {
+                    Timber.e(e)
+                    authState.value = AuthViewModel.AuthenticationState.ERROR
+                }
+            }
+        } else {
+            Timber.e("Google auth failed")
+            authVM.authState.value = AuthViewModel.AuthenticationState.ERROR
+            super.onActivityResult(requestCode, resultCode, data)
         }
+
     }
 
     override fun onDestinationChanged(
@@ -276,7 +321,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         private val EXCLUDED_DESTINATIONS = setOf(
             R.id.nav_auth,
             R.id.nav_welcome,
-            R.id.nav_checkout
+            R.id.nav_checkout,
+            R.id.nav_product
         )
 
         private val EXCLUDED_FAB_DESTINATIONS = setOf(

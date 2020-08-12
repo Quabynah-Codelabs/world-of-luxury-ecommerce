@@ -19,7 +19,7 @@
 <resources>
     <!-- Small. -->
     <style name="ShapeAppearanceOverlay.WorldOfLuxury.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerSize">8dp</item>
+        <item name="cornerSize">60%</item>
         <item name="cornerFamily">rounded</item>
     </style>
     <!-- Medium. -->
