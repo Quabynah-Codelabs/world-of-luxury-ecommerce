@@ -164,7 +164,7 @@
                 android:paddingHorizontal="@dimen/spacing_normal"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="?android:colorBackground"
-                app:tabGravity="fill"
+                app:tabGravity="start"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorGravity="center"
                 app:tabInlineLabel="true"

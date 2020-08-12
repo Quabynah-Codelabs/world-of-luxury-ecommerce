@@ -232,13 +232,12 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                     data
                 )
             }
-            
+
             with(authVM) {
                 try {
                     val signedInAccountFromIntent = GoogleSignIn.getSignedInAccountFromIntent(data)
                     val signInAccount =
                         signedInAccountFromIntent.getResult(ApiException::class.java)
-                    Timber.i("Account signed in as -> ${signInAccount?.idToken}")
                     signInAccount.whatIf({ account -> account == null }, {
                         Timber.e("User account was null")
                         authState.value = AuthViewModel.AuthenticationState.ERROR

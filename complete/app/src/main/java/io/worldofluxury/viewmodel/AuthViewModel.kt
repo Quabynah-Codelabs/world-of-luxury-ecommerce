@@ -183,8 +183,8 @@ class AuthViewModel @ViewModelInject constructor(
         }
     }
 
-
-    fun saveUser(user: User) = launchInBackground{
+    // save user data locally
+    fun saveUser(user: User) = launchInBackground {
         userDao.insert(user)
         currentUser.postValue(user)
         userPrefs.userId = user.id
