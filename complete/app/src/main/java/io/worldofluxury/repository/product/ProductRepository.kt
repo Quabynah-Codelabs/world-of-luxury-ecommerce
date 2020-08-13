@@ -21,7 +21,6 @@ package io.worldofluxury.repository.product
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import androidx.paging.PagedList
 import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.core.RemoteDataSource
@@ -30,9 +29,12 @@ import io.worldofluxury.data.sources.ProductDataSource
 import io.worldofluxury.data.sources.local.DefaultProductLocalDataSource
 import io.worldofluxury.data.sources.remote.DefaultProductRemoteDataSource
 import io.worldofluxury.repository.Repository
-import io.worldofluxury.util.APP_TAG
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.transformLatest
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -61,27 +63,32 @@ class DefaultProductRepository @Inject constructor(
     private val remoteDataSource: DefaultProductRemoteDataSource,
 ) : ProductRepository {
 
-    init {
-        Timber.tag(APP_TAG)
-    }
-
     @ExperimentalCoroutinesApi
-    override fun watchProductById(id: String): LiveData<Product> = liveData {
-        emitSource(localDataSource.watchProductById(id).asLiveData())
+    override fun watchProductById(id: String): LiveData<Product> =
         remoteDataSource.watchProductById(id)
-            .collectLatest { product -> localDataSource.storeProduct(product) }
-    }
-
+            .onStart { localDataSource.watchProductById(id) }
+            .transformLatest { product ->
+                localDataSource.storeProduct(product)
+                emit(product)
+            }
+            .flowOn(Dispatchers.IO)
+            .onCompletion { Timber.e(it, "watchProductById flow completed") }
+            .asLiveData()
+    
     /**
      * fetch all favorited products
      */
     @ExperimentalCoroutinesApi
-    override fun watchFavorites(): LiveData<List<Product>> = liveData {
-        emitSource(localDataSource.watchFavorites().asLiveData())
-        remoteDataSource.watchFavorites().collectLatest { products ->
-            products.forEach { localDataSource.addToCart(it) }
-        }
-    }
+    override fun watchFavorites(): LiveData<List<Product>> =
+        remoteDataSource.watchFavorites()
+            .onStart { localDataSource.watchFavorites() }
+            .transformLatest { products ->
+                products.forEach { localDataSource.addToCart(it) }
+                emit(products)
+            }
+            .flowOn(Dispatchers.IO)
+            .onCompletion { Timber.e(it, "watchFavorites flow completed") }
+            .asLiveData()
 
     /**
      * fetch all products from [category]
@@ -92,11 +99,15 @@ class DefaultProductRepository @Inject constructor(
         toastLiveData: MutableLiveData<String>,
         page: Int
     ): LiveData<PagedList<Product>> =
-        liveData {
-            emitSource(localDataSource.watchAllProducts(category, toastLiveData, page).asLiveData())
-            remoteDataSource.watchAllProducts(category, toastLiveData, page)
-                .collectLatest { products -> products.forEach { localDataSource.storeProduct(it) } }
-        }
+        remoteDataSource.watchAllProducts(category, toastLiveData, page)
+            .onStart { localDataSource.watchAllProducts(category, toastLiveData, page) }
+            .transformLatest { products ->
+                products.forEach { localDataSource.storeProduct(it) }
+                emit(products)
+            }
+            .flowOn(Dispatchers.IO)
+            .onCompletion { Timber.e(it, "watchAllProducts flow completed") }
+            .asLiveData()
 
     override suspend fun addToCart(product: Product) {
         localDataSource.addToCart(product)
