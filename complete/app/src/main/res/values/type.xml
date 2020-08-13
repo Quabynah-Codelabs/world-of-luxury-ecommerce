@@ -68,4 +68,12 @@
         <item name="fontFamily">@font/rubik_medium</item>
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
     </style>
+
+    <style name="TextAppearance.WorldOfLuxury.AppBar" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

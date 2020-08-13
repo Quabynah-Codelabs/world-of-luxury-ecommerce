@@ -38,6 +38,20 @@
         <item name="fontFamily">@font/rubik_medium</item>
     </style>
 
+    <style name="Widget.WorldOfLuxury.AppBar" parent="Widget.MaterialComponents.AppBarLayout.Primary">
+        <item name="android:background">?android:colorBackground</item>
+        <item name="android:elevation">@dimen/spacing_none</item>
+        <item name="titleTextStyle">@style/TextAppearance.WorldOfLuxury.AppBar</item>
+        <item name="android:titleTextStyle">@style/TextAppearance.WorldOfLuxury.AppBar</item>
+    </style>
+
+    <style name="Widget.WorldOfLuxury.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">?android:colorBackground</item>
+        <item name="android:elevation">@dimen/spacing_none</item>
+        <item name="titleTextAppearance">@style/TextAppearance.WorldOfLuxury.AppBar</item>
+        <item name="titleTextColor">?attr/colorOnBackground</item>
+    </style>
+
     <style name="Widget.WorldOfLuxury.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textAppearance">?attr/textAppearanceButton</item>
         <item name="android:paddingStart">@dimen/spacing_x24</item>

@@ -54,75 +54,11 @@
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/promo_header_height"
+                android:layout_height="wrap_content"
                 app:contentScrim="?android:colorBackground"
-                app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                app:layout_scrollFlags="exitUntilCollapsed|snap"
                 app:statusBarScrim="?android:colorBackground"
                 app:titleEnabled="false">
-
-                <!-- todo: generate a coupon code & replace this with dynamic data instead -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="0.95">
-
-                    <!-- https://images.unsplash.com/photo-1517677129300-07b130802f46?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60 -->
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_none"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:scaleType="centerCrop"
-                        android:tint="?attr/scrimBackground"
-                        app:url="@{@string/header_image_url}"
-                        tools:src="@drawable/world_of_luxury_one" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingVertical="@dimen/spacing_x24">
-
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingVertical="@dimen/spacing_normal"
-                            android:text="@string/coupon_header"
-                            android:textAppearance="?textAppearanceSubtitle1" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/spacing_normal"
-                            android:paddingHorizontal="@dimen/spacing_large"
-                            android:paddingVertical="@dimen/spacing_normal"
-                            android:text="@string/coupon_percentage"
-                            android:textAppearance="?textAppearanceHeadline4"
-                            app:textAllCaps="true" />
-
-                        <com.google.android.material.button.MaterialButton
-                            style="?materialButtonOutlinedStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/spacing_x48"
-                            android:layout_marginVertical="@dimen/spacing_normal"
-                            android:text="@string/coupon_code" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_small"
-                            android:text="@string/coupon_desc"
-                            android:textAlignment="center"
-                            android:textAppearance="?textAppearanceSubtitle1" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/toolbar"
@@ -139,7 +75,7 @@
                         android:layout_height="@dimen/spacing_none"
                         android:gravity="center"
                         android:text="@string/app_name__full"
-                        android:textAppearance="?textAppearanceHeadline6"
+                        android:textAppearance="@style/TextAppearance.WorldOfLuxury.AppBar"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

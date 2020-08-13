@@ -27,7 +27,14 @@ import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.sources.ProductDataSource
 import io.worldofluxury.repository.Repository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.transformLatest
+import timber.log.Timber
 import javax.inject.Inject
 
 interface ProductRepository : Repository {
@@ -47,8 +54,6 @@ interface ProductRepository : Repository {
 
 /**
  * [Repository] for [ProductDataSource]
- *
- * fixme: load from remote when ready
  */
 class DefaultProductRepository @Inject constructor(
     @LocalDataSource
@@ -57,34 +62,35 @@ class DefaultProductRepository @Inject constructor(
     private val remoteDataSource: ProductDataSource,
 ) : ProductRepository {
 
+    @FlowPreview
     @ExperimentalCoroutinesApi
     override fun watchProductById(id: String): LiveData<Product> =
-        localDataSource.watchProductById(id).asLiveData()
-    /*remoteDataSource.watchProductById(id)
-        .onStart { localDataSource.watchProductById(id) }
-        .transformLatest { product ->
-            localDataSource.storeProduct(product)
-            emit(product)
-        }
-        .flowOn(Dispatchers.IO)
-        .onCompletion { Timber.e(it, "watchProductById flow completed") }
-        .asLiveData()*/
+        localDataSource.watchProductById(id)
+            .transformLatest { product ->
+                emit(product)
+                remoteDataSource.watchProductById(id).collectLatest {
+                    localDataSource.storeProduct(it)
+                }
+            }
+            .onCompletion { Timber.e(it, "watchProductById flow completed") }
+            .flowOn(Dispatchers.IO)
+            .asLiveData()
 
     /**
      * fetch all favorited products
      */
     @ExperimentalCoroutinesApi
     override fun watchFavorites(): LiveData<List<Product>> =
-        localDataSource.watchFavorites().asLiveData()
-    /*remoteDataSource.watchFavorites()
-        .onStart { localDataSource.watchFavorites() }
-        .transformLatest { products ->
-            products.forEach { localDataSource.addToCart(it) }
-            emit(products)
-        }
-        .flowOn(Dispatchers.IO)
-        .onCompletion { Timber.e(it, "watchFavorites flow completed") }
-        .asLiveData()*/
+        localDataSource.watchFavorites()
+            .transformLatest { products ->
+                emit(products)
+                remoteDataSource.watchFavorites().collectLatest { items ->
+                    items.forEach { localDataSource.storeProduct(it) }
+                }
+            }
+            .flowOn(Dispatchers.IO)
+            .onCompletion { Timber.e(it, "watchFavorites flow completed") }
+            .asLiveData()
 
     /**
      * fetch all products from [category]
@@ -95,7 +101,10 @@ class DefaultProductRepository @Inject constructor(
         toastLiveData: MutableLiveData<String>,
         page: Int
     ): LiveData<PagedList<Product>> =
-        localDataSource.watchAllProducts(category, toastLiveData, page).asLiveData()
+        localDataSource.watchAllProducts(category, toastLiveData, page)
+            .flowOn(Dispatchers.IO)
+            .onCompletion { Timber.e(it, "watchAllProducts flow completed") }
+            .asLiveData()
     /*remoteDataSource.watchAllProducts(category, toastLiveData, page)
         .onStart { localDataSource.watchAllProducts(category, toastLiveData, page) }
         .transformLatest { products ->
