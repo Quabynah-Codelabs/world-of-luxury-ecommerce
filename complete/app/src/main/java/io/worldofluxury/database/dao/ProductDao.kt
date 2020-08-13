@@ -26,8 +26,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ProductDao {
 
-    @Query("select * from products order by id desc")
-    fun getAllProducts(): List<Product>
+//    @Query("select * from products where category = :category order by id desc")
+//    fun productsPagingSource(category: String): PagingSource<Int, Product>
 
     @Query("select * from products where category = :category order by id desc")
     fun watchAllProducts(category: String): DataSource.Factory<Int, Product>
