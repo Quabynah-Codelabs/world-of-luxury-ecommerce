@@ -22,7 +22,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.sources.ProductDataSource
 import io.worldofluxury.data.toCartItem
@@ -46,7 +45,7 @@ import javax.inject.Inject
  *  @since 12/08/2020 @ 21:51
  */
 
-class DefaultProductLocalDataSource @LocalDataSource @Inject constructor(
+class DefaultProductLocalDataSource @Inject constructor(
     private val dao: ProductDao,
     private val cartDao: CartDao,
     private val scope: CoroutineScope

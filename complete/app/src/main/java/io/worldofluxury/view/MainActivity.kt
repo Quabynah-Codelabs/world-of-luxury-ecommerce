@@ -37,23 +37,19 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
-import com.skydoves.whatif.whatIf
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.binding.doOnApplyWindowInsets
 import io.worldofluxury.binding.gone
 import io.worldofluxury.binding.navigationItemBackground
-import io.worldofluxury.data.User
 import io.worldofluxury.databinding.ActivityMainBinding
 import io.worldofluxury.databinding.DrawerHeaderBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.HeightTopWindowInsetsListener
 import io.worldofluxury.util.NoopWindowInsetsListener
-import io.worldofluxury.viewmodel.UserViewModel
 import io.worldofluxury.viewmodel.AuthenticationState
+import io.worldofluxury.viewmodel.UserViewModel
 import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import io.worldofluxury.widget.SpaceDecoration
 import timber.log.Timber
@@ -222,55 +218,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK) {
-            // pass down any activity result to the fragments
-            supportFragmentManager.fragments.forEach {
-                it.onActivityResult(
-                    requestCode,
-                    resultCode,
-                    data
-                )
-            }
-
-            with(authVM) {
-                try {
-                    val signedInAccountFromIntent = GoogleSignIn.getSignedInAccountFromIntent(data)
-                    val signInAccount =
-                        signedInAccountFromIntent.getResult(ApiException::class.java)
-                    signInAccount.whatIf({ account -> account == null }, {
-                        Timber.e("User account was null")
-                        authState.value = AuthenticationState.ERROR
-                    }, {
-                        // create user from google account
-                        val acct = signInAccount ?: return
-                        Timber.i("name -> ${acct.displayName}, email -> ${acct.email} & avatar -> ${acct.photoUrl}")
-                        val idTokenForServer = acct.idToken
-                        Timber.i("Token to be sent to server -> $idTokenForServer")
-                        try {
-                            val user =
-                                User(
-                                    acct.id!!,
-                                    acct.displayName!!,
-                                    acct.email,
-                                    acct.photoUrl.toString()
-                                )
-                            saveUser(user)
-                        } catch (e: Exception) {
-                            Timber.e(e)
-                            authState.value = AuthenticationState.ERROR
-                        }
-                    })
-                } catch (e: Exception) {
-                    Timber.e(e)
-                    authState.value = AuthenticationState.ERROR
-                }
-            }
-        } else {
-            Timber.e("Google auth failed")
-            authVM.authState.value = AuthenticationState.ERROR
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-
+        authVM.getUserFromGoogleSignInResult(resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestinationChanged(

@@ -82,7 +82,7 @@ class DatabaseTest {
         userDao.insert(user)
 
         // fixme: running live data on main thread
-        userDao.getUserById(uid).collectLatest { assertThat(it.id, equalTo(uid)) }
+        userDao.getUserById(uid).collectLatest { assertThat(it?.id, equalTo(uid)) }
     }
 
 }

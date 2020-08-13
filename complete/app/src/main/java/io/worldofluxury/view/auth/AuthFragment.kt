@@ -25,7 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
@@ -51,7 +51,7 @@ class AuthFragment : Fragment() {
 
     @Inject
     lateinit var modelFactory: UserViewModelFactory
-    private val viewModel by activityViewModels<UserViewModel> { modelFactory }
+    private val viewModel by viewModels<UserViewModel> { modelFactory }
 
     init {
         Timber.tag(APP_TAG)
@@ -81,15 +81,11 @@ class AuthFragment : Fragment() {
             viewModel.authState.observe(viewLifecycleOwner, { state ->
                 with(state) {
                     when (this) {
-                        AuthenticationState.ERROR -> {
-
-                        }
                         AuthenticationState.AUTHENTICATED -> {
                             navController.navigate(AuthFragmentDirections.actionNavAuthToNavHome())
                         }
-                        AuthenticationState.AUTHENTICATING -> {
-                        }
                         AuthenticationState.NONE -> {
+                            Timber.i("User unauthenticated")
                         }
                         else -> {
 

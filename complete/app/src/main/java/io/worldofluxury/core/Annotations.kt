@@ -18,30 +18,20 @@
 
 package io.worldofluxury.core
 
+import javax.inject.Qualifier
+
 /**
  *  @project World of Luxury
  *  @author Bilson Jr.
  *  @by Quabynah Codelabs LLC
  *  @since 12/08/2020 @ 21:58
  */
-@Target(
-    AnnotationTarget.ANNOTATION_CLASS,
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.PROPERTY,
-    AnnotationTarget.CONSTRUCTOR,
-    AnnotationTarget.VALUE_PARAMETER
-)
+@Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 annotation class LocalDataSource
 
-@Target(
-    AnnotationTarget.ANNOTATION_CLASS,
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.PROPERTY,
-    AnnotationTarget.CONSTRUCTOR,
-    AnnotationTarget.VALUE_PARAMETER
-)
+@Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 annotation class RemoteDataSource

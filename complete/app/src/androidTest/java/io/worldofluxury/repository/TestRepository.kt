@@ -43,7 +43,7 @@ import io.worldofluxury.util.observeOnce
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Before
@@ -79,8 +79,9 @@ class TestUserRepository {
         @Singleton
         @Provides
         fun provideUserRepository(
-            userDao: UserDao
-        ): UserRepository = FakeUserRepository(userDao)
+            userDao: UserDao,
+            scope: CoroutineScope
+        ): UserRepository = FakeUserRepository(userDao, scope)
     }
 
     @get:Rule
@@ -105,7 +106,7 @@ class TestUserRepository {
         val testUser = TestUtil.createUser(UUID.randomUUID().toString())
         val newUsername = "Quabynah Jr."
         val user = testUser.copy(name = newUsername)
-        userRepository.updateUser(user, MutableLiveData())
+        userRepository.updateUser(user)
         userRepository.watchCurrentUser(MutableLiveData())
             .observeOnce { assertThat(user.name, equalTo(testUser.name)) }
     }
@@ -117,15 +118,16 @@ class TestUserRepository {
  */
 @Singleton
 class FakeUserRepository @Inject constructor(
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val scope: CoroutineScope
 ) :
     UserRepository {
 
-    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User> =
+    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User?> =
         userDao.getUserById(UID).asLiveData()
 
-    override fun updateUser(user: User, toastLiveData: MutableLiveData<String>) {
-        userDao.insert(user)
+    override fun updateUser(user: User) {
+        scope.launch { userDao.insert(user) }
     }
 }
 

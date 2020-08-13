@@ -29,7 +29,9 @@ import kotlinx.coroutines.flow.Flow
  *  @since 12/08/2020 @ 23:48
  */
 interface UserDataSource : DataSource {
-    fun watchCurrentUser(toastLiveData: MutableLiveData<String>): Flow<User>
+    fun watchCurrentUser(toastLiveData: MutableLiveData<String>): Flow<User?>
 
     fun updateUser(user: User)
+
+    fun logout() {}
 }

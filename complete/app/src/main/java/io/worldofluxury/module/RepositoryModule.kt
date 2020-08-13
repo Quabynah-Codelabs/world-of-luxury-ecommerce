@@ -24,10 +24,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.core.RemoteDataSource
-import io.worldofluxury.data.sources.local.DefaultProductLocalDataSource
-import io.worldofluxury.data.sources.local.DefaultUserLocalDataSource
-import io.worldofluxury.data.sources.remote.DefaultProductRemoteDataSource
-import io.worldofluxury.data.sources.remote.DefaultUserRemoteDataSource
+import io.worldofluxury.data.sources.ProductDataSource
+import io.worldofluxury.data.sources.UserDataSource
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.repository.product.DefaultProductRepository
 import io.worldofluxury.repository.product.ProductRepository
@@ -46,18 +44,18 @@ object RepositoryModule {
     @Provides
     fun provideProductRepository(
         @RemoteDataSource
-        remoteDataSource: DefaultProductRemoteDataSource,
+        remoteDataSource: ProductDataSource,
         @LocalDataSource
-        localDataSource: DefaultProductLocalDataSource
+        localDataSource: ProductDataSource
     ): ProductRepository = DefaultProductRepository(localDataSource, remoteDataSource)
 
     @Singleton
     @Provides
     fun provideUserRepository(
         @RemoteDataSource
-        remoteDataSource: DefaultUserRemoteDataSource,
+        remoteDataSource: UserDataSource,
         @LocalDataSource
-        localDataSource: DefaultUserLocalDataSource
+        localDataSource: UserDataSource
     ): UserRepository = DefaultUserRepository(localDataSource, remoteDataSource)
 
 }

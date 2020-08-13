@@ -26,16 +26,8 @@ import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.sources.ProductDataSource
-import io.worldofluxury.data.sources.local.DefaultProductLocalDataSource
-import io.worldofluxury.data.sources.remote.DefaultProductRemoteDataSource
 import io.worldofluxury.repository.Repository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.transformLatest
-import timber.log.Timber
 import javax.inject.Inject
 
 interface ProductRepository : Repository {
@@ -55,26 +47,28 @@ interface ProductRepository : Repository {
 
 /**
  * [Repository] for [ProductDataSource]
+ *
+ * fixme: load from remote when ready
  */
 class DefaultProductRepository @Inject constructor(
     @LocalDataSource
-    private val localDataSource: DefaultProductLocalDataSource,
+    private val localDataSource: ProductDataSource,
     @RemoteDataSource
-    private val remoteDataSource: DefaultProductRemoteDataSource,
+    private val remoteDataSource: ProductDataSource,
 ) : ProductRepository {
 
     @ExperimentalCoroutinesApi
     override fun watchProductById(id: String): LiveData<Product> =
         localDataSource.watchProductById(id).asLiveData()
-        /*remoteDataSource.watchProductById(id)
-            .onStart { localDataSource.watchProductById(id) }
-            .transformLatest { product ->
-                localDataSource.storeProduct(product)
-                emit(product)
-            }
-            .flowOn(Dispatchers.IO)
-            .onCompletion { Timber.e(it, "watchProductById flow completed") }
-            .asLiveData()*/
+    /*remoteDataSource.watchProductById(id)
+        .onStart { localDataSource.watchProductById(id) }
+        .transformLatest { product ->
+            localDataSource.storeProduct(product)
+            emit(product)
+        }
+        .flowOn(Dispatchers.IO)
+        .onCompletion { Timber.e(it, "watchProductById flow completed") }
+        .asLiveData()*/
 
     /**
      * fetch all favorited products
@@ -82,15 +76,15 @@ class DefaultProductRepository @Inject constructor(
     @ExperimentalCoroutinesApi
     override fun watchFavorites(): LiveData<List<Product>> =
         localDataSource.watchFavorites().asLiveData()
-        /*remoteDataSource.watchFavorites()
-            .onStart { localDataSource.watchFavorites() }
-            .transformLatest { products ->
-                products.forEach { localDataSource.addToCart(it) }
-                emit(products)
-            }
-            .flowOn(Dispatchers.IO)
-            .onCompletion { Timber.e(it, "watchFavorites flow completed") }
-            .asLiveData()*/
+    /*remoteDataSource.watchFavorites()
+        .onStart { localDataSource.watchFavorites() }
+        .transformLatest { products ->
+            products.forEach { localDataSource.addToCart(it) }
+            emit(products)
+        }
+        .flowOn(Dispatchers.IO)
+        .onCompletion { Timber.e(it, "watchFavorites flow completed") }
+        .asLiveData()*/
 
     /**
      * fetch all products from [category]
@@ -102,15 +96,15 @@ class DefaultProductRepository @Inject constructor(
         page: Int
     ): LiveData<PagedList<Product>> =
         localDataSource.watchAllProducts(category, toastLiveData, page).asLiveData()
-        /*remoteDataSource.watchAllProducts(category, toastLiveData, page)
-            .onStart { localDataSource.watchAllProducts(category, toastLiveData, page) }
-            .transformLatest { products ->
-                products.forEach { localDataSource.storeProduct(it) }
-                emit(products)
-            }
-            .flowOn(Dispatchers.IO)
-            .onCompletion { Timber.e(it, "watchAllProducts flow completed") }
-            .asLiveData()*/
+    /*remoteDataSource.watchAllProducts(category, toastLiveData, page)
+        .onStart { localDataSource.watchAllProducts(category, toastLiveData, page) }
+        .transformLatest { products ->
+            products.forEach { localDataSource.storeProduct(it) }
+            emit(products)
+        }
+        .flowOn(Dispatchers.IO)
+        .onCompletion { Timber.e(it, "watchAllProducts flow completed") }
+        .asLiveData()*/
 
     override suspend fun addToCart(product: Product) {
         localDataSource.addToCart(product)

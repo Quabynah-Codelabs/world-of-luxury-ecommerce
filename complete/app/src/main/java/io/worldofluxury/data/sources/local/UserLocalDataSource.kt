@@ -19,7 +19,6 @@
 package io.worldofluxury.data.sources.local
 
 import androidx.lifecycle.MutableLiveData
-import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.data.User
 import io.worldofluxury.data.sources.UserDataSource
 import io.worldofluxury.database.dao.UserDao
@@ -36,13 +35,13 @@ import javax.inject.Inject
  *  @since 12/08/2020 @ 23:49
  */
 
-class DefaultUserLocalDataSource @LocalDataSource @Inject constructor(
+class DefaultUserLocalDataSource @Inject constructor(
     dao: UserDao,
     prefs: PreferenceStorage,
     private val scope: CoroutineScope
 ) : UserDataSource, UserDao by dao, PreferenceStorage by prefs {
 
-    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): Flow<User> =
+    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): Flow<User?> =
         getUserById(userId)
 
     override fun updateUser(user: User) {
@@ -51,7 +50,7 @@ class DefaultUserLocalDataSource @LocalDataSource @Inject constructor(
         }
     }
 
-    fun logout() {
+    override fun logout() {
         scope.launch {
             delete(userId)
             userId = null

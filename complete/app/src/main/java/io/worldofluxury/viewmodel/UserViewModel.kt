@@ -22,9 +22,7 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.navigation.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -42,7 +40,7 @@ import io.worldofluxury.view.welcome.WelcomeFragmentDirections
 import timber.log.Timber
 
 enum class AuthenticationState {
-    NONE, AUTHENTICATING, AUTHENTICATED, ERROR
+    NONE, AUTHENTICATED
 }
 
 /**
@@ -60,9 +58,12 @@ class UserViewModel @ViewModelInject constructor(
             .build()
     }
 
-    val authState: MutableLiveData<AuthenticationState> = MutableLiveData(AuthenticationState.NONE)
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
-    val currentUser: LiveData<User> = repository.watchCurrentUser(toastLiveData)
+    val currentUser: LiveData<User?> = repository.watchCurrentUser(toastLiveData)
+    val authState: LiveData<AuthenticationState> = currentUser.switchMap { user ->
+        if (user == null) liveData { emit(AuthenticationState.NONE) }
+        else liveData { emit(AuthenticationState.AUTHENTICATED) }
+    }
 
     // sign out
     fun signOut(v: View) {
@@ -72,8 +73,6 @@ class UserViewModel @ViewModelInject constructor(
             setPositiveButton("Yeah") { d, _ ->
                 // logout user & delete data
                 logout()
-                // update auth state
-                authState.postValue(AuthenticationState.NONE)
                 d.dismiss()
             }
             setNegativeButton("Nope") { d, _ ->
@@ -93,7 +92,6 @@ class UserViewModel @ViewModelInject constructor(
     // sign in with google
     fun googleLogin(host: Activity, code: Int) {
         val client = GoogleSignIn.getClient(host, gso)
-        authState.value = AuthenticationState.AUTHENTICATING
         host.startActivityForResult(client.signInIntent, code)
     }
 
@@ -108,7 +106,6 @@ class UserViewModel @ViewModelInject constructor(
                 Timber.i("Account signed in as -> ${signInAccount?.idToken}")
                 signInAccount.whatIf({ account -> account == null }, {
                     Timber.e("User account was null")
-                    authState.value = AuthenticationState.ERROR
                 }, {
                     // create user from google account
                     val acct = signInAccount ?: return
@@ -126,21 +123,20 @@ class UserViewModel @ViewModelInject constructor(
                         saveUser(user)
                     } catch (e: Exception) {
                         Timber.e(e)
-                        authState.value = AuthenticationState.ERROR
                     }
                 })
             } catch (e: Exception) {
                 Timber.e(e)
-                authState.value = AuthenticationState.ERROR
             }
         } else {
             Timber.e("Google auth failed")
-            authState.value = AuthenticationState.ERROR
         }
     }
 
     // save user data locally
-    fun saveUser(user: User) = launchInBackground {
-
+    private fun saveUser(user: User) = launchInBackground {
+        userId = user.id
+        Timber.e("User id -> $userId")
+        updateUser(user)
     }
 }

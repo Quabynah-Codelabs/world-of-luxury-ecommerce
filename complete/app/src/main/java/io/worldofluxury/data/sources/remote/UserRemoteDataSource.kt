@@ -24,7 +24,6 @@ import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import com.skydoves.whatif.whatIfNotNull
-import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.User
 import io.worldofluxury.data.sources.UserDataSource
 import io.worldofluxury.preferences.PreferenceStorage
@@ -42,7 +41,7 @@ import javax.inject.Inject
  *  @by Quabynah Codelabs LLC
  *  @since 12/08/2020 @ 23:50
  */
-class DefaultUserRemoteDataSource @RemoteDataSource @Inject constructor(
+class DefaultUserRemoteDataSource @Inject constructor(
     service: SwanWebService,
     prefs: PreferenceStorage,
     private val scope: CoroutineScope

@@ -21,24 +21,19 @@ package io.worldofluxury.repository.user
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import io.worldofluxury.core.LocalDataSource
+import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.User
-import io.worldofluxury.data.sources.local.DefaultUserLocalDataSource
-import io.worldofluxury.data.sources.remote.DefaultUserRemoteDataSource
+import io.worldofluxury.data.sources.UserDataSource
 import io.worldofluxury.repository.Repository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.transformLatest
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 interface UserRepository : Repository {
-    fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User>
+    fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User?>
 
-    fun updateUser(user: User, toastLiveData: MutableLiveData<String>)
+    fun updateUser(user: User)
 
     fun logout() {}
 }
@@ -48,24 +43,26 @@ interface UserRepository : Repository {
  */
 @Singleton
 class DefaultUserRepository @Inject constructor(
-    private val localDataSource: DefaultUserLocalDataSource,
-    private val remoteDataSource: DefaultUserRemoteDataSource
+    @LocalDataSource
+    private val localDataSource: UserDataSource,
+    @RemoteDataSource
+    private val remoteDataSource: UserDataSource
 ) : UserRepository {
 
     @ExperimentalCoroutinesApi
-    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User> =
+    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User?> =
         localDataSource.watchCurrentUser(toastLiveData)
-        /*remoteDataSource.watchCurrentUser(toastLiveData)
-            .onStart { localDataSource.watchCurrentUser(toastLiveData) }
-            .transformLatest { value ->
-                localDataSource.updateUser(value)
-                emit(value)
-            }
-            .flowOn(Dispatchers.IO)
-            .onCompletion { Timber.e(it, "watchCurrentUser flow completed") }*/
+            /*remoteDataSource.watchCurrentUser(toastLiveData)
+                .onStart { localDataSource.watchCurrentUser(toastLiveData) }
+                .transformLatest { value ->
+                    localDataSource.updateUser(value)
+                    emit(value)
+                }
+                .flowOn(Dispatchers.IO)
+                .onCompletion { Timber.e(it, "watchCurrentUser flow completed") }*/
             .asLiveData()
 
-    override fun updateUser(user: User, toastLiveData: MutableLiveData<String>) {
+    override fun updateUser(user: User) {
         localDataSource.updateUser(user)
         remoteDataSource.updateUser(user)
     }

@@ -25,7 +25,6 @@ import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import com.skydoves.whatif.whatIfNotNull
-import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.sources.ProductDataSource
 import io.worldofluxury.webservice.SwanWebService
@@ -44,7 +43,7 @@ import javax.inject.Inject
  *  @since 12/08/2020 @ 21:50
  */
 
-class DefaultProductRemoteDataSource @RemoteDataSource @Inject constructor(
+class DefaultProductRemoteDataSource @Inject constructor(
     private val service: SwanWebService,
     private val scope: CoroutineScope
 ) : ProductDataSource {

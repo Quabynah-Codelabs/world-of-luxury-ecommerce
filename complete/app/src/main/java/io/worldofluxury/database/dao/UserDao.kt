@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Query("select * from users where id = :id")
-    fun getUserById(id: String?): Flow<User>
+    fun getUserById(id: String?): Flow<User?>
 
     @Query("select * from users where id = :id")
     fun watchUserById(id: String): LiveData<User>
@@ -39,7 +39,7 @@ interface UserDao {
     suspend fun insertAll(users: MutableList<User>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Query("delete from users where id = :id")
     suspend fun delete(id: String?)
