@@ -30,7 +30,7 @@
     <string name="title_auth">Authentication</string>
     <string name="title_product">Product Details</string>
     <string name="title_cart">Cart</string>
-    <string name="title_help">Help</string>
+    <string name="title_help">About &amp; Support</string>
     <string name="title_search">Search</string>
     <string name="header_image">header_image</string>
     <string name="app_desc__other">Discover the world\'s top products right at the comfort of your home</string>
@@ -53,7 +53,7 @@
     <string name="cd_toggle_theme">Toggle theme</string>
     <string name="categories">Categories</string>
     <string name="title_favorites">Favorites</string>
-    <string name="title_user">Profile</string>
+    <string name="title_user">My Profile</string>
     <string name="coupon_desc">Use the code above for our <b>Spring Collection Purchase</b></string>
     <string name="coupon_code">luxury @galore</string>
     <string name="coupon_percentage"><b>23%</b> off</string>
@@ -70,4 +70,5 @@
     <string name="login_prompt">Login to view your profile</string>
     <string name="header_image_url" translatable="false"><![CDATA[https://images.unsplash.com/photo-1517677129300-07b130802f46?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60]]></string>
     <string name="buy_now">Buy now</string>
+    <string name="update">Update</string>
 </resources>

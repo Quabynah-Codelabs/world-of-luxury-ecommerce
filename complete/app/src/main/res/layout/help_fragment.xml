@@ -17,28 +17,129 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="io.worldofluxury.view.help.HelpViewModel" />
 
+        <import type="io.worldofluxury.BuildConfig" />
+
         <variable
             name="vm"
             type="HelpViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.help.HelpFragment">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="?android:colorBackground"
+                app:layout_scrollFlags="exitUntilCollapsed|snap"
+                app:statusBarScrim="?android:colorBackground"
+                app:titleEnabled="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/toolbar"
+                    style="?toolbarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?actionBarSize"
+                    android:overScrollMode="never"
+                    android:paddingVertical="@dimen/spacing_normal"
+                    app:layout_collapseMode="pin">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/back_button"
+                        android:layout_width="?actionBarSize"
+                        android:layout_height="@dimen/spacing_none"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_twotone_close"
+                        android:tint="?attr/colorOnBackground"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:onBackPressed="@{true}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="@dimen/spacing_none"
+                        android:layout_height="@dimen/spacing_none"
+                        android:gravity="center"
+                        android:text="@string/title_help"
+                        android:textAppearance="@style/TextAppearance.WorldOfLuxury.AppBar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/title_help"
-            android:textAppearance="?textAppearanceHeadline4" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_x24"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/logo"
+                android:layout_width="@dimen/logo_size"
+                android:layout_height="@dimen/small_logo_size"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/swan" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/spacing_large"
+                android:text="@string/app_name__full"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{BuildConfig.VERSION_NAME}"
+                android:textAppearance="?textAppearanceCaption"
+                tools:text="Version 0.0.1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/app_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="?emphasisHigh"
+                android:paddingVertical="@dimen/spacing_large"
+                android:text="@string/app_desc__long"
+                android:textAppearance="?textAppearanceSubtitle1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_x36"
+                android:enabled="@{false}"
+                android:onClick="@{(v) -> vm.updateApp(v)}"
+                android:text="@string/update"
+                app:icon="@drawable/ic_twotone_right" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

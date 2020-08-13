@@ -18,7 +18,19 @@
 
 package io.worldofluxury.view.help
 
+import android.view.View
+import android.widget.Toast
 import androidx.hilt.lifecycle.ViewModelInject
 import io.worldofluxury.base.LiveCoroutinesViewModel
 
-class HelpViewModel @ViewModelInject constructor() : LiveCoroutinesViewModel()
+class HelpViewModel @ViewModelInject constructor() : LiveCoroutinesViewModel() {
+
+    fun updateApp(v: View) {
+        // todo: update app
+        Toast.makeText(
+            v.context.applicationContext,
+            "Update feature unavailable",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+}

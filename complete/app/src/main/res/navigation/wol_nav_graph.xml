@@ -78,6 +78,7 @@
         android:name="io.worldofluxury.view.product.ProductFragment"
         android:label="@string/title_product"
         tools:layout="@layout/fragment_product">
+        <deepLink app:uri="swan://products/{productId}" />
         <argument
             android:name="product"
             app:argType="io.worldofluxury.data.Product" />

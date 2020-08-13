@@ -18,6 +18,10 @@
 
 package io.worldofluxury.viewmodel
 
+import android.app.Activity
+import android.content.Intent
+import androidx.core.app.ShareCompat
+import androidx.core.net.toUri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -52,4 +56,18 @@ class ProductViewModel @ViewModelInject constructor(
         launchInBackground { repository.addToCart(item) }
 
     fun watchProductById(id: String) = launchOnViewModelScope { repository.watchProductById(id) }
+
+    fun share(host: Activity, product: Product) {
+        val intentBuilder = ShareCompat.IntentBuilder.from(host)
+        val intent: Intent = intentBuilder
+            .setType("text/plain")
+            .setStream(product.photoUrl?.toUri())
+            .setText("Buy ${product.name} now while stock lasts!!!\n\n[swan://products/${product.id}]")
+            .setChooserTitle("Choose share client")
+            .createChooserIntent()
+
+        if (intent.resolveActivity(host.packageManager) != null) {
+            host.startActivity(intent)
+        }
+    }
 }

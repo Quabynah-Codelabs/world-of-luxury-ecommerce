@@ -35,8 +35,8 @@ import io.worldofluxury.databinding.FragmentProductBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.ProductViewModel
 import io.worldofluxury.viewmodel.UserViewModel
-import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -69,16 +69,18 @@ class ProductFragment : Fragment() {
             lifecycleOwner = this@ProductFragment
             authViewModel = this@ProductFragment.authViewModel
             productViewModel = this@ProductFragment.productViewModel
+            host = requireActivity()
 
             root.doOnApplyWindowInsets { v, insets, padding ->
                 v.updatePadding(bottom = padding.bottom + insets.systemWindowInsetBottom)
             }
 
             // observe product
-            this@ProductFragment.productViewModel.watchProductById(args.product.id).observe(viewLifecycleOwner, {
-                // update product in real-time
-                product = it
-            })
+            this@ProductFragment.productViewModel.watchProductById(args.product.id)
+                .observe(viewLifecycleOwner, {
+                    // update product in real-time
+                    product = it
+                })
 
             executePendingBindings()
         }
