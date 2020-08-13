@@ -22,6 +22,7 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
@@ -34,26 +35,23 @@ import io.worldofluxury.BuildConfig
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.base.launchInBackground
 import io.worldofluxury.data.User
-import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.PreferenceStorage
+import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.view.auth.AuthFragment
 import io.worldofluxury.view.welcome.WelcomeFragmentDirections
 import timber.log.Timber
 
+enum class AuthenticationState {
+    NONE, AUTHENTICATING, AUTHENTICATED, ERROR
+}
 
 /**
- * Main [ViewModel] for the [AuthFragment]
+ * Main [ViewModel] for the [UserRepository]
  */
-class AuthViewModel @ViewModelInject constructor(
-    private val userPrefs: PreferenceStorage,
-    private val userDao: UserDao
-) :
-    LiveCoroutinesViewModel(), PreferenceStorage by userPrefs {
-
-    enum class AuthenticationState {
-        NONE, AUTHENTICATING, AUTHENTICATED, ERROR
-    }
+class UserViewModel @ViewModelInject constructor(
+    userPrefs: PreferenceStorage,
+    repository: UserRepository
+) : LiveCoroutinesViewModel(), PreferenceStorage by userPrefs, UserRepository by repository {
 
     private val gso: GoogleSignInOptions by lazy {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -64,34 +62,19 @@ class AuthViewModel @ViewModelInject constructor(
 
     val authState: MutableLiveData<AuthenticationState> = MutableLiveData(AuthenticationState.NONE)
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
-    val currentUser: MutableLiveData<User> = MutableLiveData()
-
-    init {
-        Timber.tag(APP_TAG)
-        if (userPrefs.isLoggedIn.get()) {
-            authState.value = AuthenticationState.AUTHENTICATED
-            launchInBackground {
-                currentUser.postValue(
-                    userDao.getUserById(userPrefs.userId)
-                        .apply { Timber.d("Found user -> ${this?.name}") })
-            }
-        }
-    }
+    val currentUser: LiveData<User> = repository.watchCurrentUser(toastLiveData)
 
     // sign out
-    fun logout(v: View) {
+    fun signOut(v: View) {
         MaterialAlertDialogBuilder(v.context).apply {
             setTitle("Confirmation required")
             setMessage("Do you wish to sign out?")
             setPositiveButton("Yeah") { d, _ ->
-                d.dismiss()
-
-                // clear user id from prefs
-                userPrefs.userId = null
-                // update live data
-                currentUser.postValue(null)
+                // logout user & delete data
+                logout()
                 // update auth state
                 authState.postValue(AuthenticationState.NONE)
+                d.dismiss()
             }
             setNegativeButton("Nope") { d, _ ->
                 d.dismiss()
@@ -99,43 +82,16 @@ class AuthViewModel @ViewModelInject constructor(
         }.show()
     }
 
-    // todo: implement twitter login
-    fun twitterLogin() {
-
-    }
-
+    // navigate to home or auth
     fun navLoginOrHome(view: View) {
         view.findNavController().navigate(
-            if (userPrefs.isLoggedIn.get()) WelcomeFragmentDirections.actionNavWelcomeToNavHome()
+            if (isLoggedIn.get()) WelcomeFragmentDirections.actionNavWelcomeToNavHome()
             else WelcomeFragmentDirections.actionNavWelcomeToNavAuth()
         )
     }
 
     // sign in with google
     fun googleLogin(host: Activity, code: Int) {
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        /*val lastSignedInAccount: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(host)
-        lastSignedInAccount.whatIf({ account -> account == null }, {
-            Timber.e("Last user account was null")
-            val client = GoogleSignIn.getClient(host, gso)
-            authState.value = AuthenticationState.AUTHENTICATING
-            host.startActivityForResult(client.signInIntent, code)
-        }, {
-            // create user from google account
-            val acct = lastSignedInAccount ?: return
-            Timber.i("name -> ${acct.displayName}, email -> ${acct.email} & avatar -> ${acct.photoUrl}")
-            val idTokenForServer = acct.idToken
-            Timber.i("Token to be sent to server -> $idTokenForServer")
-            try {
-                val user =
-                    User(acct.id!!, acct.displayName!!, acct.email, acct.photoUrl.toString())
-                saveUser(user)
-            } catch (e: Exception) {
-                Timber.e(e)
-                authState.value = AuthenticationState.ERROR
-            }
-        })*/
         val client = GoogleSignIn.getClient(host, gso)
         authState.value = AuthenticationState.AUTHENTICATING
         host.startActivityForResult(client.signInIntent, code)
@@ -185,10 +141,6 @@ class AuthViewModel @ViewModelInject constructor(
 
     // save user data locally
     fun saveUser(user: User) = launchInBackground {
-        userDao.insert(user)
-        currentUser.postValue(user)
-        userPrefs.userId = user.id
-        toastLiveData.postValue("Login was successful")
-        authState.postValue(AuthenticationState.AUTHENTICATED)
+
     }
 }

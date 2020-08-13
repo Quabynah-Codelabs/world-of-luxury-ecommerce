@@ -25,9 +25,13 @@ import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.sources.local.DefaultProductLocalDataSource
+import io.worldofluxury.data.sources.local.DefaultUserLocalDataSource
 import io.worldofluxury.data.sources.remote.DefaultProductRemoteDataSource
+import io.worldofluxury.data.sources.remote.DefaultUserRemoteDataSource
 import io.worldofluxury.database.dao.CartDao
 import io.worldofluxury.database.dao.ProductDao
+import io.worldofluxury.database.dao.UserDao
+import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.webservice.SwanWebService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -65,4 +69,21 @@ object DataSourceModule {
     ): DefaultProductRemoteDataSource =
         DefaultProductRemoteDataSource(service, scope)
 
+    @Singleton
+    @Provides
+    @LocalDataSource
+    fun provideUserLocalDataSource(
+        dao: UserDao,
+        prefs: PreferenceStorage,
+        scope: CoroutineScope
+    ): DefaultUserLocalDataSource = DefaultUserLocalDataSource(dao, prefs, scope)
+
+    @Singleton
+    @Provides
+    @RemoteDataSource
+    fun provideUserRemoteDataSource(
+        service: SwanWebService,
+        prefs: PreferenceStorage,
+        scope: CoroutineScope
+    ): DefaultUserRemoteDataSource = DefaultUserRemoteDataSource(service, prefs, scope)
 }

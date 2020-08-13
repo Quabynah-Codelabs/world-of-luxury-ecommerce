@@ -24,15 +24,15 @@
 
         <import type="io.worldofluxury.viewmodel.ProductViewModel" />
 
-        <import type="io.worldofluxury.viewmodel.AuthViewModel.AuthenticationState" />
+        <import type="io.worldofluxury.viewmodel.AuthenticationState" />
 
-        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
+        <import type="io.worldofluxury.viewmodel.UserViewModel" />
 
         <import type="io.worldofluxury.util.ConstantsKt" />
 
         <variable
             name="authViewModel"
-            type="AuthViewModel" />
+            type="UserViewModel" />
 
         <variable
             name="vm"

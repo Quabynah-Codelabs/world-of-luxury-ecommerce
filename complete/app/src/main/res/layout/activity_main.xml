@@ -22,11 +22,11 @@
 
     <data>
 
-        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
+        <import type="io.worldofluxury.viewmodel.UserViewModel" />
 
         <variable
             name="vm"
-            type="AuthViewModel" />
+            type="UserViewModel" />
 
     </data>
 

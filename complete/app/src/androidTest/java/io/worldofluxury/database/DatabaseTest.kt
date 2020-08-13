@@ -29,6 +29,7 @@ import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.TestUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.After
@@ -81,8 +82,7 @@ class DatabaseTest {
         userDao.insert(user)
 
         // fixme: running live data on main thread
-        val userById = userDao.getUserById(uid)
-        assertThat(userById?.id, equalTo(uid))
+        userDao.getUserById(uid).collectLatest { assertThat(it.id, equalTo(uid)) }
     }
 
 }

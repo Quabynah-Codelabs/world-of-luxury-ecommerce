@@ -22,13 +22,13 @@
 
     <data>
 
-        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
+        <import type="io.worldofluxury.viewmodel.UserViewModel" />
 
-        <import type="io.worldofluxury.viewmodel.AuthViewModel.AuthenticationState" />
+        <import type="io.worldofluxury.viewmodel.AuthenticationState" />
 
         <variable
             name="vm"
-            type="AuthViewModel" />
+            type="UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,7 +83,7 @@
             android:layout_width="?actionBarSize"
             android:layout_height="?actionBarSize"
             android:background="?selectableItemBackgroundBorderless"
-            android:onClick="@{(v) -> vm.logout(v)}"
+            android:onClick="@{(v) -> vm.signOut(v)}"
             android:src="@{vm.authState == AuthenticationState.AUTHENTICATED ?  @drawable/ic_twotone_exit : @drawable/ic_twotone_login}"
             app:layout_constraintBottom_toBottomOf="@id/user_avatar"
             app:layout_constraintEnd_toEndOf="parent"

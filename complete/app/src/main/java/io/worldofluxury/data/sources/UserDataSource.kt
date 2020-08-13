@@ -16,24 +16,20 @@
  * limitations under the License.
  */
 
-package io.worldofluxury.view.user
+package io.worldofluxury.data.sources
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.data.User
-import io.worldofluxury.repository.user.UserRepository
+import kotlinx.coroutines.flow.Flow
 
 /**
- * [ViewModel] for [UserRepository]
+ *  @project World of Luxury
+ *  @author Bilson Jr.
+ *  @by Quabynah Codelabs LLC
+ *  @since 12/08/2020 @ 23:48
  */
-class UserViewModel @ViewModelInject constructor(
-    private val repository: UserRepository
-) : LiveCoroutinesViewModel() {
-    val toastLiveData: MutableLiveData<String> = MutableLiveData()
-    val currentUser: LiveData<User> = repository.watchCurrentUser(toastLiveData)
+interface UserDataSource : DataSource {
+    fun watchCurrentUser(toastLiveData: MutableLiveData<String>): Flow<User>
 
-    fun updateUser(user: User) = repository.updateUser(user, toastLiveData)
+    fun updateUser(user: User)
 }

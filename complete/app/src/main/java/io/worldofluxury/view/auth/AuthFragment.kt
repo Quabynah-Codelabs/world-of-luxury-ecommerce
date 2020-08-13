@@ -35,8 +35,9 @@ import io.worldofluxury.R
 import io.worldofluxury.binding.checkAllMatched
 import io.worldofluxury.databinding.AuthFragmentBinding
 import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.viewmodel.AuthViewModel
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.AuthenticationState
+import io.worldofluxury.viewmodel.UserViewModel
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import retrofit2.Call
 import retrofit2.Response
 import timber.log.Timber
@@ -49,8 +50,8 @@ class AuthFragment : Fragment() {
     private val twitterAuthClient: TwitterAuthClient? by lazy { TwitterAuthClient() }
 
     @Inject
-    lateinit var authViewModelFactory: AuthViewModelFactory
-    private val viewModel by activityViewModels<AuthViewModel> { authViewModelFactory }
+    lateinit var modelFactory: UserViewModelFactory
+    private val viewModel by activityViewModels<UserViewModel> { modelFactory }
 
     init {
         Timber.tag(APP_TAG)
@@ -80,15 +81,15 @@ class AuthFragment : Fragment() {
             viewModel.authState.observe(viewLifecycleOwner, { state ->
                 with(state) {
                     when (this) {
-                        AuthViewModel.AuthenticationState.ERROR -> {
+                        AuthenticationState.ERROR -> {
 
                         }
-                        AuthViewModel.AuthenticationState.AUTHENTICATED -> {
+                        AuthenticationState.AUTHENTICATED -> {
                             navController.navigate(AuthFragmentDirections.actionNavAuthToNavHome())
                         }
-                        AuthViewModel.AuthenticationState.AUTHENTICATING -> {
+                        AuthenticationState.AUTHENTICATING -> {
                         }
-                        AuthViewModel.AuthenticationState.NONE -> {
+                        AuthenticationState.NONE -> {
                         }
                         else -> {
 
@@ -156,7 +157,6 @@ class AuthFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Timber.tag(APP_TAG)
         Timber.i("Result code -> $resultCode")
         when (requestCode) {
             RC_GOOGLE -> viewModel.getUserFromGoogleSignInResult(resultCode, data)

@@ -22,7 +22,7 @@
 
     <data>
 
-        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
+        <import type="io.worldofluxury.viewmodel.UserViewModel" />
 
         <import type="io.worldofluxury.preferences.PreferenceStorage" />
 
@@ -32,7 +32,7 @@
 
         <variable
             name="vm"
-            type="AuthViewModel" />
+            type="UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

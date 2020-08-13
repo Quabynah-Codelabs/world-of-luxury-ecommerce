@@ -102,6 +102,7 @@ class DefaultProductRemoteDataSource @RemoteDataSource @Inject constructor(
                     scope.launch {
                         data.whatIfNotNull {
                             // todo: add pages list here
+
                         }
                     }
                 }
@@ -121,7 +122,7 @@ class DefaultProductRemoteDataSource @RemoteDataSource @Inject constructor(
     }
 
     override suspend fun addToCart(product: Product) {
-        service.addToCart(product)
+        service.addToCart(product.copy(isFavorite = !product.isFavorite))
             .whatIfNotNull { apiResponse ->
                 apiResponse.onSuccess {
                     // save data to local database

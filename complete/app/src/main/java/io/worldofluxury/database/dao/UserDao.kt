@@ -19,14 +19,18 @@
 package io.worldofluxury.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import io.worldofluxury.data.User
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
 
     @Query("select * from users where id = :id")
-    fun getUserById(id: String?): User?
+    fun getUserById(id: String?): Flow<User>
 
     @Query("select * from users where id = :id")
     fun watchUserById(id: String): LiveData<User>
@@ -37,7 +41,7 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
 
-    @Update
-    suspend fun update(user: User)
+    @Query("delete from users where id = :id")
+    suspend fun delete(id: String?)
 
 }

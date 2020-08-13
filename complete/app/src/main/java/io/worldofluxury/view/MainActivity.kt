@@ -52,8 +52,9 @@ import io.worldofluxury.databinding.DrawerHeaderBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.HeightTopWindowInsetsListener
 import io.worldofluxury.util.NoopWindowInsetsListener
-import io.worldofluxury.viewmodel.AuthViewModel
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.UserViewModel
+import io.worldofluxury.viewmodel.AuthenticationState
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import io.worldofluxury.widget.SpaceDecoration
 import timber.log.Timber
 import javax.inject.Inject
@@ -65,8 +66,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
     private lateinit var controller: NavController
 
     @Inject
-    lateinit var authViewModelFactory: AuthViewModelFactory
-    private val authVM by viewModels<AuthViewModel> { authViewModelFactory }
+    lateinit var authViewModelFactory: UserViewModelFactory
+    private val authVM by viewModels<UserViewModel> { authViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.tag(APP_TAG)
@@ -153,7 +154,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             authVM.authState.observe(this@MainActivity, { state ->
                 Timber.d("State -> $state")
 
-                val isAuthenticated = state == AuthViewModel.AuthenticationState.AUTHENTICATED
+                val isAuthenticated = state == AuthenticationState.AUTHENTICATED
 
                 // header
                 headerBinding.root.setOnClickListener {
@@ -238,7 +239,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                         signedInAccountFromIntent.getResult(ApiException::class.java)
                     signInAccount.whatIf({ account -> account == null }, {
                         Timber.e("User account was null")
-                        authState.value = AuthViewModel.AuthenticationState.ERROR
+                        authState.value = AuthenticationState.ERROR
                     }, {
                         // create user from google account
                         val acct = signInAccount ?: return
@@ -256,17 +257,17 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                             saveUser(user)
                         } catch (e: Exception) {
                             Timber.e(e)
-                            authState.value = AuthViewModel.AuthenticationState.ERROR
+                            authState.value = AuthenticationState.ERROR
                         }
                     })
                 } catch (e: Exception) {
                     Timber.e(e)
-                    authState.value = AuthViewModel.AuthenticationState.ERROR
+                    authState.value = AuthenticationState.ERROR
                 }
             }
         } else {
             Timber.e("Google auth failed")
-            authVM.authState.value = AuthViewModel.AuthenticationState.ERROR
+            authVM.authState.value = AuthenticationState.ERROR
             super.onActivityResult(requestCode, resultCode, data)
         }
 

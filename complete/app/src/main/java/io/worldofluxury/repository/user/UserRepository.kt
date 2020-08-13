@@ -20,21 +20,17 @@ package io.worldofluxury.repository.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onFailure
-import com.skydoves.sandwich.onSuccess
-import com.skydoves.whatif.whatIfNotNull
+import androidx.lifecycle.asLiveData
 import io.worldofluxury.data.User
-import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.PreferenceStorage
+import io.worldofluxury.data.sources.local.DefaultUserLocalDataSource
+import io.worldofluxury.data.sources.remote.DefaultUserRemoteDataSource
 import io.worldofluxury.repository.Repository
-import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.webservice.SwanWebService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.transformLatest
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,6 +39,8 @@ interface UserRepository : Repository {
     fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User>
 
     fun updateUser(user: User, toastLiveData: MutableLiveData<String>)
+
+    fun logout() {}
 }
 
 /**
@@ -50,87 +48,26 @@ interface UserRepository : Repository {
  */
 @Singleton
 class DefaultUserRepository @Inject constructor(
-    private val dao: UserDao,
-    private val prefs: PreferenceStorage,
-    private val webService: SwanWebService,
-    private val scope: CoroutineScope
+    private val localDataSource: DefaultUserLocalDataSource,
+    private val remoteDataSource: DefaultUserRemoteDataSource
 ) : UserRepository {
 
-    init {
-        Timber.tag(APP_TAG)
-    }
-
-    // checks for the login state of the current user.
-    // fetches the live user instance by converting the user id live data to a live
-    // user object.
+    @ExperimentalCoroutinesApi
     override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User> =
-        liveData {
-            if (!prefs.isLoggedIn.get()) return@liveData
-            // get live user instance
-            val user: LiveData<User> = prefs.liveUserId.switchMap { dao.watchUserById(it) }
-            // pass it to live data
-            emitSource(user)
-
-            // perform network call for user data
-            webService.getUserById(prefs.userId).whatIfNotNull { response ->
-                with(response) {
-                    onError {
-                        toastLiveData.postValue("Cannot get user data at this time")
-                        Timber.e("An error occurred while retrieving user data -> $errorBody")
-                    }
-
-                    onException {
-                        toastLiveData.postValue("Cannot get user data at this time")
-                        Timber.e("An exception occurred while retrieving user data -> $message")
-                    }
-
-                    onFailure {
-                        toastLiveData.postValue("Cannot get user data at this time")
-                        Timber.e("Failed occurred while retrieving user data")
-                    }
-
-                    // save data to the local database
-                    onSuccess {
-                        Timber.i("User retrieved successfully")
-                        scope.launch {
-                            data.whatIfNotNull {
-                                dao.insert(it.results)
-                            }
-                        }
-                    }
-
-                }
+        remoteDataSource.watchCurrentUser(toastLiveData)
+            .onStart { localDataSource.watchCurrentUser(toastLiveData) }
+            .transformLatest { value ->
+                localDataSource.updateUser(value)
+                emit(value)
             }
+            .flowOn(Dispatchers.IO)
+            .onCompletion { Timber.e(it, "watchCurrentUser flow completed") }
+            .asLiveData()
 
-        }
-
-
-    // update user profile
     override fun updateUser(user: User, toastLiveData: MutableLiveData<String>) {
-        scope.launch {
-            dao.update(user)
-            webService.updateUser(user).whatIfNotNull { response ->
-                with(response) {
-                    onError {
-                        Timber.e("An error occurred while updating user data -> $errorBody")
-                    }
-
-                    onException {
-                        Timber.e("An exception occurred while updating user data -> $message")
-                    }
-
-                    onFailure {
-                        Timber.e("Failed occurred while updating user data")
-                    }
-
-                    // save data to the local database
-                    onSuccess {
-                        Timber.i("User updated successfully")
-                        data?.results.whatIfNotNull { scope.launch { dao.update(it) } }
-                    }
-                }
-            }
-        }
+        localDataSource.updateUser(user)
+        remoteDataSource.updateUser(user)
     }
 
+    override fun logout() = localDataSource.logout()
 }

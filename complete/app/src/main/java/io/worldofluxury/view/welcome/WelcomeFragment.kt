@@ -30,8 +30,8 @@ import io.worldofluxury.R
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
 import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.viewmodel.AuthViewModel
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.UserViewModel
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.random.Random
@@ -50,8 +50,8 @@ class WelcomeFragment : Fragment() {
     private lateinit var binding: FragmentWelcomeBinding
 
     @Inject
-    lateinit var authViewModelFactory: AuthViewModelFactory
-    private val viewModel by activityViewModels<AuthViewModel> { authViewModelFactory }
+    lateinit var authViewModelFactory: UserViewModelFactory
+    private val viewModel by activityViewModels<UserViewModel> { authViewModelFactory }
 
     private val images = mutableListOf(
         R.drawable.world_of_luxury_one,

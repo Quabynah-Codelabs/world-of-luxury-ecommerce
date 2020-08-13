@@ -23,14 +23,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import io.worldofluxury.database.dao.UserDao
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
-import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import javax.inject.Singleton
 
 /**
@@ -43,22 +41,16 @@ object ViewModelModule {
     @Singleton
     @Provides
     fun provideAuthViewModelProvider(
-        userDao: UserDao,
+        repository: UserRepository,
         prefs: PreferenceStorage
-    ): AuthViewModelFactory =
-        AuthViewModelFactory(userDao, prefs)
+    ): UserViewModelFactory =
+        UserViewModelFactory(repository, prefs)
 
     @Singleton
     @Provides
     fun provideProductViewModelProvider(
         repository: ProductRepository
     ): ProductViewModelFactory = ProductViewModelFactory(repository)
-
-    @Singleton
-    @Provides
-    fun provideUserViewModelProvider(
-        repository: UserRepository
-    ): UserViewModelFactory = UserViewModelFactory(repository)
 
     @Singleton
     @Provides

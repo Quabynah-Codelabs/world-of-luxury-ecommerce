@@ -33,9 +33,9 @@ import io.worldofluxury.binding.doOnApplyWindowInsets
 import io.worldofluxury.data.Product
 import io.worldofluxury.databinding.FragmentProductBinding
 import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.viewmodel.AuthViewModel
 import io.worldofluxury.viewmodel.ProductViewModel
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.UserViewModel
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
@@ -48,13 +48,13 @@ class ProductFragment : Fragment() {
     private lateinit var binding: FragmentProductBinding
 
     @Inject
-    lateinit var authViewModelFactory: AuthViewModelFactory
+    lateinit var authViewModelFactory: UserViewModelFactory
 
     @Inject
     lateinit var productViewModelFactory: ProductViewModelFactory
 
-    private val viewModel by activityViewModels<ProductViewModel> { productViewModelFactory }
-    private val authVM by activityViewModels<AuthViewModel> { authViewModelFactory }
+    private val productViewModel by activityViewModels<ProductViewModel> { productViewModelFactory }
+    private val authViewModel by activityViewModels<UserViewModel> { authViewModelFactory }
 
     private val args by navArgs<ProductFragmentArgs>()
 
@@ -67,15 +67,15 @@ class ProductFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
         binding.run {
             lifecycleOwner = this@ProductFragment
-            authViewModel = authVM
-            productViewModel = viewModel
+            authViewModel = this@ProductFragment.authViewModel
+            productViewModel = this@ProductFragment.productViewModel
 
             root.doOnApplyWindowInsets { v, insets, padding ->
                 v.updatePadding(bottom = padding.bottom + insets.systemWindowInsetBottom)
             }
 
             // observe product
-            viewModel.watchProductById(args.product.id).observe(viewLifecycleOwner, {
+            this@ProductFragment.productViewModel.watchProductById(args.product.id).observe(viewLifecycleOwner, {
                 // update product in real-time
                 product = it
             })

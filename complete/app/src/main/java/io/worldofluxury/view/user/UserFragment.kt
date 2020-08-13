@@ -29,8 +29,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.databinding.UserFragmentBinding
 import io.worldofluxury.util.APP_TAG
-import io.worldofluxury.viewmodel.AuthViewModel
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.UserViewModel
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,8 +43,8 @@ class UserFragment : Fragment() {
     }
 
     @Inject
-    lateinit var authViewModelFactory: AuthViewModelFactory
-    private val viewModel by activityViewModels<AuthViewModel> { authViewModelFactory }
+    lateinit var modelFactory: UserViewModelFactory
+    private val viewModel by activityViewModels<UserViewModel> { modelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +61,6 @@ class UserFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         viewModel.currentUser.observe(viewLifecycleOwner, { user -> Timber.d("User is -> $user") })
     }
 

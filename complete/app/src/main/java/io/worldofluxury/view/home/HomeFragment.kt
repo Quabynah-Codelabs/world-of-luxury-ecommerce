@@ -34,9 +34,9 @@ import io.worldofluxury.databinding.HomeFragmentBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.CATEGORIES
 import io.worldofluxury.view.product.ProductPagerFragment
-import io.worldofluxury.viewmodel.AuthViewModel
+import io.worldofluxury.viewmodel.UserViewModel
 import io.worldofluxury.viewmodel.ProductViewModel
-import io.worldofluxury.viewmodel.factory.AuthViewModelFactory
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
@@ -47,8 +47,8 @@ class HomeFragment : Fragment() {
     private lateinit var binding: HomeFragmentBinding
 
     @Inject
-    lateinit var authViewModelFactory: AuthViewModelFactory
-    private val authVM by navGraphViewModels<AuthViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
+    lateinit var authViewModelFactory: UserViewModelFactory
+    private val authVM by navGraphViewModels<UserViewModel>(R.id.wol_nav_graph) { authViewModelFactory }
 
     @Inject
     lateinit var productViewModelFactory: ProductViewModelFactory

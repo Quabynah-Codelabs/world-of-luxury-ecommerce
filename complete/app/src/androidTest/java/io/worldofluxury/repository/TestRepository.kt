@@ -20,10 +20,10 @@ package io.worldofluxury.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.paging.PagedList
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import com.skydoves.whatif.whatIfNotNull
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,6 +43,7 @@ import io.worldofluxury.util.observeOnce
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Before
@@ -121,9 +122,7 @@ class FakeUserRepository @Inject constructor(
     UserRepository {
 
     override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User> =
-        liveData {
-            userDao.getUserById(UID).whatIfNotNull { emit(it) }
-        }
+        userDao.getUserById(UID).asLiveData()
 
     override fun updateUser(user: User, toastLiveData: MutableLiveData<String>) {
         userDao.insert(user)
@@ -137,7 +136,7 @@ class FakeUserRepository @Inject constructor(
 class FakeProductRepository @Inject constructor() :
     ProductRepository {
     // todo: add to cart
-    override fun watchProductById(id: String): LiveData<Product> = liveData {  }
+    override fun watchProductById(id: String): LiveData<Product> = liveData { }
 
     // todo: watch all favorites
     override fun watchFavorites(): LiveData<List<Product>> = liveData { }

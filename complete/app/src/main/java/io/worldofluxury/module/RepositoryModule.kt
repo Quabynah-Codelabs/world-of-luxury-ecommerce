@@ -25,16 +25,14 @@ import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.sources.local.DefaultProductLocalDataSource
+import io.worldofluxury.data.sources.local.DefaultUserLocalDataSource
 import io.worldofluxury.data.sources.remote.DefaultProductRemoteDataSource
-import io.worldofluxury.database.dao.UserDao
-import io.worldofluxury.preferences.PreferenceStorage
+import io.worldofluxury.data.sources.remote.DefaultUserRemoteDataSource
 import io.worldofluxury.repository.Repository
 import io.worldofluxury.repository.product.DefaultProductRepository
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.DefaultUserRepository
 import io.worldofluxury.repository.user.UserRepository
-import io.worldofluxury.webservice.SwanWebService
-import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 /**
@@ -56,10 +54,10 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideUserRepository(
-        userDao: UserDao,
-        webService: SwanWebService,
-        prefs: PreferenceStorage,
-        thread: CoroutineScope
-    ): UserRepository = DefaultUserRepository(userDao, prefs, webService, thread)
+        @RemoteDataSource
+        remoteDataSource: DefaultUserRemoteDataSource,
+        @LocalDataSource
+        localDataSource: DefaultUserLocalDataSource
+    ): UserRepository = DefaultUserRepository(localDataSource, remoteDataSource)
 
 }

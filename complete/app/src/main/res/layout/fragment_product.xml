@@ -24,11 +24,11 @@
 
         <import type="io.worldofluxury.data.Product" />
 
-        <import type="io.worldofluxury.viewmodel.AuthViewModel" />
+        <import type="io.worldofluxury.viewmodel.UserViewModel" />
 
         <import type="io.worldofluxury.viewmodel.ProductViewModel" />
 
-        <import type="io.worldofluxury.viewmodel.AuthViewModel.AuthenticationState" />
+        <import type="io.worldofluxury.viewmodel.AuthenticationState" />
 
         <variable
             name="productViewModel"
@@ -36,7 +36,7 @@
 
         <variable
             name="authViewModel"
-            type="AuthViewModel" />
+            type="UserViewModel" />
 
         <variable
             name="product"

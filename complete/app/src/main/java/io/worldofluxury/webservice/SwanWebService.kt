@@ -48,10 +48,9 @@ interface SwanWebService {
     suspend fun getUserById(@Path("id") userId: String?): ApiResponse<WebServiceResponse<User>>
 
     @PUT("/users/{id}")
-    suspend fun updateUser(@Body user: User): ApiResponse<WebServiceResponse<User>>
+    suspend fun updateUserProfile(@Body user: User): ApiResponse<WebServiceResponse<User>>
 
     @POST("/users/cart/new")
-    @FormUrlEncoded
     suspend fun addToCart(@Body product: Product): ApiResponse<WebServiceResponse<List<Product>>>
 
     companion object {
