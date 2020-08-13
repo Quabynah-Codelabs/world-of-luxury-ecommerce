@@ -54,14 +54,15 @@ class DefaultUserRepository @Inject constructor(
 
     @ExperimentalCoroutinesApi
     override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User> =
-        remoteDataSource.watchCurrentUser(toastLiveData)
+        localDataSource.watchCurrentUser(toastLiveData)
+        /*remoteDataSource.watchCurrentUser(toastLiveData)
             .onStart { localDataSource.watchCurrentUser(toastLiveData) }
             .transformLatest { value ->
                 localDataSource.updateUser(value)
                 emit(value)
             }
             .flowOn(Dispatchers.IO)
-            .onCompletion { Timber.e(it, "watchCurrentUser flow completed") }
+            .onCompletion { Timber.e(it, "watchCurrentUser flow completed") }*/
             .asLiveData()
 
     override fun updateUser(user: User, toastLiveData: MutableLiveData<String>) {

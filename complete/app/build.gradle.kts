@@ -144,7 +144,7 @@ android {
         versionCode = Dependencies.versionCode
         versionName = Dependencies.versionName
         vectorDrawables.useSupportLibrary = true
-        
+
         testInstrumentationRunner = "${Dependencies.packageName}.SwanTestRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -198,10 +198,13 @@ android {
         isAbortOnError = false
     }
 
-    sourceSets {
-//        androidTest.java.srcDirs += "src/test-common/java"
-//        test.java.srcDirs += "src/test-common/java"
-//        test.assets.srcDirs += files("$projectDir/schemas".toString())
+    sourceSets.getByName("androidTest") {
+        java.srcDir("src/test-common/java")
+    }
+
+    sourceSets.getByName("test") {
+        java.srcDir("src/test-common/java")
+        assets.srcDir("$projectDir/schemas")
     }
 
     testOptions {
