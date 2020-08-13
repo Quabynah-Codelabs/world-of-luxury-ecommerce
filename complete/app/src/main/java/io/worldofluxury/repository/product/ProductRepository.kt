@@ -74,7 +74,7 @@ class DefaultProductRepository @Inject constructor(
             .flowOn(Dispatchers.IO)
             .onCompletion { Timber.e(it, "watchProductById flow completed") }
             .asLiveData()
-    
+
     /**
      * fetch all favorited products
      */

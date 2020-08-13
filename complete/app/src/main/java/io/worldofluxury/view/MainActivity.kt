@@ -221,7 +221,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
             // pass down any activity result to the fragments
             supportFragmentManager.fragments.forEach {
@@ -271,7 +271,7 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             super.onActivityResult(requestCode, resultCode, data)
         }
 
-    }
+    }*/
 
     override fun onDestinationChanged(
         controller: NavController,
