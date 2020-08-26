@@ -1,4 +1,4 @@
-/*
+/**
 * Copyright (c) 2020.
 * Designed and developed by @quabynah_codelabs (Dennis Bilson)
 *
@@ -257,7 +257,7 @@ dependencies {
     implementation("androidx.room:room-runtime:${Dependencies.roomVersion}")
     implementation("androidx.room:room-ktx:${Dependencies.roomVersion}")
     kapt("androidx.room:room-compiler:${Dependencies.roomVersion}")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.legacy:legacy-support-v4:${Dependencies.legacyVersion}")
     implementation("androidx.navigation:navigation-fragment-ktx:${Dependencies.navVersion}")
     implementation("androidx.navigation:navigation-ui-ktx:${Dependencies.navVersion}")
     androidTestImplementation("androidx.navigation:navigation-testing:${Dependencies.navVersion}")

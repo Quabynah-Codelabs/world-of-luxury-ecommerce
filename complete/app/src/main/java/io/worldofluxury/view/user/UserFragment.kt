@@ -22,13 +22,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import io.worldofluxury.R
 import io.worldofluxury.databinding.UserFragmentBinding
-import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.UserViewModel
 import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import timber.log.Timber
@@ -38,9 +35,6 @@ import javax.inject.Inject
 class UserFragment : Fragment() {
     private lateinit var binding: UserFragmentBinding
 
-    init {
-        Timber.tag(APP_TAG)
-    }
 
     @Inject
     lateinit var modelFactory: UserViewModelFactory
@@ -50,7 +44,7 @@ class UserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.user_fragment, container, false)
+        binding = UserFragmentBinding.inflate(layoutInflater)
         binding.run {
             lifecycleOwner = this@UserFragment
             vm = viewModel

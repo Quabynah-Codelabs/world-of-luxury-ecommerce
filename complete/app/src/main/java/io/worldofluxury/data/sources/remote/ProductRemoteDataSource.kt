@@ -19,19 +19,19 @@
 package io.worldofluxury.data.sources.remote
 
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.PagedList
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import com.skydoves.whatif.whatIfNotNull
+import io.worldofluxury.data.CartItem
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.sources.ProductDataSource
 import io.worldofluxury.webservice.SwanWebService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,17 +44,17 @@ import javax.inject.Inject
  */
 
 class DefaultProductRemoteDataSource @Inject constructor(
-    private val service: SwanWebService,
-    private val scope: CoroutineScope
-) : ProductDataSource {
+    service: SwanWebService,
+    scope: CoroutineScope
+) : ProductDataSource, SwanWebService by service, CoroutineScope by scope {
 
     @ExperimentalCoroutinesApi
-    override fun watchFavorites(): Flow<List<Product>> = flow {
-        service.getFavorites()
+    override fun watchFavorites(): Flow<List<Product>> = channelFlow {
+        getFavoritesItems()
             .whatIfNotNull { apiResponse ->
                 apiResponse.onSuccess {
                     // save data to local database
-                    scope.launch { data.whatIfNotNull { emit(it.results) } }
+                    launch { data.whatIfNotNull { offer(it.results) } }
                 }
                 apiResponse.onException {
                     Timber.e("An exception occurred while retrieving data from the favs web service endpoint -> $message")
@@ -69,12 +69,12 @@ class DefaultProductRemoteDataSource @Inject constructor(
     }
 
     @ExperimentalCoroutinesApi
-    override fun watchProductById(id: String): Flow<Product> = flow {
-        service.getProductById(id)
+    override fun watchProductById(id: String): Flow<Product> = channelFlow {
+        getProductInfo(id)
             .whatIfNotNull { apiResponse ->
                 apiResponse.onSuccess {
                     // save data to local database
-                    scope.launch { data.whatIfNotNull { emit(it.results) } }
+                    launch { data.whatIfNotNull { if (!isClosedForSend) offer(it.results) } }
                 }
                 apiResponse.onException {
                     Timber.e("An exception occurred while retrieving data from the product web service endpoint -> $message")
@@ -89,19 +89,18 @@ class DefaultProductRemoteDataSource @Inject constructor(
     }
 
     @ExperimentalCoroutinesApi
-    override fun watchAllProducts(
+    override fun watchAllProductsNonPaged(
         category: String,
         toastLiveData: MutableLiveData<String>,
         page: Int
-    ): Flow<PagedList<Product>> = flow {
-        service.getProducts(category, page)
+    ): Flow<List<Product>> = channelFlow {
+        getAllProducts(category, page)
             .whatIfNotNull { apiResponse ->
                 apiResponse.onSuccess {
                     // save data to local database
-                    scope.launch {
+                    launch {
                         data.whatIfNotNull {
-                            // todo: add pages list here
-
+                            if (!isClosedForSend) offer(it.results)
                         }
                     }
                 }
@@ -120,27 +119,32 @@ class DefaultProductRemoteDataSource @Inject constructor(
             }
     }
 
-    override suspend fun addToCart(product: Product) {
-        service.addToCart(product.copy(isFavorite = !product.isFavorite))
-            .whatIfNotNull { apiResponse ->
-                apiResponse.onSuccess {
-                    // save data to local database
-                    Timber.e("Product(s) added to cart successfully")
+    override fun addToCart(cartItem: CartItem) {
+        launch {
+            addItemToCart(cartItem)
+                .whatIfNotNull { apiResponse ->
+                    apiResponse.onSuccess {
+                        // save data to local database
+                        Timber.i("Product(s) added to cart successfully")
+                    }
+                    apiResponse.onException {
+                        Timber.e("An exception occurred while retrieving data from the product web service endpoint -> $message")
+                    }
+                    apiResponse.onFailure {
+                        Timber.e("Failed to retrieve data from the product web service endpoint")
+                    }
+                    apiResponse.onError {
+                        Timber.e("An error occurred while retrieving data from the product web service endpoint -> $errorBody")
+                    }
                 }
-                apiResponse.onException {
-                    Timber.e("An exception occurred while retrieving data from the product web service endpoint -> $message")
-                }
-                apiResponse.onFailure {
-                    Timber.e("Failed to retrieve data from the product web service endpoint")
-                }
-                apiResponse.onError {
-                    Timber.e("An error occurred while retrieving data from the product web service endpoint -> $errorBody")
-                }
-            }
+        }
     }
 
-    override suspend fun storeProduct(product: Product) {
+    override fun storeProduct(product: Product) {
         /*not applicable: no products will be saved from the client's device to the cloud*/
     }
 
+    override fun clearCart() {
+        /*todo: clear cart*/
+    }
 }

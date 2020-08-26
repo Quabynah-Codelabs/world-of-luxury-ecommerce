@@ -25,8 +25,8 @@ object Dependencies {
     const val compileSdkVersion = 29
     const val minSdkVersion = 23
     const val targetSdkVersion = 29
-    const val versionCode = 7
-    const val versionName = "1.0.7-production"
+    const val versionCode = 8
+    const val versionName = "1.0.8-production"
 
     // gradle & kotlin
     const val gradleBuildTool = "4.2.0-alpha07"
@@ -44,6 +44,7 @@ object Dependencies {
     // support library
     const val materialVersion = "1.3.0-alpha02"
     const val constraintVersion = "2.0.0-rc1"
+    const val legacyVersion = "1.0.0"
 
     // architecture components
     const val fragmentVersion = "1.2.5"

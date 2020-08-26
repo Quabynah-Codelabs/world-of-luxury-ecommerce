@@ -23,7 +23,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -31,10 +30,8 @@ import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.twitter.sdk.android.core.models.User
 import dagger.hilt.android.AndroidEntryPoint
-import io.worldofluxury.R
 import io.worldofluxury.binding.checkAllMatched
 import io.worldofluxury.databinding.AuthFragmentBinding
-import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.AuthenticationState
 import io.worldofluxury.viewmodel.UserViewModel
 import io.worldofluxury.viewmodel.factory.UserViewModelFactory
@@ -53,10 +50,6 @@ class AuthFragment : Fragment() {
     lateinit var modelFactory: UserViewModelFactory
     private val viewModel by viewModels<UserViewModel> { modelFactory }
 
-    init {
-        Timber.tag(APP_TAG)
-    }
-
     private val twitterAuthCallback = object : Callback<TwitterSession?>() {
         override fun success(result: Result<TwitterSession?>?) {
             val session = result?.data
@@ -72,7 +65,7 @@ class AuthFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.auth_fragment, container, false)
+        binding = AuthFragmentBinding.inflate(layoutInflater)
         binding.run {
             lifecycleOwner = this@AuthFragment
             vm = viewModel

@@ -20,11 +20,9 @@ package io.worldofluxury.data
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -39,19 +37,22 @@ import kotlinx.android.parcel.Parcelize
         ForeignKey(
             entity = Product::class,
             parentColumns = ["id"],
-            childColumns = ["productId"],
+            childColumns = ["prod_id"],
             onDelete = ForeignKey.CASCADE
         )
-    ], indices = [Index(value = ["productId"], name = "productId", unique = false)]
+    ], indices = [Index(value = ["prod_id"], name = "prod_id", unique = true)]
 )
 @Parcelize
 data class CartItem(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @ColumnInfo(name = "prod_id")
+    @PrimaryKey
     val productId: String,
     val price: Double = 10.0,
     var units: Int = 1
-) :
-    Parcelable {
+) : Parcelable {
+
+    @Ignore
+    fun isNotEmpty(): Boolean = units >= 1
 
     companion object {
         /**
@@ -61,7 +62,7 @@ data class CartItem(
         val CART_DIFF: DiffUtil.ItemCallback<CartItem> =
             object : DiffUtil.ItemCallback<CartItem>() {
                 override fun areItemsTheSame(oldItem: CartItem, newItem: CartItem): Boolean =
-                    oldItem.id == newItem.id
+                    oldItem.productId == newItem.productId
 
                 override fun areContentsTheSame(oldItem: CartItem, newItem: CartItem): Boolean =
                     oldItem == newItem

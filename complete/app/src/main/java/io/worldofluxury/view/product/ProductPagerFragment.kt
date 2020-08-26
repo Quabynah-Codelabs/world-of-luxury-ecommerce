@@ -31,6 +31,8 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.platform.MaterialElevationScale
 import com.skydoves.whatif.whatIfNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
@@ -115,9 +117,8 @@ class ProductPagerFragment : Fragment() {
 class ProductsGridAdapter(private val viewModel: ProductViewModel) :
     PagedListAdapter<Product, ProductViewHolder>(Product.PRODUCT_DIFF) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val binding = DataBindingUtil.inflate<ItemProductBinding>(
+        val binding = ItemProductBinding.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_product,
             parent,
             false
         )
@@ -142,6 +143,18 @@ class ProductViewHolder(
             product = item
             vm = viewModel
             root.setOnClickListener {
+                if(it.context is Fragment) {
+                    with(it.context as Fragment) {
+                        exitTransition = Hold().apply {
+                            duration = 300L
+                        }
+
+                        reenterTransition = MaterialElevationScale(true).apply {
+                            duration = 350L
+                        }
+
+                    }
+                }
                 val extras = FragmentNavigatorExtras(binding.productImage to item.id)
                 it.findNavController()
                     .navigate(HomeFragmentDirections.actionNavHomeToNavProduct(item), extras)

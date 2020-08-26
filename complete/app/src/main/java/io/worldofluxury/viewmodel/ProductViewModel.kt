@@ -29,6 +29,7 @@ import androidx.paging.PagedList
 import io.worldofluxury.base.LiveCoroutinesViewModel
 import io.worldofluxury.base.launchInBackground
 import io.worldofluxury.data.Product
+import io.worldofluxury.data.toCartItem
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.util.APP_TAG
 import timber.log.Timber
@@ -37,8 +38,8 @@ import timber.log.Timber
  * Main [ViewModel] for all [Product]s
  */
 class ProductViewModel @ViewModelInject constructor(
-    private val repository: ProductRepository
-) : LiveCoroutinesViewModel() {
+    repository: ProductRepository
+) : LiveCoroutinesViewModel(), ProductRepository by repository {
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
     val favorites: LiveData<List<Product>> = launchOnViewModelScope { repository.watchFavorites() }
@@ -49,12 +50,11 @@ class ProductViewModel @ViewModelInject constructor(
     }
 
     fun watchProductsLiveData(category: String): LiveData<PagedList<Product>> =
-        launchOnViewModelScope { repository.watchAllProducts(category, toastLiveData) }
+        launchOnViewModelScope { watchAllProducts(category, toastLiveData) }
 
-    fun addToCart(item: Product) =
-        launchInBackground { repository.addToCart(item) }
+    fun addToCart(item: Product) = launchInBackground { addToCart(item.toCartItem()) }
 
-    fun watchProductById(id: String) = launchOnViewModelScope { repository.watchProductById(id) }
+    fun watchProductByID(id: String) = launchOnViewModelScope { watchProductById(id) }
 
     fun share(host: Activity, product: Product) {
         val intentBuilder = ShareCompat.IntentBuilder.from(host)
@@ -68,5 +68,23 @@ class ProductViewModel @ViewModelInject constructor(
         if (intent.resolveActivity(host.packageManager) != null) {
             host.startActivity(intent)
         }
+    }
+
+    fun incrementItems(item: Product) {
+        // increment product
+        val cartItem = item.toCartItem()
+        cartItem.copy(units = ++cartItem.units)
+        launchInBackground { addToCart(cartItem) }
+    }
+
+    fun decrementItems(item: Product) {
+        // decrement product
+        val cartItem = item.toCartItem()
+        if (cartItem.isNotEmpty()) cartItem.copy(units = --cartItem.units)
+        launchInBackground { addToCart(cartItem) }
+    }
+
+    fun clearShoppingCart() {
+        launchInBackground { clearCart() }
     }
 }

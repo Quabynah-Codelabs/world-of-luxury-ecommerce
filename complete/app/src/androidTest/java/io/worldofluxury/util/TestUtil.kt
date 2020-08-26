@@ -23,6 +23,9 @@ import io.worldofluxury.data.User
 object TestUtil {
 
     @JvmStatic
-    fun createUser(uid: String): User = User(uid, "Quabynah", "quabynahdennis@gmail.com", "")
+    fun createUser(uid: String): User = User(
+        uid, "Quabynah",
+        "quabynahdennis@gmail.com", ""
+    )
 
 }

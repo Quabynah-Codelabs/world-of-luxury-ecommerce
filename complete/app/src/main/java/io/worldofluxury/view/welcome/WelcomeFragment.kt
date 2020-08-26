@@ -22,17 +22,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.databinding.FragmentWelcomeBinding
-import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.viewmodel.UserViewModel
 import io.worldofluxury.viewmodel.factory.UserViewModelFactory
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -43,9 +40,6 @@ import kotlin.random.Random
 @AndroidEntryPoint
 class WelcomeFragment : Fragment() {
 
-    init {
-        Timber.tag(APP_TAG)
-    }
 
     private lateinit var binding: FragmentWelcomeBinding
 
@@ -68,7 +62,7 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false)
+        binding = FragmentWelcomeBinding.inflate(layoutInflater)
         binding.run {
             lifecycleOwner = this@WelcomeFragment
             vm = viewModel

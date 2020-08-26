@@ -20,6 +20,7 @@ package io.worldofluxury.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.worldofluxury.data.CartItem
 import kotlinx.coroutines.flow.Flow
@@ -33,13 +34,19 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CartDao {
 
-    @Query("select * from carts order by id asc")
-    fun watchAllItems(): Flow<List<CartItem>>
+    @Query("select * from carts order by prod_id asc")
+    fun observeCartItems(): Flow<List<CartItem>>
 
-    @Insert
-    suspend fun insert(cartItem: CartItem)
+    @Query("select * from carts order by prod_id asc")
+    fun getCartItems(): List<CartItem>
 
-    @Query("delete from carts where id = :id")
-    suspend fun delete(id: Int)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItemIntoCart(cartItem: CartItem)
+
+    @Query("delete from carts where prod_id = :id")
+    suspend fun deleteItemFromCart(id: String)
+
+    @Query("delete from carts")
+    suspend fun clearCartItems()
 
 }

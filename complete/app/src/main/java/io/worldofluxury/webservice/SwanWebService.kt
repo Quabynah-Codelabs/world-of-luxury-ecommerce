@@ -21,8 +21,10 @@ package io.worldofluxury.webservice
 import com.skydoves.sandwich.ApiResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.worldofluxury.data.CartItem
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.User
+import io.worldofluxury.util.payment.ApiVersioningRequest
 import retrofit2.http.*
 
 /**
@@ -33,16 +35,16 @@ interface SwanWebService {
 
     @POST("/products")
     @FormUrlEncoded
-    suspend fun getProducts(
+    suspend fun getAllProducts(
         @Field("category") category: String,
         @Field("page") page: Int
     ): ApiResponse<WebServiceResponse<List<Product>>>
 
     @GET("/users/cart")
-    suspend fun getFavorites(): ApiResponse<WebServiceResponse<List<Product>>>
+    suspend fun getFavoritesItems(): ApiResponse<WebServiceResponse<List<Product>>>
 
     @GET("/products/{id}")
-    suspend fun getProductById(@Path("id") id: String): ApiResponse<WebServiceResponse<Product>>
+    suspend fun getProductInfo(@Path("id") id: String): ApiResponse<WebServiceResponse<Product>>
 
     @GET("/users/{id}")
     suspend fun getUserById(@Path("id") userId: String?): ApiResponse<WebServiceResponse<User>>
@@ -51,7 +53,10 @@ interface SwanWebService {
     suspend fun updateUserProfile(@Body user: User): ApiResponse<WebServiceResponse<User>>
 
     @POST("/users/cart/new")
-    suspend fun addToCart(@Body product: Product): ApiResponse<WebServiceResponse<List<Product>>>
+    suspend fun addItemToCart(@Body cartItem: CartItem): ApiResponse<WebServiceResponse<CartItem>>
+
+    @POST("/payment")
+    suspend fun createEphemeralKey(@Body request: ApiVersioningRequest): ApiResponse<WebServiceResponse<String>>
 
     companion object {
         const val BASE_URL = "http://10.0.2.2:5000/"

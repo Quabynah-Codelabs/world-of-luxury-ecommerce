@@ -38,6 +38,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import io.worldofluxury.BuildConfig
 import io.worldofluxury.R
 import io.worldofluxury.base.DataBindingActivity
 import io.worldofluxury.binding.doOnApplyWindowInsets
@@ -165,8 +166,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
                     this.setupWithNavController(controller)
 
                     // set menu items visibility
-                    menu.findItem(R.id.nav_cart).isVisible = isAuthenticated
-                    menu.findItem(R.id.nav_user).isVisible = isAuthenticated
+                    menu.findItem(R.id.nav_cart).isVisible = BuildConfig.DEBUG || isAuthenticated
+                    menu.findItem(R.id.nav_user).isVisible = BuildConfig.DEBUG || isAuthenticated
                 }
 
                 // re-layout the options menu for our bottom nav
@@ -269,7 +270,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             R.id.nav_auth,
             R.id.nav_welcome,
             R.id.nav_checkout,
-            R.id.nav_product
+            R.id.nav_product,
+            R.id.nav_cart
         )
 
         private val EXCLUDED_FAB_DESTINATIONS = setOf(
@@ -278,7 +280,8 @@ class MainActivity : DataBindingActivity(), NavController.OnDestinationChangedLi
             R.id.nav_checkout,
             R.id.nav_help,
             R.id.nav_product,
-            R.id.nav_user
+            R.id.nav_user,
+            R.id.nav_cart
         )
     }
 }

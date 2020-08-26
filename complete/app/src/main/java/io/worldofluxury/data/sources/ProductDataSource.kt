@@ -20,8 +20,10 @@ package io.worldofluxury.data.sources
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
+import io.worldofluxury.data.CartItem
 import io.worldofluxury.data.Product
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 /**
  *  @project World of Luxury
@@ -34,13 +36,23 @@ interface ProductDataSource : DataSource {
 
     fun watchProductById(id: String): Flow<Product>
 
+    // to be used by local data source
     fun watchAllProducts(
         category: String,
         toastLiveData: MutableLiveData<String>,
         page: Int = 1
-    ): Flow<PagedList<Product>>
+    ): Flow<PagedList<Product>> = flowOf()
 
-    suspend fun addToCart(product: Product)
+    // to be used by remote data source
+    fun watchAllProductsNonPaged(
+        category: String,
+        toastLiveData: MutableLiveData<String>,
+        page: Int
+    ): Flow<List<Product>> = flowOf(emptyList())
 
-    suspend fun storeProduct(product: Product)
+    fun addToCart(cartItem: CartItem)
+
+    fun clearCart()
+
+    fun storeProduct(product: Product)
 }

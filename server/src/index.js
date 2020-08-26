@@ -7,8 +7,11 @@ var morgan = require("morgan");
 let productsRoute = require("./routes/product");
 // Import user routes
 let usersRoute = require("./routes/user");
+// Import payment routes
+let paymentRoute = require("./routes/payment");
 
 //Set up default mongoose connection
+// 'mongodb://user:pass@localhost:port/swan_wol'
 var mongoDB = "mongodb://127.0.0.1/swan_wol";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -21,6 +24,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(morgan("dev"));
 app.use("/products", productsRoute);
 app.use("/users", usersRoute);
+app.use("/payment", paymentRoute);
 
 // Connect to server
 let server = app.listen(5000, () => {

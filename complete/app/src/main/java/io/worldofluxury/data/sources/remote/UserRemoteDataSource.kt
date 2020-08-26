@@ -29,8 +29,9 @@ import io.worldofluxury.data.sources.UserDataSource
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.webservice.SwanWebService
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -47,38 +48,40 @@ class DefaultUserRemoteDataSource @Inject constructor(
     private val scope: CoroutineScope
 ) : UserDataSource, SwanWebService by service, PreferenceStorage by prefs {
 
-    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): Flow<User> = flow {
-        val uid = userId ?: return@flow
-        getUserById(uid)
-            .whatIfNotNull { response ->
-                with(response) {
-                    onError {
-                        toastLiveData.postValue("Cannot get user data at this time")
-                        Timber.e("An error occurred while retrieving user data -> $errorBody")
-                    }
+    @ExperimentalCoroutinesApi
+    override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): Flow<User> =
+        channelFlow {
+            val uid = userId ?: return@channelFlow
+            getUserById(uid)
+                .whatIfNotNull { response ->
+                    with(response) {
+                        onError {
+                            toastLiveData.postValue("Cannot get user data at this time")
+                            Timber.e("An error occurred while retrieving user data -> $errorBody")
+                        }
 
-                    onException {
-                        toastLiveData.postValue("Cannot get user data at this time")
-                        Timber.e("An exception occurred while retrieving user data -> $message")
-                    }
+                        onException {
+                            toastLiveData.postValue("Cannot get user data at this time")
+                            Timber.e("An exception occurred while retrieving user data -> $message")
+                        }
 
-                    onFailure {
-                        toastLiveData.postValue("Cannot get user data at this time")
-                        Timber.e("Failed occurred while retrieving user data")
-                    }
+                        onFailure {
+                            toastLiveData.postValue("Cannot get user data at this time")
+                            Timber.e("Failed occurred while retrieving user data")
+                        }
 
-                    // save data to the local database
-                    onSuccess {
-                        Timber.i("User retrieved successfully")
-                        scope.launch {
-                            data.whatIfNotNull {
-                                emit(it.results)
+                        // save data to the local database
+                        onSuccess {
+                            Timber.i("User retrieved successfully")
+                            scope.launch {
+                                data.whatIfNotNull {
+                                    if(!isClosedForSend) offer(it.results)
+                                }
                             }
                         }
                     }
                 }
-            }
-    }
+        }
 
     override fun updateUser(user: User) {
         scope.launch {

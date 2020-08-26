@@ -22,7 +22,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.navGraphViewModels
@@ -34,10 +33,10 @@ import io.worldofluxury.databinding.HomeFragmentBinding
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.CATEGORIES
 import io.worldofluxury.view.product.ProductPagerFragment
-import io.worldofluxury.viewmodel.UserViewModel
 import io.worldofluxury.viewmodel.ProductViewModel
-import io.worldofluxury.viewmodel.factory.UserViewModelFactory
+import io.worldofluxury.viewmodel.UserViewModel
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -63,7 +62,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
+        binding = HomeFragmentBinding.inflate(layoutInflater)
         binding.run {
             lifecycleOwner = this@HomeFragment
             vm = viewModel

@@ -75,17 +75,14 @@ class ActivityTest {
 
         @Singleton
         @Provides
-        fun provideBackgroundThread(): CoroutineScope = CoroutineScope(Dispatchers.IO)
-
-        @Singleton
-        @Provides
         fun provideProductRepository(): ProductRepository = FakeProductRepository()
 
         @Singleton
         @Provides
         fun provideUserRepository(
-            userDao: UserDao
-        ): UserRepository = FakeUserRepository(userDao)
+            userDao: UserDao,
+            scope: CoroutineScope
+        ): UserRepository = FakeUserRepository(userDao, scope)
     }
 
     @get:Rule

@@ -22,9 +22,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
+import io.worldofluxury.data.CartItem
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.sources.ProductDataSource
-import io.worldofluxury.data.toCartItem
 import io.worldofluxury.database.dao.CartDao
 import io.worldofluxury.database.dao.ProductDao
 import kotlinx.coroutines.CoroutineScope
@@ -46,26 +46,29 @@ import javax.inject.Inject
  */
 
 class DefaultProductLocalDataSource @Inject constructor(
-    private val dao: ProductDao,
-    private val cartDao: CartDao,
-    private val scope: CoroutineScope
-) : ProductDataSource {
+    productDao: ProductDao,
+    cartDao: CartDao,
+    scope: CoroutineScope
+) : ProductDataSource, ProductDao by productDao, CartDao by cartDao, CoroutineScope by scope {
 
     @ExperimentalCoroutinesApi
     override fun watchFavorites(): Flow<List<Product>> =
-        cartDao.watchAllItems()
+        observeCartItems()
             .transformLatest { cartItems ->
-                val products = cartItems.map { dao.getProductById(it.productId) }
+                Timber.e("Cart items -> $cartItems")
+                val products = cartItems.map { getProductById(it.productId) }
                 emit(products)
             }
             .flowOn(Dispatchers.IO)
             .onCompletion {
-                Timber.i("watchFavorites flow completed")
+                Timber.i("observeCartItems flow completed")
             }
 
     @ExperimentalCoroutinesApi
     override fun watchProductById(id: String): Flow<Product> =
-        dao.watchProductById(id).onCompletion { Timber.i("watchProductById flow completed") }
+        observeProductById(id)
+            .flowOn(Dispatchers.IO)
+            .onCompletion { Timber.i("observeProductById flow completed") }
 
     @ExperimentalCoroutinesApi
     override fun watchAllProducts(
@@ -73,20 +76,29 @@ class DefaultProductLocalDataSource @Inject constructor(
         toastLiveData: MutableLiveData<String>,
         page: Int
     ): Flow<PagedList<Product>> =
-        dao.watchAllProducts(category).toLiveData(pageSize = 10, initialLoadKey = page).asFlow()
-            .onCompletion { Timber.i("watchAllProducts flow completed") }
+        observeAllProducts(category).toLiveData(pageSize = 10, initialLoadKey = page).asFlow()
+            .flowOn(Dispatchers.IO)
+            .onCompletion { Timber.i("observeAllProducts flow completed") }
 
-    override suspend fun addToCart(product: Product) {
-        scope.launch {
-            val updatedProduct = product.copy(isFavorite = !product.isFavorite)
-            dao.update(updatedProduct)
-            val item = product.toCartItem()
-            if (updatedProduct.isFavorite) cartDao.insert(item) else cartDao.delete(item.id)
+    override fun addToCart(cartItem: CartItem) {
+        launch {
+            val updatedProduct = getProductById(cartItem.productId)
+            updateInProducts(updatedProduct.copy(isFavorite = !updatedProduct.isFavorite))
+            insertItemIntoCart(cartItem)
         }
     }
 
-    override suspend fun storeProduct(product: Product) {
-        scope.launch { dao.insert(product) }
+    override fun storeProduct(product: Product) {
+        launch { insertIntoProducts(product) }
+    }
+
+    override fun clearCart() {
+        launch {
+            getCartItems().map { cartItem ->
+                getProductById(cartItem.productId)
+            }.forEach { product -> updateInProducts(product.copy(isFavorite = false)) }
+            clearCartItems()
+        }
     }
 
 }

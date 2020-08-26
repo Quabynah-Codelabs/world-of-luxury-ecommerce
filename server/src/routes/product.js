@@ -105,7 +105,7 @@ router.get("/:id", (req, res) => {
         "Libero volutpat sed cras ornare arcu. Adipiscing bibendum est ultricies integer quis auctor. Urna cursus eget nunc scelerisque viverra mauris in",
       category: "Shirt",
       style: "Wine",
-      price: 13.25,
+      price: 13.45,
       currency_id: "USD",
       currency_format: "$",
       shippable: false,

@@ -87,7 +87,7 @@ abstract class AppDatabase : RoomDatabase() {
             instance ?: Room
                 .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .run {
-                    fallbackToDestructiveMigrationFrom(6, 7, 8)
+                    fallbackToDestructiveMigrationFrom(6, 7, 8, 9)
                     addCallback(appDatabaseCallback(context))
                 }
                 .build()

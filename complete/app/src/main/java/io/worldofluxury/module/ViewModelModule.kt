@@ -26,9 +26,11 @@ import dagger.hilt.android.components.ApplicationComponent
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
-import io.worldofluxury.viewmodel.factory.UserViewModelFactory
+import io.worldofluxury.util.payment.PaymentUtil
 import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
+import io.worldofluxury.viewmodel.factory.PaymentViewModelFactory
 import io.worldofluxury.viewmodel.factory.ProductViewModelFactory
+import io.worldofluxury.viewmodel.factory.UserViewModelFactory
 import javax.inject.Singleton
 
 /**
@@ -49,8 +51,16 @@ object ViewModelModule {
     @Singleton
     @Provides
     fun provideProductViewModelProvider(
-        repository: ProductRepository
+        repository: ProductRepository,
     ): ProductViewModelFactory = ProductViewModelFactory(repository)
+
+
+    @Singleton
+    @Provides
+    fun providePaymentViewModelProvider(
+        repository: ProductRepository,
+        paymentUtil: PaymentUtil
+    ): PaymentViewModelFactory = PaymentViewModelFactory(repository, paymentUtil)
 
     @Singleton
     @Provides

@@ -23,9 +23,11 @@ import androidx.lifecycle.ViewModelProvider
 import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.repository.product.ProductRepository
 import io.worldofluxury.repository.user.UserRepository
-import io.worldofluxury.view.LauncherViewModel
-import io.worldofluxury.viewmodel.UserViewModel
+import io.worldofluxury.util.payment.PaymentUtil
+import io.worldofluxury.viewmodel.LauncherViewModel
+import io.worldofluxury.viewmodel.PaymentViewModel
 import io.worldofluxury.viewmodel.ProductViewModel
+import io.worldofluxury.viewmodel.UserViewModel
 
 @Suppress("UNCHECKED_CAST")
 class UserViewModelFactory(
@@ -38,10 +40,19 @@ class UserViewModelFactory(
 
 @Suppress("UNCHECKED_CAST")
 class ProductViewModelFactory(
-    private val repository: ProductRepository
+    private val repository: ProductRepository,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         ProductViewModel(repository) as T
+}
+
+@Suppress("UNCHECKED_CAST")
+class PaymentViewModelFactory(
+    private val repository: ProductRepository,
+    private val paymentUtil: PaymentUtil
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+        PaymentViewModel(repository, paymentUtil) as T
 }
 
 @Suppress("UNCHECKED_CAST")

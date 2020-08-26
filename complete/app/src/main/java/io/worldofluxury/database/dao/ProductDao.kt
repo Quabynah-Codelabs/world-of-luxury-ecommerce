@@ -30,23 +30,24 @@ interface ProductDao {
 //    fun productsPagingSource(category: String): PagingSource<Int, Product>
 
     @Query("select * from products where category = :category order by id desc")
-    fun watchAllProducts(category: String): DataSource.Factory<Int, Product>
+    fun observeAllProducts(category: String): DataSource.Factory<Int, Product>
 
     @Query("select * from products where id = :id")
-    fun watchProductById(id: String): Flow<Product>
+    fun observeProductById(id: String): Flow<Product>
 
     @Query("select * from products where id = :id")
     fun getProductById(id: String): Product
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(items: List<Product>)
+    suspend fun insertAllProducts(items: List<Product>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(items: Product)
+    suspend fun insertIntoProducts(item: Product)
 
     @Update
-    suspend fun update(item: Product)
+    suspend fun updateInProducts(item: Product)
 
     @Query("select * from products where isFavorite order by price desc")
     fun getFavorites(): Flow<List<Product>>
+
 }

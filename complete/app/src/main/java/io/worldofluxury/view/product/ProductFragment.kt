@@ -22,11 +22,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.updatePadding
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import io.worldofluxury.R
 import io.worldofluxury.binding.doOnApplyWindowInsets
@@ -58,13 +59,23 @@ class ProductFragment : Fragment() {
 
     private val args by navArgs<ProductFragmentArgs>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = 300L
+            isElevationShadowEnabled = true
+            setAllContainerColors(requireContext().getColor(R.color.color_surface_secondary))
+        }
+
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         Timber.tag(APP_TAG)
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
+        binding = FragmentProductBinding.inflate(layoutInflater)
         binding.run {
             lifecycleOwner = this@ProductFragment
             authViewModel = this@ProductFragment.authViewModel
@@ -76,7 +87,7 @@ class ProductFragment : Fragment() {
             }
 
             // observe product
-            this@ProductFragment.productViewModel.watchProductById(args.product.id)
+            this@ProductFragment.productViewModel.watchProductByID(args.product.id)
                 .observe(viewLifecycleOwner, {
                     // update product in real-time
                     product = it
@@ -87,4 +98,9 @@ class ProductFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+    }
 }

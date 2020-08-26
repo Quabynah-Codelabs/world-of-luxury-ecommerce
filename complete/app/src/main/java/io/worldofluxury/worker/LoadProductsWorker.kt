@@ -30,7 +30,6 @@ import io.worldofluxury.data.Product
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.util.APP_TAG
 import io.worldofluxury.util.PRODUCT_JSON_FILENAME
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
 import java.io.IOException
@@ -53,7 +52,7 @@ class LoadProductsWorker @WorkerInject constructor(
                     val type = object : TypeToken<List<Product>>() {}.type
                     val list: List<Product> = Gson().fromJson(jsonReader, type)
 
-                    productDao.insertAll(list.toMutableList())
+                    productDao.insertAllProducts(list.toMutableList())
                     Timber.d("Products added to database successfully")
                     Result.success()
                 }

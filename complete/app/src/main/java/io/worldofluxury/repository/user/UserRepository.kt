@@ -21,12 +21,20 @@ package io.worldofluxury.repository.user
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
+import com.skydoves.whatif.whatIfNotNull
+import com.stripe.android.CustomerSession
 import io.worldofluxury.core.LocalDataSource
 import io.worldofluxury.core.RemoteDataSource
 import io.worldofluxury.data.User
 import io.worldofluxury.data.sources.UserDataSource
 import io.worldofluxury.repository.Repository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -51,21 +59,21 @@ class DefaultUserRepository @Inject constructor(
 
     @ExperimentalCoroutinesApi
     override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User?> =
-        localDataSource.watchCurrentUser(toastLiveData)
-            /*remoteDataSource.watchCurrentUser(toastLiveData)
-                .onStart { localDataSource.watchCurrentUser(toastLiveData) }
-                .transformLatest { value ->
-                    localDataSource.updateUser(value)
-                    emit(value)
-                }
+        liveData {
+            emitSource(localDataSource.watchCurrentUser(toastLiveData).asLiveData())
+            remoteDataSource.watchCurrentUser(toastLiveData)
                 .flowOn(Dispatchers.IO)
-                .onCompletion { Timber.e(it, "watchCurrentUser flow completed") }*/
-            .asLiveData()
+                .onCompletion { Timber.e(it, "watchCurrentUser flow completed") }
+                .collectLatest { user -> user.whatIfNotNull { localDataSource.updateUser(it) } }
+        }
 
     override fun updateUser(user: User) {
         localDataSource.updateUser(user)
         remoteDataSource.updateUser(user)
     }
 
-    override fun logout() = localDataSource.logout()
+    override fun logout() {
+        localDataSource.logout()
+        CustomerSession.endCustomerSession()
+    }
 }

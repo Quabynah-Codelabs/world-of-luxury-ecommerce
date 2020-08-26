@@ -67,7 +67,7 @@ object DataSourceModule {
     @RemoteDataSource
     fun provideProductRemoteDataSource(
         service: SwanWebService,
-        scope: CoroutineScope
+        scope: CoroutineScope,
     ): ProductDataSource =
         DefaultProductRemoteDataSource(service, scope)
 

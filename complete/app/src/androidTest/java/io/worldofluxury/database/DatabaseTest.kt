@@ -23,6 +23,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.worldofluxury.core.CoroutineTestRule
 import io.worldofluxury.database.dao.ProductDao
 import io.worldofluxury.database.dao.UserDao
@@ -38,11 +39,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
-import java.io.IOException
 import java.util.*
 
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4::class)
+//@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class DatabaseTest {
 
     @get:Rule
@@ -67,7 +68,6 @@ class DatabaseTest {
     }
 
     @After
-    @Throws(IOException::class)
     fun tearDown() {
         db.close()
     }

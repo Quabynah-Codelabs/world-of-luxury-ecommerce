@@ -31,4 +31,22 @@ router.get("/:id", (req, res) => {
   });
 });
 
+router.post("/cart/new", (req, res) => {
+  // TODO: add item to cart here
+  res.send({
+    page: 1,
+    total_pages: 1,
+    results: req.body,
+  });
+});
+
+router.get("/cart", (req, res) => {
+  // TODO: show cart items
+  res.send({
+    page: 1,
+    total_pages: 1,
+    results: [],
+  });
+});
+
 module.exports = router;

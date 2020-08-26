@@ -32,6 +32,7 @@ import io.worldofluxury.binding.doOnApplyWindowInsets
 import io.worldofluxury.databinding.ActivityOnboardingBinding
 import io.worldofluxury.databinding.ItemOnboardingBinding
 import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.viewmodel.LauncherViewModel
 import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
 import kotlinx.android.parcel.Parcelize
 import timber.log.Timber
@@ -125,7 +126,7 @@ data class OnBoardingItem constructor(
             OnBoardingItem(
                 "Get started with our clothing experts",
                 "Invite your friends to join the community and save money on your next order",
-                "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
+                "https://images.unsplash.com/photo-1495121605193-b116b5b9c5fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
             ),
             OnBoardingItem(
                 "It's a \"add-to-cart\" kinda cool day",
@@ -135,7 +136,7 @@ data class OnBoardingItem constructor(
             OnBoardingItem(
                 "Hurry up right now until its too late",
                 "The odds of going to the shop for a loaf of bread",
-                "https://images.unsplash.com/photo-1495121605193-b116b5b9c5fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
+                "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
             )
         )
     }

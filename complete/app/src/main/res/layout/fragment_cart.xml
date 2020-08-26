@@ -24,15 +24,28 @@
 
         <import type="io.worldofluxury.viewmodel.ProductViewModel" />
 
+        <import type="io.worldofluxury.viewmodel.PaymentViewModel" />
+
+        <import type="com.stripe.android.PaymentSession" />
+
+        <variable
+            name="session"
+            type="PaymentSession" />
+
         <variable
             name="productViewModel"
             type="ProductViewModel" />
+
+        <variable
+            name="paymentViewModel"
+            type="PaymentViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:toast="@{productViewModel.toastLiveData}"
         tools:context=".view.cart.CartFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -88,13 +101,37 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fav_items_list"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_none"
+                android:layout_weight="1"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_cart" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/checkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_x36"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_x24"
+                android:enabled="@{paymentViewModel.supportsPaymentModule}"
+                android:onClick="@{() -> paymentViewModel.checkout(session)}"
+                android:text="@{paymentViewModel.supportsPaymentModule ? @string/checkout : @string/payment_unsupported}"
+                app:gone="@{productViewModel.favorites.size() == 0}"
+                app:icon="@{paymentViewModel.supportsPaymentModule ? @drawable/ic_twotone_pay : null}"
+                tools:enabled="false"
+                tools:text="@string/payment_unsupported" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

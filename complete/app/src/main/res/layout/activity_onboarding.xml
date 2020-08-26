@@ -22,7 +22,7 @@
 
     <data>
 
-        <import type="io.worldofluxury.view.LauncherViewModel" />
+        <import type="io.worldofluxury.viewmodel.LauncherViewModel" />
 
         <import type="android.app.Activity" />
 

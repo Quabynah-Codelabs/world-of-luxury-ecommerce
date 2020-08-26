@@ -32,6 +32,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import io.worldofluxury.core.CoroutineTestRule
+import io.worldofluxury.data.CartItem
 import io.worldofluxury.data.Product
 import io.worldofluxury.data.User
 import io.worldofluxury.database.dao.UserDao
@@ -41,7 +42,6 @@ import io.worldofluxury.repository.user.UserRepository
 import io.worldofluxury.util.TestUtil
 import io.worldofluxury.util.observeOnce
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
@@ -67,10 +67,6 @@ class TestUserRepository {
     @Module
     @InstallIn(ApplicationComponent::class)
     object TestRepositoryModule {
-
-        @Singleton
-        @Provides
-        fun provideBackgroundThread(): CoroutineScope = CoroutineScope(Dispatchers.IO)
 
         @Singleton
         @Provides
@@ -120,8 +116,7 @@ class TestUserRepository {
 class FakeUserRepository @Inject constructor(
     private val userDao: UserDao,
     private val scope: CoroutineScope
-) :
-    UserRepository {
+) : UserRepository {
 
     override fun watchCurrentUser(toastLiveData: MutableLiveData<String>): LiveData<User?> =
         userDao.getUserById(UID).asLiveData()
@@ -150,8 +145,12 @@ class FakeProductRepository @Inject constructor() :
         page: Int
     ): LiveData<PagedList<Product>> = liveData { }
 
-    override suspend fun addToCart(product: Product) {
-        // todo: add to cart
+    override suspend fun addToCart(cartItem: CartItem) {
+
+    }
+
+    override suspend fun clearCart() {
+
     }
 
 }

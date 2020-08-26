@@ -18,63 +18,18 @@
 
 package io.worldofluxury.view
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import dagger.hilt.android.AndroidEntryPoint
-import io.worldofluxury.BuildConfig.DEBUG
 import io.worldofluxury.binding.checkAllMatched
-import io.worldofluxury.preferences.PreferenceStorage
 import io.worldofluxury.util.APP_TAG
+import io.worldofluxury.viewmodel.LaunchDestination
+import io.worldofluxury.viewmodel.LauncherViewModel
 import io.worldofluxury.viewmodel.factory.LaunchViewModelFactory
-import kotlinx.coroutines.delay
 import timber.log.Timber
 import javax.inject.Inject
-
-enum class LaunchDestination {
-    ONBOARDING,
-    MAIN_ACTIVITY
-}
-
-class LauncherViewModel @ViewModelInject constructor(private val prefs: PreferenceStorage) :
-    ViewModel(),
-    PreferenceStorage by prefs {
-
-    init {
-        if (DEBUG) prefs.onboardingCompleted = false
-    }
-
-    val launchDestination = liveData {
-        val result = prefs.onboardingCompleted
-        if (result) {
-            emit(LaunchDestination.MAIN_ACTIVITY)
-        } else {
-            emit(LaunchDestination.ONBOARDING)
-        }
-    }
-
-    // simulate loading resources from server
-    val loadingResourcesLiveData = liveData {
-        emit(true)
-        delay(3500)
-        emit(false)
-    }
-
-    fun completeOnboarding(v: View, host: Activity) {
-        prefs.onboardingCompleted = true
-        host.startActivity(
-            Intent(v.context, MainActivity::class.java)/*,
-            ActivityOptions.makeSceneTransitionAnimation(host).toBundle()*/
-        )
-        host.finish()
-    }
-}
 
 /**
  * A 'Trampoline' activity for sending users to an appropriate screen on launch.

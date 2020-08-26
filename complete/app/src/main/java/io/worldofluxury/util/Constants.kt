@@ -18,7 +18,7 @@
 
 package io.worldofluxury.util
 
-const val DATABASE_VERSION = 9
+const val DATABASE_VERSION = 10
 const val DATABASE_NAME = "swan-wol.db"
 
 const val USER_ID_KEY = "user-id-key"
