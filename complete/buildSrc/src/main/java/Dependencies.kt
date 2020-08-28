@@ -73,7 +73,7 @@ object Dependencies {
 
     // moshi
     const val moshiVersion = "1.9.2"
-    const val moshiConverterVersion = "2.7.2"
+    //const val moshiConverterVersion = "2.7.2"
 
     // gson
     const val gsonVersion = "2.8.6"
