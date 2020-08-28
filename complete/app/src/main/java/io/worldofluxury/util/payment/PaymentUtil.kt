@@ -186,8 +186,8 @@ class DefaultPaymentUtil @Inject constructor(
         .setShippingInformationValidator(validator)
         // shipping methods factory
         .setShippingMethodsFactory(shippingMethodsFactory)
-        .setShouldShowGooglePay(true)
         // shows Google Pay as an option
+        .setShouldShowGooglePay(true)
         .build()
 
     override val supportsPaymentModule: LiveData<Boolean>

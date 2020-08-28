@@ -41,6 +41,9 @@ object Dependencies {
     // stripe
     const val stripeVersion = "15.0.1"
 
+    // agora
+    const val agoraVersion = "3.1.0"
+
     // support library
     const val materialVersion = "1.3.0-alpha02"
     const val constraintVersion = "2.0.0-rc1"

@@ -313,7 +313,9 @@ dependencies {
 
     // stripe
     implementation("com.stripe:stripe-android:${Dependencies.stripeVersion}")
-    implementation("implementation 'io.agora.rtc:full-sdk:3.1.0")
+
+    // agora
+    // implementation("io.agora.rtc:full-sdk:${Dependencies.agoraVersion}")
 
 
     // coroutines
