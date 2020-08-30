@@ -29,7 +29,7 @@ object Dependencies {
     const val versionName = "1.0.8-production"
 
     // gradle & kotlin
-    const val gradleBuildTool = "4.2.0-alpha07"
+    const val gradleBuildTool = "4.2.0-alpha08"
     const val kotlin = "1.4.0-rc"
 
     // twitter

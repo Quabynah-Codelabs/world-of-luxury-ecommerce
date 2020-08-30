@@ -24,7 +24,7 @@ buildscript {
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:${Dependencies.gradleBuildTool}")
+        classpath("com.android.tools.build:gradle:4.2.0-alpha08")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.kotlin}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Dependencies.daggerHiltAndroidVersion}")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Dependencies.navVersion}")
