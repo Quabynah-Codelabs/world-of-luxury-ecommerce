@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "419742430509",
+    "firebase_url": "https://handyman-mobile.firebaseio.com",
+    "project_id": "handyman-mobile",
+    "storage_bucket": "handyman-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419742430509:android:8dcd46e3fc1d7c81284fa4",
+        "android_client_info": {
+          "package_name": "dev.azaware.handyman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419742430509-l735rbs090440lat2m74obh12l8oht43.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.azaware.handyman",
+            "certificate_hash": "c7a35f1a1f8eecd685bca35564663c98dfc331c2"
+          }
+        },
+        {
+          "client_id": "419742430509-8q0ugg65ljbv0cankkhg60agqpmo0a8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.azaware.handyman",
+            "certificate_hash": "2e8eefa3f0a5f15cd11d69264d82465ba412e105"
+          }
+        },
+        {
+          "client_id": "419742430509-fp1sohao2ukv1ssc7hbfqfvi5rpv8ivr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYjfiMNcTvPziQGO0XcH97FCX9akpKaQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419742430509-fp1sohao2ukv1ssc7hbfqfvi5rpv8ivr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "419742430509-m72nqpvt24ie9nuvcdh668u38sq2p4go.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.azaware.handyman"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "255441b3-5d45-4fa4-8c26-47b2d9af8326",
+    "author": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "recipient": "Qagy1vnqaqWFBMwPGBSc0fz5hEh2",
+    "content": "Compose newbie: I’ve scourged the internet for tutorials about async data loading but haven’t found any good ones. What’s the recommended way to load async data and emit composable widgets?",
+    "createdAt": "8:03 PM",
+    "image": ""
+  },
+  {
+    "id": "f9095d90-59d2-4a57-b3cf-43e9b9ed2743",
+    "author": "Qagy1vnqaqWFBMwPGBSc0fz5hEh2",
+    "recipient": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "content": "Compose newbie as well, have you looked at the JetNews sample? Most blog posts end up out of date pretty fast but this sample is always up to date and deals with async data loading (it's faked but the same idea applies) \\uD83D\\uDC49 https://github.com/android/compose-samples/tree/master/JetNews",
+    "createdAt": "8:04 PM",
+    "image": ""
+  },
+  {
+    "id": "e37caaee-ede4-4402-9115-26645fc40b12",
+    "author": "Qagy1vnqaqWFBMwPGBSc0fz5hEh2",
+    "recipient": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "content": "@quabynah Take a look at the `Flow.collectAsState()` APIs",
+    "createdAt": "8:05 PM",
+    "image": ""
+  },
+  {
+    "id": "a434e2f9-c1c5-4add-9db9-3a6df0a849aa",
+    "author": "Qagy1vnqaqWFBMwPGBSc0fz5hEh2",
+    "recipient": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "content": "You can use all the same stuff",
+    "createdAt": "8:05 PM",
+    "image": ""
+  },
+  {
+    "id": "9ff59852-ff2b-4a3f-982f-436d85e1dae1",
+    "author": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "recipient": "Qagy1vnqaqWFBMwPGBSc0fz5hEh2",
+    "content": "Thank you!",
+    "createdAt": "8:06 PM",
+    "image": "https://images.unsplash.com/photo-1574981370294-edbbf06bb159?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
+  },
+  {
+    "id": "50c491f4-17dc-44e6-9131-b002b12c3334",
+    "author": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "recipient": "Qagy1vnqaqWFBMwPGBSc0fz5hEh2",
+    "content": "Check it out!",
+    "createdAt": "8:07 PM",
+    "image": ""
+  }
+]

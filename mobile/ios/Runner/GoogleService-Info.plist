@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>419742430509-m72nqpvt24ie9nuvcdh668u38sq2p4go.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.419742430509-m72nqpvt24ie9nuvcdh668u38sq2p4go</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>419742430509-8ldnr4arvmt5gjfe42bkr3vdqqj5213u.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC_jC4oSk7fDuw1_1G7Bir87tWSBCpCFl0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>419742430509</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>dev.azaware.handyman</string>
+	<key>PROJECT_ID</key>
+	<string>handyman-mobile</string>
+	<key>STORAGE_BUCKET</key>
+	<string>handyman-mobile.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:419742430509:ios:c38be49b99ccd844284fa4</string>
+	<key>DATABASE_URL</key>
+	<string>https://handyman-mobile.firebaseio.com</string>
+</dict>
+</plist>

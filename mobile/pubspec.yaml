@@ -1,0 +1,97 @@
+name: handyman
+description: An artisan search application.
+
+publish_to: "github.com"
+
+authors:
+  - "Quabynah Codelabs LLC <codelbas.quabynah@gmail.com>"
+
+version: 0.0.1+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  google_fonts: ^1.1.0
+  auto_route: ^0.6.7
+  moor: ^3.1.0
+  sqlite3_flutter_libs: ^0.2.0
+  get_it: ^4.0.4
+  shared_preferences: ^0.5.10
+  md2_tab_indicator: ^1.0.2
+  sliding_sheet: ^0.3.3
+  wakelock: ^0.1.4+2
+  random_color: ^1.0.5
+  permission_handler: ^5.0.0+hotfix.3
+  google_sign_in: ^4.5.1
+  flutter_icons: ^1.0.0+1
+  path: ^1.7.0
+  path_provider: ^1.6.8
+  provider: ^4.0.4
+  carousel_slider: ^2.1.0
+  image_picker: ^0.6.1+10
+  image_cropper: ^1.2.1
+  intl: ^0.16.1
+  uuid: ^2.0.4
+  flutter_local_notifications: ^1.4.3
+  badges: ^1.1.1
+  google_maps_flutter: ^0.5.28+1
+  geolocator: ^6.0.0
+  geocoder: ^0.2.1
+  flutter_google_places: ^0.2.6
+  google_maps_webservice: ^0.0.18
+  after_layout: ^1.0.7+2
+  jiffy: ^3.0.1
+  table_calendar: ^2.2.3
+  share: ^0.6.4+2
+  json_annotation: ^3.0.1
+  email_validator: ^1.0.4
+  flutter_image_compress: ^0.6.5+1
+  flutter_staggered_grid_view: ^0.3.0
+  flutter_staggered_animations: ^0.1.2
+  flutter_rating_bar: ^3.0.1+1
+  firebase_auth: ^0.18.0+1
+  cloud_firestore: ^0.14.0+2
+  firebase_storage: ^4.0.0
+  firebase_remote_config: ^0.4.0
+  firebase_core: ^0.5.0
+  firebase_analytics: ^6.0.0
+  firebase_messaging: ^7.0.2
+  algolia: ^0.1.7
+  cached_network_image: ^2.3.2+1
+  photo_view: ^0.10.2
+  url_launcher: ^5.7.2
+  flutter_svg_provider: ^0.1.6
+  flutter_isolate: ^1.0.0+14
+  file_picker: ^2.0.11
+  contact_picker: ^0.0.2
+  cupertino_icons: ^0.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  auto_route_generator: ^0.6.8
+  build_runner: ^1.10.2
+  moor_generator: ^3.3.1
+  flutter_launcher_icons: ^0.7.4
+  json_serializable: ^3.2.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/logo_colored.png"
+
+flutter:
+  uses-material-design: true
+  # https://flutter.dev/docs/development/ui/assets-and-images
+  assets:
+    - assets/
+    - assets/logo/
+    - assets/bg/bg.webp
+    - assets/bg/2x/bg.webp
+    - assets/bg/3x/bg.webp
+    - assets/svg/
+

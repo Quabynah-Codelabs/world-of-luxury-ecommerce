@@ -1,0 +1,62 @@
+[
+  {
+    "id": "161a7f70-1bb5-405c-a36a-5305405c0ff2",
+    "customer_id": "Qagy1vnqaqWFBMwPGBSc0fz5hEh2",
+    "provider_id": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "created_at": 1601866140394,
+    "due_date": 1602125340394,
+    "reason": "Code.io Office Renovation",
+    "category" : "bbe8a179-7797-4d87-b388-cf93125f490e",
+    "progress": 0.45,
+    "value": 7142.11,
+    "completed": false
+  },
+  {
+    "id": "ee53fdb2-6f1a-4492-928e-e0495c38aaff",
+    "customer_id": "Qagy1vnqaqWFBMwPGBSc0fz5hEh2",
+    "provider_id": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "created_at": 1601866140394,
+    "due_date": 1602125340394,
+    "reason": "Plumbing Repair",
+    "category" : "bbe8a179-7797-4d87-b388-cf93125f490e",
+    "progress": 0.75,
+    "value": 2948.55,
+    "completed": false
+  },
+  {
+    "id": "dabb28e6-bad1-4d25-9c42-61c93c8df15f",
+    "customer_id": "54a897c6-6eb3-44b4-8499-21a28f847982",
+    "provider_id": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "created_at": 1601866140394,
+    "due_date": 1601866140394,
+    "reason": "Michael's Apartment Tiling",
+    "category" : "bbe8a179-7797-4d87-b388-cf93125f490e",
+    "progress": 1.0,
+    "value": 123.99,
+    "completed": false
+  },
+  {
+    "id": "fbaf23c0-f86a-4269-a467-e1ddd1865abb",
+    "customer_id": "54a897c6-6eb3-44b4-8499-21a28f847982",
+    "provider_id": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "created_at": 1601866140394,
+    "due_date": null,
+    "reason": "Quabynah's Kitchen Remake",
+    "category" : "bbe8a179-7797-4d87-b388-cf93125f490e",
+    "progress": 1.0,
+    "value": 123.99,
+    "completed": false
+  },
+  {
+    "id": "c8c6f878-4875-4eaf-8354-29dc4db078f6",
+    "customer_id": "ae7a0df5-02c0-4b9e-8cc7-fae14ede58ff",
+    "provider_id": "KTzNoxtqAyTHReE2Ua0t8Aj6LE53",
+    "category" : "bbe8a179-7797-4d87-b388-cf93125f490e",
+    "created_at": 1601866140394,
+    "due_date": 1602125340394,
+    "reason": "2-Storey Home Renovation",
+    "progress": 0.45,
+    "value": 589.99,
+    "completed": false
+  }
+]
